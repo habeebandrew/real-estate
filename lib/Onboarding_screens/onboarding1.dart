@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/authentication/User/Signin_User.dart';
-import 'package:pro_2/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -66,7 +65,7 @@ class _MyWidgetState extends State<Onboarding> {
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setBool("showHome", true);
-                Navigator.pushNamed(context, SigninUser.ScreenRoute);
+                Navigator.pushNamed(context, SignInScreen.ScreenRoute);
               },
               child: const Text(
                 'Get Started',

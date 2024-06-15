@@ -3,6 +3,8 @@ import 'package:pro_2/Onboarding_screens/onboarding1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
+  static const String ScreenRoute = 'HomePage';
+
   const HomePage({super.key});
 
   @override
@@ -25,6 +27,9 @@ class _HomePageState extends State<HomePage> {
               },
               icon: const Icon(Icons.logout))
         ],
+      ),
+      body: Scaffold(
+        body: Center(child: Text("welcome mehdi\nXD hala madried !!")),
       ),
     );
   }

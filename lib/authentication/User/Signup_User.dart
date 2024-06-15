@@ -1,23 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:pro_2/HomePage.dart';
 import 'package:pro_2/Widgets/my_button.dart';
 
-class Signup_User extends StatefulWidget {
+class Signup_User extends StatelessWidget {
   static const String ScreenRoute = 'Signup_User';
 
-  const Signup_User({super.key});
-
-  @override
-  State<Signup_User> createState() => _Signup_UserState();
-}
-
-class _Signup_UserState extends State<Signup_User> {
   final _formKey = GlobalKey<FormState>();
+
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+
+  Future<void> _registerUser(BuildContext context) async {
+    final response =
+        await http.post(Uri.parse('http://10.0.2.2:8000/api/register'), body:
+                //  jsonEncode(<String, String>
+                {
+      'first_name': "asd", //_firstNameController.text,
+      'last_name': "ds", // _lastNameController.text,
+      'email': "hsssabeb@gmail.com", //_emailController.text,
+      'password': "0000000000", //_passwordController.text,
+      'password_confirmation': "0000000000" //_confirmPasswordController.text,
+    }
+            // ),
+            );
+
+    if (response.statusCode == 200) {
+      print("successsssssss0");
+      // If the server returns a 201 CREATED response,
+      // navigate to the next screen or show a success message
+      Navigator.of(context).push(_createRoute());
+    } else {
+      print("Noooo");
+      // If the server did not return a 201 CREATED response,
+      // show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to register. Please try again.'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -49,10 +78,12 @@ class _Signup_UserState extends State<Signup_User> {
                   decoration: InputDecoration(
                     labelText: 'First Name',
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
                     ),
                   ),
                   maxLength: 55,
@@ -65,19 +96,19 @@ class _Signup_UserState extends State<Signup_User> {
                     return null;
                   },
                 ),
-
                 SizedBox(height: 10.h),
                 TextFormField(
                   controller: _lastNameController,
                   decoration: InputDecoration(
                     labelText: 'Last Name',
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
                     ),
-
                   ),
                   maxLength: 55,
                   validator: (value) {
@@ -95,12 +126,13 @@ class _Signup_UserState extends State<Signup_User> {
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
                     ),
-
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -119,12 +151,13 @@ class _Signup_UserState extends State<Signup_User> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
                     ),
-
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -142,12 +175,13 @@ class _Signup_UserState extends State<Signup_User> {
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
+                      borderSide: BorderSide(
+                          color: Color(0xFFBBAB8C)), // لون الحدود عند التركيز
                     ),
-
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -164,11 +198,20 @@ class _Signup_UserState extends State<Signup_User> {
                     color: Color(0xFFBBAB8C),
                     tittle: "Sign up",
                     onPreessed: () {
-                      if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Registration Successful')),
-                        );
-                      }
+                      print("object");
+                      _registerUser(context);
+
+                      // if (_formKey.currentState!.validate()) {
+                      //   // Validation passed, perform login or further actions
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(
+                      //       duration: Duration(seconds: 2),
+                      //       content: Text('Registration ...'),
+                      //     ),
+                      //   );
+
+                      //   // Send the registration data to the API
+                      // }
                     },
                     minWidth: width * 0.5,
                     height: height * 0.07)
@@ -177,6 +220,25 @@ class _Signup_UserState extends State<Signup_User> {
           ),
         ),
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }
