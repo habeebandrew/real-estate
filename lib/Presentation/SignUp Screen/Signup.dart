@@ -1,54 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:pro_2/HomePage.dart';
-import 'package:pro_2/Widgets/my_button.dart';
 
-class Signup_User extends StatelessWidget {
+import 'package:pro_2/Util/app_routes.dart';
+import 'package:pro_2/Util/global%20Widgets/my_button.dart';
+
+class SignUp extends StatelessWidget {
   static const String ScreenRoute = 'Signup_User';
 
-  final _formKey = GlobalKey<FormState>();
 
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
-  Future<void> _registerUser(BuildContext context) async {
-    final response =
-        await http.post(Uri.parse('http://10.0.2.2:8000/api/register'), body:
-                //  jsonEncode(<String, String>
-                {
-      'first_name': "asd", //_firstNameController.text,
-      'last_name': "ds", // _lastNameController.text,
-      'email': "hsssabeb@gmail.com", //_emailController.text,
-      'password': "0000000000", //_passwordController.text,
-      'password_confirmation': "0000000000" //_confirmPasswordController.text,
-    }
-            // ),
-            );
+    const SignUp({super.key});
 
-    if (response.statusCode == 200) {
-      print("successsssssss0");
-      // If the server returns a 201 CREATED response,
-      // navigate to the next screen or show a success message
-      Navigator.of(context).push(_createRoute());
-    } else {
-      print("Noooo");
-      // If the server did not return a 201 CREATED response,
-      // show an error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to register. Please try again.'),
-        ),
-      );
-    }
-  }
+  // Future<void> _registerUser(BuildContext context) async {
+  //   final response =
+  //       await http.post(Uri.parse('http://10.0.2.2:8000/api/register'), body:
+  //               //  jsonEncode(<String, String>
+  //               {
+  //     'first_name': "asd", //_firstNameController.text,
+  //     'last_name': "ds", // _lastNameController.text,
+  //     'email': "hsssabeb@gmail.com", //_emailController.text,
+  //     'password': "0000000000", //_passwordController.text,
+  //     'password_confirmation': "0000000000" //_confirmPasswordController.text,
+  //   }
+  //           // ),
+  //           );
+  //
+  //   if (response.statusCode == 200) {
+  //     print("successsssssss0");
+  //     // If the server returns a 201 CREATED response,
+  //     // navigate to the next screen or show a success message
+  //     Navigator.of(context).push(_createRoute());
+  //   } else {
+  //     print("Noooo");
+  //     // If the server did not return a 201 CREATED response,
+  //     // show an error message
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Failed to register. Please try again.'),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+
+    final firstNameController = TextEditingController();
+    final lastNameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final confirmPasswordController = TextEditingController();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -56,7 +58,7 @@ class Signup_User extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(16.w),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               children: <Widget>[
                 SizedBox(height: 30.h),
@@ -69,15 +71,16 @@ class Signup_User extends StatelessWidget {
                   "Sign up as a user",
                   style: TextStyle(
                       fontSize: 18.sp,
-                      color: Color(0xFFBBAB8C),
+                      color: const Color(0xFFBBAB8C),
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20.h),
                 TextFormField(
-                  controller: _firstNameController,
-                  decoration: InputDecoration(
+                  controller: firstNameController,
+                  decoration: const InputDecoration(
                     labelText: 'First Name',
                     border: OutlineInputBorder(
+                      
                       borderSide: BorderSide(
                           color: Color(0xFFBBAB8C)), // لون الحدود الافتراضي
                     ),
@@ -98,8 +101,8 @@ class Signup_User extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 TextFormField(
-                  controller: _lastNameController,
-                  decoration: InputDecoration(
+                  controller: lastNameController,
+                  decoration: const InputDecoration(
                     labelText: 'Last Name',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -122,8 +125,8 @@ class Signup_User extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
+                  controller: emailController,
+                  decoration: const InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -147,8 +150,8 @@ class Signup_User extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -171,8 +174,8 @@ class Signup_User extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 TextFormField(
-                  controller: _confirmPasswordController,
-                  decoration: InputDecoration(
+                  controller: confirmPasswordController,
+                  decoration: const InputDecoration(
                     labelText: 'Confirm Password',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -187,7 +190,7 @@ class Signup_User extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please confirm your password';
-                    } else if (value != _passwordController.text) {
+                    } else if (value != passwordController.text) {
                       return 'Passwords do not match';
                     }
                     return null;
@@ -195,11 +198,11 @@ class Signup_User extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 MyButton(
-                    color: Color(0xFFBBAB8C),
+                    color: const Color(0xFFBBAB8C),
                     tittle: "Sign up",
                     onPreessed: () {
                       print("object");
-                      _registerUser(context);
+                      // _registerUser(context);
 
                       // if (_formKey.currentState!.validate()) {
                       //   // Validation passed, perform login or further actions
@@ -225,9 +228,9 @@ class Signup_User extends StatelessWidget {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+      pageBuilder: (context, animation, secondaryAnimation) =>AppRoutes.homeScreen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = Offset(1.0, 0.0);
+        var begin = const Offset(1.0, 0.0);
         var end = Offset.zero;
         var curve = Curves.ease;
 

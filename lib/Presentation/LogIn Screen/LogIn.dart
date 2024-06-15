@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:pro_2/HomePage.dart';
-import 'package:pro_2/authentication/User/Signup_User.dart';
+import 'package:pro_2/Presentation/Home%20Screen/HomeScreen.dart';
+import 'package:pro_2/Presentation/SignUp%20Screen/Signup.dart';
+import 'package:pro_2/Util/app_routes.dart';
 
-import '../../Widgets/my_button.dart';
+import '../../Util/global Widgets/my_button.dart';
 
-class SignInScreen extends StatelessWidget {
-  static const String ScreenRoute = 'Signin_User';
+class LogInScreen extends StatelessWidget {
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+   const LogInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -32,7 +32,7 @@ class SignInScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Card(
-                  color: Color(0xFFFEF7E4),
+                  color: const Color(0xFFFEF7E4),
                   elevation: 8.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
@@ -40,17 +40,17 @@ class SignInScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Form(
-                      key: _formKey,
+                      key: formKey,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: TextFormField(
-                              controller: _usernameController,
-                              decoration: InputDecoration(
+                              controller: usernameController,
+                              decoration: const InputDecoration(
                                 labelText: 'Username',
                                 border: OutlineInputBorder(),
                               ),
@@ -62,12 +62,12 @@ class SignInScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: TextFormField(
-                              controller: _passwordController,
-                              decoration: InputDecoration(
+                              controller: passwordController,
+                              decoration: const InputDecoration(
                                 labelText: 'Password',
                                 border: OutlineInputBorder(),
                               ),
@@ -82,23 +82,23 @@ class SignInScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           MyButton(
-                              color: Color(0xFFBBAB8C),
+                              color: const Color(0xFFBBAB8C),
                               tittle: "Sign in",
                               onPreessed: () {
                                 print("object");
-                                if (_formKey.currentState!.validate()) {
+                                if (formKey.currentState!.validate()) {
                                   // Validation passed, perform login or further actions
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                       duration: Duration(seconds: 2),
                                       content: Text('Logging in...'),
                                     ),
                                   );
 
                                   // Delay for 2 seconds and then navigate to the next screen
-                                  Future.delayed(Duration(seconds: 2), () {
+                                  Future.delayed(const Duration(seconds: 2), () {
                                     Navigator.of(context).push(_createRoute());
                                   });
                                 }
@@ -110,7 +110,7 @@ class SignInScreen extends StatelessWidget {
                                 print("object");
                                 //Not now
                               },
-                              child: Text(
+                              child: const Text(
                                 "Forget the password?",
                                 style: TextStyle(color: Color(0xFFBBAB8C)),
                               )),
@@ -119,17 +119,17 @@ class SignInScreen extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "new member?",
                                 style: TextStyle(
                                     color: Color(0xFFBBAB8C),
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               TextButton(
-                                child: Text(
+                                child: const Text(
                                   "Sign up",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -139,24 +139,24 @@ class SignInScreen extends StatelessWidget {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return Container(
+                                        return SizedBox(
                                           height: height * 0.2,
                                           child: Column(
                                             children: [
                                               ListTile(
-                                                leading: Icon(Icons.person_add),
-                                                title: Text('Sign Up'),
+                                                leading: const Icon(Icons.person_add),
+                                                title: const Text('Sign Up'),
                                                 onTap: () {
                                                   Navigator.pop(context);
                                                   Navigator.of(context)
                                                       .push(_createRoute());
                                                 },
                                               ),
-                                              Divider(),
+                                              const Divider(),
                                               ListTile(
-                                                leading: Icon(
+                                                leading: const Icon(
                                                     Icons.no_accounts_outlined),
-                                                title: Text('Log in as guest'),
+                                                title: const Text('Log in as guest'),
                                                 onTap: () {
                                                   Navigator.pop(context);
                                                   Navigator.of(context)
@@ -188,7 +188,7 @@ class SignInScreen extends StatelessWidget {
 //***for animarion
 Route _createRoute_1() {
   return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+      pageBuilder: (context, animation, secondaryAnimation) => AppRoutes.homeScreen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -202,12 +202,12 @@ Route _createRoute_1() {
           child: child,
         );
       },
-      transitionDuration: Duration(seconds: 2));
+      transitionDuration: const Duration(seconds: 2));
 }
 
 Route _createRoute() {
   return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => Signup_User(),
+      pageBuilder: (context, animation, secondaryAnimation) =>AppRoutes.signUpScreen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -221,5 +221,5 @@ Route _createRoute() {
           child: child,
         );
       },
-      transitionDuration: Duration(seconds: 2));
+      transitionDuration: const Duration(seconds: 2));
 }

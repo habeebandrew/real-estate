@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:pro_2/Onboarding_screens/onboarding1.dart';
+import 'package:pro_2/Presentation/Onboarding_screens/onboarding1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static const String ScreenRoute = 'HomePage';
 
-  const HomePage({super.key});
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

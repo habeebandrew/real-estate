@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pro_2/authentication/User/Signin_User.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pro_2/Presentation/Onboarding_screens/onBoarding%20Widgets/onboadring_widgets.dart';
+import 'package:pro_2/Util/app_routes.dart';
+import 'package:pro_2/Util/cache_helper.dart';
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Onboarding extends StatefulWidget {
   static const String ScreenRoute = 'onboarding1';
+
+  const Onboarding({super.key});
 
   @override
   State<Onboarding> createState() => _MyWidgetState();
@@ -60,12 +64,13 @@ class _MyWidgetState extends State<Onboarding> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                minimumSize: Size.fromHeight(60),
+                minimumSize: const Size.fromHeight(60),
               ),
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                prefs.setBool("showHome", true);
-                Navigator.pushNamed(context, SignInScreen.ScreenRoute);
+              onPressed: ()  {
+                CacheHelper.putData(key: "showHome",value:  true).then((onValue){
+                  Navigator.pushNamed(context, NamedRoutes.logInScreen);
+                });
+
               },
               child: const Text(
                 'Get Started',
@@ -88,7 +93,7 @@ class _MyWidgetState extends State<Onboarding> {
                   SmoothPageIndicator(
                     controller: controller,
                     count: 3,
-                    effect: WormEffect(
+                    effect: const WormEffect(
                       spacing: 16,
                       dotColor: Colors.black26,
                       activeDotColor: Color(0XffFCCE5E),
@@ -116,48 +121,4 @@ class _MyWidgetState extends State<Onboarding> {
   }
 }
 
-Widget buildpage({
-  // required Color color,
-  required String urlImage,
-  required String title,
-  required String subtitle,
-}) =>
-    SafeArea(
-      child: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 40,
-              ),
-              Image.asset(
-                urlImage,
-                fit: BoxFit.contain,
-                width: double.infinity,
-              ),
-              Text(
-                title,
-                textDirection: TextDirection.rtl,
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  subtitle,
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+
