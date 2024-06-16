@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:pro_2/Data/user_model.dart';
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'package:pro_2/Util/network_helper.dart';
 
 class AuthService{
 
- static Future signUp({
+ static Future<User?> signUp({
    required firstName,
    required lastName,
    required email,
@@ -25,16 +26,16 @@ class AuthService{
       },
 
     );
-    print(response.statusCode.toString());
     if (response.statusCode == 200) {
       try {
-        var data = json.decode(response.body);
-        print(data);
+        var user = userFromJson(response.body);
+        print(user);
       } catch (e) {
         print('Failed to parse JSON: $e');
       }
     } else {
       print('Failed to load data. HTTP status: ${response.statusCode}');
     }
+    return null;
   }
 }
