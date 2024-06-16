@@ -3,7 +3,7 @@ import 'package:pro_2/Presentation/Onboarding_screens/onboarding1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String ScreenRoute = 'HomePage';
+
 
   const HomeScreen({super.key});
 

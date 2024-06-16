@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:pro_2/Util/constants.dart';
 
 class MyButton extends StatelessWidget {
-  MyButton(
-      {required this.color,
-      required this.tittle,
-      required this.onPreessed,
-      required this.minWidth,
-      required this.height});
-  final Color color;
+
+  final Color?color;
   final String tittle;
   final VoidCallback onPreessed;
   final double minWidth;
   final double height;
+
+  const MyButton({
+      super.key,
+      this.color,
+      required this.tittle,
+      required this.onPreessed,
+      required this.minWidth,
+      required this.height
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +25,7 @@ class MyButton extends StatelessWidget {
       child: Center(
         child: Material(
           elevation: 2, //ارتفاع
-          color: color,
+          color: Constants.mainColor,
           borderRadius: BorderRadius.circular(10),
           child: MaterialButton(
             onPressed: onPreessed,
@@ -27,7 +33,7 @@ class MyButton extends StatelessWidget {
             height: height,
             child: Text(
               tittle,
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: const TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
         ),

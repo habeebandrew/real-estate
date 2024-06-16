@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Onboarding_screens/onBoarding%20Widgets/onboadring_widgets.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
-
+import 'package:pro_2/Util/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Onboarding extends StatefulWidget {
-  static const String ScreenRoute = 'onboarding1';
 
   const Onboarding({super.key});
 
@@ -72,9 +71,9 @@ class _MyWidgetState extends State<Onboarding> {
                 });
 
               },
-              child: const Text(
+              child:  Text(
                 'Get Started',
-                style: TextStyle(fontSize: 28, color: Color(0xFFBBAB8C)),
+                style: TextStyle(fontSize: 28, color: Constants.mainColor),
               ),
             )
           : Container(
@@ -85,9 +84,9 @@ class _MyWidgetState extends State<Onboarding> {
                 children: [
                   TextButton(
                     onPressed: () => controller.jumpToPage(2),
-                    child: const Text(
+                    child:  Text(
                       'SKIP',
-                      style: TextStyle(color: Color(0xFFBBAB8C), fontSize: 20),
+                      style: TextStyle(color: Constants.mainColor, fontSize: 20),
                     ),
                   ),
                   SmoothPageIndicator(
@@ -109,9 +108,9 @@ class _MyWidgetState extends State<Onboarding> {
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                     ),
-                    child: const Text(
+                    child:  Text(
                       'NEXT',
-                      style: TextStyle(color: Color(0xFFBBAB8C), fontSize: 20),
+                      style: TextStyle(color: Constants.mainColor, fontSize: 20),
                     ),
                   ),
                 ],
