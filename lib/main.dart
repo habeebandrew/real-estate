@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
                   //نعرف الخطوط اللازمة
                 ),
               ),
-              initialRoute: onBoardShowen==true?NamedRoutes.logInScreen:NamedRoutes.onBoardingScreen,
+              initialRoute: onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen,
               routes: AppRoutes.routes,
             ),
           );

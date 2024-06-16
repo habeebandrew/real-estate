@@ -22,4 +22,5 @@ class CacheHelper
   {
     return sharedPreferences!.getBool(key);
   }
+  //for token now
 }

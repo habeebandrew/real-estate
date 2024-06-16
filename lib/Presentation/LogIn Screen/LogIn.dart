@@ -83,11 +83,11 @@ class LogInScreen extends StatelessWidget {
                             MyButton(
                                 tittle: "Log in",
                                 onPreessed: () {
-                                  print("object");
+
                                   if (cubit.logInFormKey.currentState!.validate()) {
                                     // Validation passed, perform login or further actions
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
+                                       SnackBar(backgroundColor:  Constants.mainColor,
                                         duration: Duration(seconds: 2),
                                         content: Text('Logging in...'),
                                       ),
@@ -104,7 +104,7 @@ class LogInScreen extends StatelessWidget {
                             ),
                             TextButton(
                                 onPressed: () {
-                                  print("object");
+
                                   //Not now
                                 },
                                 child:  Text(
