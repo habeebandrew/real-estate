@@ -1,3 +1,4 @@
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper
@@ -23,4 +24,18 @@ class CacheHelper
     return sharedPreferences!.getBool(key);
   }
   //for token now
+  static Future<bool?>putString({
+    required String key,
+    required String value,
+  })async
+  {
+    return await sharedPreferences!.setString(key, value);
+  }
+
+  static String? getString({
+    required String key,
+  })
+  {
+    return sharedPreferences!.getString(key);
+  }
 }

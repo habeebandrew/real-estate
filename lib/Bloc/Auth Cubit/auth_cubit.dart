@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Auth%20Cubit/auth_service.dart';
+import 'package:pro_2/Util/cache_helper.dart';
+import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 
 import '../../Util/app_routes.dart';
 import '../../Util/global Widgets/animation.dart';
@@ -49,21 +51,16 @@ class AuthCubit extends Cubit<AuthState>
       );
       if (data != null) {
         emit(AuthLoadedState());
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            duration: Duration(seconds: 2),
-            content: Text('Registration successful'),
-          ),
-        );
+        await CacheHelper.putString(key: 'token', value: data.accessToken);
         resetFormFields();
 
         // Delay for 2 seconds and then navigate to the next screen
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
         });
-      } else {        resetFormFields();
-
-      emit(AuthErrorState('Failed to register. Please try again later.'));
+      } else {
+        resetFormFields();
+        emit(AuthErrorState(message: 'Failed to register. Please try again later.'));
       }
     }
   }

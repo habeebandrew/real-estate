@@ -6,6 +6,7 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
 import 'package:pro_2/Util/global Widgets/my_button.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
+import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:pro_2/Util/global%20Widgets/my_form_field.dart';
 
 
@@ -86,11 +87,9 @@ class LogInScreen extends StatelessWidget {
 
                                   if (cubit.logInFormKey.currentState!.validate()) {
                                     // Validation passed, perform login or further actions
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                       SnackBar(backgroundColor:  Constants.mainColor,
-                                        duration: Duration(seconds: 2),
-                                        content: Text('Logging in...'),
-                                      ),
+                                    mySnackBar(
+                                        context: context,
+                                        title: 'Logging in...',
                                     );
 
                                     // Delay for 2 seconds and then navigate to the next screen

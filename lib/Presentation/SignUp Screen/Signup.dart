@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
+import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:pro_2/Util/global%20Widgets/my_button.dart';
 import 'package:pro_2/Util/global%20Widgets/my_form_field.dart';
 
@@ -19,39 +20,20 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) { if (state is AuthErrorState) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Constants.mainColor,
-            duration: Duration(seconds: 2),
-            content: Text('Registration failed: ${state.message}'),
-          ),
-        );
+      listener: (context, state) {
+        if (state is AuthErrorState) {
+          mySnackBar(
+            context: context,
+            title: 'Registration failed: ${state.message}',
+          );
+          if(state is AuthLoadedState){
+            mySnackBar(
+              context: context,
+              title: 'Registration successful',
+            );
+          }
       }
-        // if (state is AuthSuccessState) {
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     SnackBar(backgroundColor: Constants.mainColor,
-        //       duration: Duration(seconds: 2),
-        //       content: Text('Registration successful: ${state.response}'),
-        //     ),
-        //   );
-        //
-        //   // Delay for 2 seconds and then navigate to the next screen
-        //   Future.delayed(const Duration(seconds: 2), () {
-        //     Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-        //   });
-        // }
-        // if (state is AuthErrorState) {
-        //   AuthCubit.get(context).resetFormFields();
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //     SnackBar(backgroundColor:Constants.mainColor,
-        //       duration: Duration(seconds: 2),
-        //       content: Text('Registration failed: ${state.message}',),
-        //     ),
-        //   );
-        //
-        //
-        // }
+
       },
       builder: (context, state) {
         AuthCubit cubit = AuthCubit.get(context);

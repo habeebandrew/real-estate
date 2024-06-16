@@ -6,7 +6,7 @@ import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
-import 'package:pro_2/Util/network_helper.dart';
+
 
 
 
@@ -16,11 +16,13 @@ void main() async {
   await CacheHelper.init();
 
   bool? onBoardShowen = CacheHelper.getData(key: "showHome") ?? false;
+  String? token = CacheHelper.getString(key: "token");
   debugPrint(onBoardShowen.toString());
+  debugPrint(token.toString());
 
   Bloc.observer = MyBlocObserver();
 
-  runApp(MyApp(onBoardShowen: onBoardShowen));
+  runApp(MyApp(onBoardShowen: onBoardShowen,token: token,));
 }
 
 class MyApp extends StatelessWidget {
@@ -60,7 +62,8 @@ class MyApp extends StatelessWidget {
                   //نعرف الخطوط اللازمة
                 ),
               ),
-              initialRoute: onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen,
+              initialRoute:onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen,
+              //token!=null?onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen:NamedRoutes.logInScreen,
               routes: AppRoutes.routes,
             ),
           );
