@@ -7,6 +7,7 @@ import 'package:pro_2/Presentation/SignUp%20Screen/Signup.dart';
 import 'package:pro_2/test/Test1ForJson.dart';
 
 
+import '../Presentation/SplashScreen/splash_screen.dart';
 import '../test/Test1ForJson.dart';
 
 class NamedRoutes
@@ -15,7 +16,9 @@ class NamedRoutes
   static const onBoardingScreen='onboarding1';
   static const signUpScreen='Signup';
   static const logInScreen='Login';
-  // static const test1_json='doneTaskScreen';
+  static const splashscreen='splash_screen';
+
+// static const test1_json='doneTaskScreen';
 
 
 }
@@ -26,6 +29,8 @@ class AppRoutes
   static const  onBoardingScreen=Onboarding();
   static const  signUpScreen= SignUp();
   static const  logInScreen=LogInScreen();
+  static const  Splashscreen=splashscreen();
+
   // static const  test1_json=theList();
 
 
@@ -35,6 +40,9 @@ class AppRoutes
     NamedRoutes.onBoardingScreen:(context)=>AppRoutes.onBoardingScreen,
     NamedRoutes.signUpScreen:(context)=>AppRoutes.signUpScreen,
     NamedRoutes.logInScreen:(context)=>AppRoutes.logInScreen,
+    NamedRoutes.logInScreen:(context)=>AppRoutes.logInScreen,
+    NamedRoutes.splashscreen:(context)=>AppRoutes.Splashscreen,
+
     // NamedRoutes.test1_json:(context)=>AppRoutes.test1_json,
 
   };

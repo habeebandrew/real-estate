@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                   //نعرف الخطوط اللازمة
                 ),
               ),
-              initialRoute:onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen,
+              initialRoute:onBoardShowen==true?NamedRoutes.splashscreen:NamedRoutes.onBoardingScreen,
               //token!=null?onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen:NamedRoutes.logInScreen,
               routes: AppRoutes.routes,
             ),

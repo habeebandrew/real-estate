@@ -8,8 +8,6 @@ import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:pro_2/Util/global%20Widgets/my_button.dart';
 import 'package:pro_2/Util/global%20Widgets/my_form_field.dart';
 
-import '../../Util/app_routes.dart';
-import '../../Util/global Widgets/animation.dart';
 
 class SignUp extends StatelessWidget {
 
