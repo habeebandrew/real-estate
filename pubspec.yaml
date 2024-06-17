@@ -41,6 +41,12 @@ dependencies:
   http: ^1.2.1
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
+  flutter_launcher_icons: ^0.13.1
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/General/App_Icon.png"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
