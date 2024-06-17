@@ -27,10 +27,11 @@ class SignUp extends StatelessWidget {
             title: 'Registration failed: ${state.message}',
           );
           if(state is AuthLoadedState){
-            mySnackBar(
-              context: context,
-              title: 'Registration successful',
-            );
+            //ماعم تشتغل هون فرجعت عملتها بال Cubit
+            // mySnackBar(
+            //   context: context,
+            //   title: 'Registration successful',
+            // );
           }
       }
 
@@ -117,7 +118,7 @@ class SignUp extends StatelessWidget {
                     SizedBox(height: 20.h),
                     MyButton(
                       tittle: "Sign up",
-                      onPreessed: () {
+                      onPreessed: () {print("adasd");
                         cubit.SignUp(context);
                       },
                       minWidth: Dimensions.widthPercentage(context, 50),

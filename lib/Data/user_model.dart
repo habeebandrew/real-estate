@@ -28,8 +28,7 @@ class User {
 
 class UserClass {
   int roleId;
-  String firstName;
-  String lastName;
+  String username;
   String email;
   DateTime updatedAt;
   DateTime createdAt;
@@ -37,8 +36,7 @@ class UserClass {
 
   UserClass({
     required this.roleId,
-    required this.firstName,
-    required this.lastName,
+    required this.username,
     required this.email,
     required this.updatedAt,
     required this.createdAt,
@@ -47,8 +45,7 @@ class UserClass {
 
   factory UserClass.fromJson(Map<String, dynamic> json) => UserClass(
     roleId: json["role_id"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
+    username: json["user_name"],
     email: json["email"],
     updatedAt: DateTime.parse(json["updated_at"]),
     createdAt: DateTime.parse(json["created_at"]),
@@ -57,8 +54,7 @@ class UserClass {
 
   Map<String, dynamic> toJson() => {
     "role_id": roleId,
-    "first_name": firstName,
-    "last_name": lastName,
+    "user_name": username,
     "email": email,
     "updated_at": updatedAt.toIso8601String(),
     "created_at": createdAt.toIso8601String(),

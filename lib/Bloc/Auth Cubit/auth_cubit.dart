@@ -49,12 +49,16 @@ class AuthCubit extends Cubit<AuthState>
       if (data != null) {
         emit(AuthLoadedState());
         await CacheHelper.putString(key: 'token', value: data.accessToken);
-        resetFormFields();
-
+        mySnackBar(
+          context: context,
+          title: 'Registration successful',
+        );
         // Delay for 2 seconds and then navigate to the next screen
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
         });
+        resetFormFields();
+
       } else {
         resetFormFields();
         emit(AuthErrorState(message: 'Failed to register. Please try again later.'));
