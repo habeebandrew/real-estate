@@ -3,8 +3,7 @@ import 'package:pro_2/Util/api_endpoints.dart';
 import 'package:pro_2/Util/network_helper.dart';
 class AuthService {
   static Future<User?> signUp({
-    required String firstName,
-    required String lastName,
+    required String user_name,
     required String email,
     required String password,
     required String passwordConfirm,
@@ -15,8 +14,7 @@ class AuthService {
         'Content-Type': 'application/json'
       },
       body: {
-        "first_name": firstName,
-        "last_name": lastName,
+        "user_name": user_name,
         "email": email,
         "passwoord": password,
         "passwoord_confirmation": passwordConfirm

@@ -23,15 +23,13 @@ class AuthCubit extends Cubit<AuthState>
   final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
   //SignUp
   final formKey = GlobalKey<FormState>();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
+  final user_nameController = TextEditingController();
   final emailController = TextEditingController();
   final signUPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   //لافراغ الحقول
   void resetFormFields() {
-    firstNameController.clear();
-    lastNameController.clear();
+    user_nameController.clear();
     emailController.clear();
     signUPasswordController.clear();
     confirmPasswordController.clear();
@@ -43,8 +41,7 @@ class AuthCubit extends Cubit<AuthState>
     if (formKey.currentState!.validate()) {
       emit(AuthLoadingState());
       var data = await AuthService.signUp(
-        firstName: firstNameController.text,
-        lastName: lastNameController.text,
+        user_name: user_nameController.text,
         email: emailController.text,
         password: signUPasswordController.text,
         passwordConfirm: confirmPasswordController.text,

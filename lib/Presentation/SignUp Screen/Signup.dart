@@ -60,28 +60,14 @@ class SignUp extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     MyFormField(
-                      controller: cubit.firstNameController,
-                      labelText: 'First Name',
+                      controller: cubit.user_nameController,
+                      labelText: 'User Name',
                       maxLength: 55,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your first name';
+                          return 'Please enter your User name';
                         } else if (value.length > 55) {
-                          return 'First name cannot exceed 55 characters';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10.h),
-                    MyFormField(
-                      controller: cubit.lastNameController,
-                      labelText: 'Last Name',
-                      maxLength: 55,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your last name';
-                        } else if (value.length > 55) {
-                          return 'Last name cannot exceed 55 characters';
+                          return 'User name cannot exceed 55 characters';
                         }
                         return null;
                       },
