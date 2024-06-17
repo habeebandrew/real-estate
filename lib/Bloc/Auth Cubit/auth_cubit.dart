@@ -18,7 +18,7 @@ class AuthCubit extends Cubit<AuthState>
   static AuthCubit get(context)=>BlocProvider.of(context);
 
    //Log In
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController logInEmailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
   //SignUp
@@ -27,17 +27,46 @@ class AuthCubit extends Cubit<AuthState>
   final emailController = TextEditingController();
   final signUPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  //لافراغ الحقول
+
   void resetFormFields() {
     user_nameController.clear();
     emailController.clear();
     signUPasswordController.clear();
     confirmPasswordController.clear();
   }
+  void logIn(BuildContext context)async
+  {
+    if (logInFormKey.currentState!.validate()){
+      emit(AuthLoadingState());
+      var data = await AuthService.login(
+          email: logInEmailController.text,
+          password: passwordController.text,
+      );
+      if(data != null){
+        emit(AuthLoadedState());
+        debugPrint(data.accessToken);
+        await CacheHelper.putString(key: 'token', value: data.accessToken);
+        mySnackBar(
+          context: context,
+          title: 'login successful',
+        );
+        logInEmailController.clear();
+        passwordController.clear();
+        // Delay for 2 seconds and then navigate to the next screen
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
+        });
 
-  void LogIn()async{}
+      } else {
+        logInEmailController.clear();
+        passwordController.clear();
+        emit(AuthErrorState(message: 'Failed to login. Please try again later.'));
+      }
+    }
+  }
 
-  void SignUp(BuildContext context) async {
+
+  void signUp(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       emit(AuthLoadingState());
       var data = await AuthService.signUp(

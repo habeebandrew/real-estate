@@ -26,12 +26,12 @@ class MyFormField extends StatelessWidget {
         keyboardType:type ,
         decoration: InputDecoration(
           labelText: labelText,
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderSide: BorderSide(
                 color: Constants.mainColor
             ),
           ),
-          focusedBorder:  OutlineInputBorder(
+          focusedBorder:  const OutlineInputBorder(
             borderSide: BorderSide(
                 color:  Constants.mainColor
             ),

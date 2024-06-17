@@ -8,8 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
 
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -57,12 +55,26 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(
                     seedColor: Constants.mainColor
                 ),
+                progressIndicatorTheme: const ProgressIndicatorThemeData(
+                  color: Constants.mainColor,
+                ),
+                floatingActionButtonTheme: const FloatingActionButtonThemeData(
+                  elevation: 0.0,
+                  backgroundColor: Constants.mainColor,
+                  foregroundColor: Constants.mainColor4,
+                  shape: CircleBorder(
+                  ),
+                ),
                 useMaterial3: true,
                 textTheme: const TextTheme(
                   //نعرف الخطوط اللازمة
                 ),
               ),
-              initialRoute:onBoardShowen==true?NamedRoutes.splashscreen:NamedRoutes.onBoardingScreen,
+              initialRoute:token!=null
+                  ?NamedRoutes.splashscreen
+                  :onBoardShowen==true
+                  ?NamedRoutes.logInScreen
+                  :NamedRoutes.onBoardingScreen,
               //token!=null?onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen:NamedRoutes.logInScreen,
               routes: AppRoutes.routes,
             ),

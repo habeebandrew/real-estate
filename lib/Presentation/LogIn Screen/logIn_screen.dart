@@ -18,7 +18,15 @@ class LogInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return BlocConsumer<AuthCubit, AuthState>(
-    listener: (context, state) {},
+    listener: (context, state) {
+      if (state is AuthErrorState) {
+        mySnackBar(
+          context: context,
+          color: Colors.red,
+          title: 'LogIn failed: ${state.message}',
+        );
+      }
+    },
     builder: (context, state) {
       AuthCubit cubit=AuthCubit.get(context);
       return Scaffold(
@@ -53,11 +61,11 @@ class LogInScreen extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: MyFormField(
-                                controller: cubit.usernameController,
-                                labelText: 'Username',
+                                controller: cubit.logInEmailController,
+                                labelText: 'email',
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter your username';
+                                    return 'Please enter your email';
                                   }
                                   return null;
                                 },
@@ -81,22 +89,14 @@ class LogInScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20.0),
-                            MyButton(
+                            state is AuthLoadingState?
+                            const Center(
+                                child: CircularProgressIndicator()
+                            )
+                                :MyButton(
                                 tittle: "Log in",
                                 onPreessed: () {
-
-                                  if (cubit.logInFormKey.currentState!.validate()) {
-                                    // Validation passed, perform login or further actions
-                                    mySnackBar(
-                                        context: context,
-                                        title: 'Logging in...',
-                                    );
-
-                                    // Delay for 2 seconds and then navigate to the next screen
-                                    Future.delayed(const Duration(seconds: 2), () {
-                                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.signUpScreen));
-                                    });
-                                  }
+                                  cubit.logIn(context);
                                 },
                                 minWidth: Dimensions.widthPercentage(context, 50),
                                 height:Dimensions.heightPercentage(context, 7),
@@ -106,7 +106,7 @@ class LogInScreen extends StatelessWidget {
 
                                   //Not now
                                 },
-                                child:  Text(
+                                child:  const Text(
                                   "Forget the password?",
                                   style: TextStyle(color: Constants.mainColor),
                                 )),
@@ -115,7 +115,7 @@ class LogInScreen extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                 Text(
+                                 const Text(
                                   "new member?",
                                   style: TextStyle(
                                       color: Constants.mainColor,

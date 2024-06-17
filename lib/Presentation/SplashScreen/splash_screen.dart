@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:pro_2/Presentation/Home%20Screen/HomeScreen.dart';
+import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
 import 'package:pro_2/Util/constants.dart';
 class splashscreen extends StatefulWidget {
   const splashscreen({super.key});
@@ -27,7 +27,7 @@ class _splashscreenState extends State<splashscreen> with SingleTickerProviderSt
   }
 
   _navigateToHome() async {
-    await Future.delayed(Duration(seconds: 5), () {});
+    await Future.delayed(const Duration(seconds: 5), () {});
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => HomeScreen()),

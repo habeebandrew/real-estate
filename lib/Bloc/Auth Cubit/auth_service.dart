@@ -37,4 +37,37 @@ class AuthService {
       return null;
     }
   }
+
+  static Future<User?> login({
+    required String email,
+    required String password,
+  }) async {
+    var response = await NetworkHelper.post(
+      ApiAndEndpoints.logIn,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {
+        "email": email,
+        "password": password,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        var user = userFromJson(response.body);
+        return user;
+
+      } catch (e) {
+        print('Failed to parse JSON: $e');
+        return null;
+      }
+
+    }
+
+    else {
+      print('Failed to register. HTTP status: ${response.statusCode}');
+      return null;
+    }
+  }
 }

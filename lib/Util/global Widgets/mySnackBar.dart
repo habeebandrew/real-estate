@@ -4,12 +4,13 @@ import 'package:pro_2/Util/constants.dart';
 void mySnackBar({
   required String title,
   required BuildContext context,
+   Color color=Constants.mainColor,
 }) => ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
     content: Text(
       title,
     ),
-    backgroundColor: Constants.mainColor,
+    backgroundColor:color,
     duration: const Duration(seconds: 2),
   ))
       .closed

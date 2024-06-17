@@ -11,7 +11,6 @@ import 'package:pro_2/Util/global%20Widgets/my_form_field.dart';
 
 class SignUp extends StatelessWidget {
 
-
     const SignUp({super.key});
 
   @override
@@ -22,15 +21,10 @@ class SignUp extends StatelessWidget {
         if (state is AuthErrorState) {
           mySnackBar(
             context: context,
+            color: Colors.red,
             title: 'Registration failed: ${state.message}',
           );
-          if(state is AuthLoadedState){
-            //ماعم تشتغل هون فرجعت عملتها بال Cubit
-            // mySnackBar(
-            //   context: context,
-            //   title: 'Registration successful',
-            // );
-          }
+
       }
 
       },
@@ -114,10 +108,14 @@ class SignUp extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20.h),
-                    MyButton(
+                    state is AuthLoadingState?
+                    const Center(
+                        child: CircularProgressIndicator()
+                    )
+                        : MyButton(
                       tittle: "Sign up",
-                      onPreessed: () {print("adasd");
-                        cubit.SignUp(context);
+                      onPreessed: () {
+                        cubit.signUp(context);
                       },
                       minWidth: Dimensions.widthPercentage(context, 50),
                       height: Dimensions.heightPercentage(context, 7),
