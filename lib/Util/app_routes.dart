@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Ad%20Propert%20Screen/ad_property_screen.dart';
+import 'package:pro_2/Presentation/Drawer%20Screen/drawer_screen.dart';
 import 'package:pro_2/Presentation/Favourite%20Screen/favourite_screen.dart';
 import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
 import 'package:pro_2/Presentation/LogIn%20Screen/LogIn_screen.dart';
@@ -25,6 +26,7 @@ class NamedRoutes
   static const adPropertyScreen='adPropertyScreen';
   static const propertiesScreen='propertiesScreen';
   static const mainScreen='mainScreen';
+  static const drawerScreen='drawerScreen';
 
 // static const test1_json='doneTaskScreen';
 
@@ -44,6 +46,7 @@ class AppRoutes
   static const adPropertyScreen=AdPropertyScreen();
   static const propertiesScreen=PropertiesScreen();
   static const mainScreen=MainScreen();
+  static const drawerScreen=DrawerScreen();
 
   // static const  test1_json=theList();
 
@@ -60,6 +63,7 @@ class AppRoutes
     NamedRoutes.adPropertyScreen:(context)=>AppRoutes.adPropertyScreen,
     NamedRoutes.propertiesScreen:(context)=>AppRoutes.propertiesScreen,
     NamedRoutes.mainScreen:(context)=>AppRoutes.mainScreen,
+    NamedRoutes.drawerScreen:(context)=>AppRoutes.drawerScreen,
 
     // NamedRoutes.test1_json:(context)=>AppRoutes.test1_json,
 

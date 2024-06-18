@@ -44,7 +44,7 @@ class AuthCubit extends Cubit<AuthState>
       );
       if(data != null){
         emit(AuthLoadedState());
-        debugPrint(data.accessToken);
+        await CacheHelper.putString(key: 'name', value: data.user.username);
         await CacheHelper.putString(key: 'token', value: data.accessToken);
         mySnackBar(
           context: context,
@@ -77,6 +77,7 @@ class AuthCubit extends Cubit<AuthState>
       );
       if (data != null) {
         emit(AuthLoadedState());
+        await CacheHelper.putString(key: 'name', value: data.user.username);
         await CacheHelper.putString(key: 'token', value: data.accessToken);
         mySnackBar(
           context: context,

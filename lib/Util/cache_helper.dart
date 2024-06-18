@@ -38,4 +38,11 @@ class CacheHelper
   {
     return sharedPreferences!.getString(key);
   }
+
+  static Future<bool> deleteString({
+    required String key,
+  })
+  {
+    return sharedPreferences!.remove(key);
+  }
 }

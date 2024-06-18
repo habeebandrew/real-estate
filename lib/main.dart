@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AuthCubit(),
         ),
-
       ],
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {},
@@ -62,8 +61,7 @@ class MyApp extends StatelessWidget {
                   elevation: 0.0,
                   backgroundColor: Constants.mainColor,
                   foregroundColor: Constants.mainColor4,
-                  shape: CircleBorder(
-                  ),
+                  shape: CircleBorder(),
                 ),
                 useMaterial3: true,
                 textTheme: const TextTheme(
@@ -75,7 +73,6 @@ class MyApp extends StatelessWidget {
                   :onBoardShowen==true
                   ?NamedRoutes.logInScreen
                   :NamedRoutes.onBoardingScreen,
-              //token!=null?onBoardShowen==true?NamedRoutes.signUpScreen:NamedRoutes.onBoardingScreen:NamedRoutes.logInScreen,
               routes: AppRoutes.routes,
             ),
           );

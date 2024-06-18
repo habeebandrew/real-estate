@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pro_2/Presentation/Drawer%20Screen/Drawer%20Widgets/drawer_widgets.dart';
 import 'package:pro_2/Util/dimensions.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -25,7 +26,16 @@ class DrawerScreen extends StatelessWidget {
                indent: Dimensions.widthPercentage(context, 3),
                endIndent: Dimensions.widthPercentage(context, 2),
               ),
-
+              myDrawerButton(
+                  label: 'adsdsada',
+                  icon: Icons.add,
+                  onPress: (){}
+              ),
+              myDrawerButton(
+                  label: 'Logout',
+                  icon: Icons.power_settings_new,
+                  onPress: (){}
+              ),
             ],
           ),
         ),

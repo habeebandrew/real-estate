@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Presentation/Home%20Screen/Home%20Widgets/home_widgets.dart';
-import 'package:pro_2/Presentation/Home%20Screen/drawer_screen.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 
@@ -22,6 +21,7 @@ class _HomePageState extends State<HomeScreen> {
     AppRoutes.propertiesScreen,
     AppRoutes.mainScreen,
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,30 +30,34 @@ class _HomePageState extends State<HomeScreen> {
             'هون لازم اسم التطبيق وجنبو اللوغو '
         ),
       ),
-      endDrawer: const DrawerScreen(),
+      endDrawer: AppRoutes.drawerScreen,
       body: Screens[currentIndex],
       floatingActionButton: FloatingActionButton(
-        child:Icon(
-          color: currentIndex==2?Constants.mainColor4:Colors.black45,
-          Icons.add,
-          size: 40.0.sp,
-        ),
-        onPressed: (){},
+            child:Icon(
+              Icons.add,
+              size: 40.0.sp,
+            ),
+            onPressed: (){},
       ),
+
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
+
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         backgroundColor: Constants.mainColor,
         selectedItemColor: Constants.mainColor4,
-        unselectedItemColor: Colors.black45,
+        unselectedItemColor:  Colors.black45,
+
         onTap: (value){
            setState(() {
              Screens[currentIndex=value];
 
            });
         },
-        items:  [
+        items:
+        [
           myBottomNavBarItem(
               icon: Icons.announcement,
               label: 'Posts'
@@ -64,9 +68,12 @@ class _HomePageState extends State<HomeScreen> {
               label: 'Favourite'
           ),
           myBottomNavBarItem(
-              icon: Icons.cabin,
-              label: 'Ad'
+
+              icon: Icons.add,
+
+              label: 'add'
           ),
+
           myBottomNavBarItem(
               icon: Icons.holiday_village,
               label: 'Properties'
