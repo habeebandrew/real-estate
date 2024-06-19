@@ -95,4 +95,13 @@ class AuthCubit extends Cubit<AuthState>
       }
     }
   }
+
+  void logOut(BuildContext context) async {
+    await CacheHelper.deleteString(key: 'name');
+    await CacheHelper.deleteString(key: 'token');
+    emit(AuthInitialState());
+    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+  }
 }
+
+

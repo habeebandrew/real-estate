@@ -70,4 +70,21 @@ class AuthService {
       return null;
     }
   }
+
+  static Future<bool> logout(String token) async {
+    var response = await NetworkHelper.post(
+      ApiAndEndpoints.logout,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      print('Failed to log out. HTTP status: ${response.statusCode}');
+      return false;
+    }
+  }
 }

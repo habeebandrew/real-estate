@@ -84,6 +84,7 @@ flutter:
     - assets/images/Onboarding/
     - assets/images/authentication/
     - assets/images/General/
+    - assets/images/Home/
 
     - assets/json test/
 
