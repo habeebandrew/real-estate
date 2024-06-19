@@ -9,6 +9,8 @@ final class AuthLoadingState extends AuthState {}
 
 final class AuthLoadedState extends AuthState {}
 
+final class NavChangeState extends AuthState {}
+
 
 class AuthErrorState extends AuthState {
   final String message;

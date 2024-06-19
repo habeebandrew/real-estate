@@ -32,53 +32,39 @@ class MyApp extends StatelessWidget {
     this.token,
     required this.onBoardShowen,
   });
-
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AuthCubit(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Real Estate',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Constants.mainColor
+          ),
+          progressIndicatorTheme: const ProgressIndicatorThemeData(
+            color: Constants.mainColor,
+          ),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            elevation: 0.0,
+            backgroundColor: Constants.mainColor,
+            foregroundColor: Constants.mainColor4,
+            shape: CircleBorder(),
+          ),
+          useMaterial3: true,
+          textTheme: const TextTheme(
+            //نعرف الخطوط اللازمة
+          ),
         ),
-      ],
-      child: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return ScreenUtilInit(
-            designSize: const Size(375, 812),
-            minTextAdapt: true,
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Real Estate',
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(
-                    seedColor: Constants.mainColor
-                ),
-                progressIndicatorTheme: const ProgressIndicatorThemeData(
-                  color: Constants.mainColor,
-                ),
-                floatingActionButtonTheme: const FloatingActionButtonThemeData(
-                  elevation: 0.0,
-                  backgroundColor: Constants.mainColor,
-                  foregroundColor: Constants.mainColor4,
-                  shape: CircleBorder(),
-                ),
-                useMaterial3: true,
-                textTheme: const TextTheme(
-                  //نعرف الخطوط اللازمة
-                ),
-              ),
-               initialRoute:
-               // NamedRoutes.homeScreen,
-              token!=null
-                  ?NamedRoutes.splashscreen
-                  :onBoardShowen==true
-                  ?NamedRoutes.logInScreen
-                  :NamedRoutes.onBoardingScreen,
-              routes: AppRoutes.routes,
-            ),
-          );
-        },
+         initialRoute: NamedRoutes.homeScreen,
+        // token!=null
+        //     ?NamedRoutes.splashscreen
+        //     :onBoardShowen==true
+        //     ?NamedRoutes.logInScreen
+        //     :NamedRoutes.onBoardingScreen,
+        routes: AppRoutes.routes,
       ),
     );
   }

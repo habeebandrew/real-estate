@@ -17,7 +17,9 @@ class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocConsumer<AuthCubit, AuthState>(
+  return BlocProvider(
+  create: (context) => AuthCubit(),
+  child: BlocConsumer<AuthCubit, AuthState>(
     listener: (context, state) {
       if (state is AuthErrorState) {
         mySnackBar(
@@ -180,7 +182,8 @@ class LogInScreen extends StatelessWidget {
         ),
       );
     },
-   );
+   ),
+);
   }
 }
 
