@@ -56,106 +56,203 @@ class _DrawerScreenState extends State<DrawerScreen> {
                indent: Dimensions.widthPercentage(context, 3),
                endIndent: Dimensions.widthPercentage(context, 2),
               ),
-              myDrawerButton(
-                  label: 'Account Information',
-                  icon: Icons.person,
-                  onPress: (){}
-              ),
-// هون الشرط منشان اذا كان فايت ك زائر ****
-              storedValue != null
-                  ? myDrawerButton(
-                label: 'Logout',
-                icon: Icons.logout,
-                onPress: () {
-                  BlocProvider.of<AuthCubit>(context).logOut(context);
-                },
-              ):
-             //SizedBox(),
-              myDrawerButton(
-                label: 'Login',
-                icon: Icons.login,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'My real estate',
-
-                icon: Icons.home,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'My posts',
-
-                icon: Icons.article,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'My favorite',
-
-                icon: Icons.favorite,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'Invite friends',
-
-                icon: Icons.mail,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'Help Center',
-
-                icon: Icons.help_outline,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'Connect with us',
-
-                icon: Icons.phone,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'privacy policy',
-
-                icon: Icons.privacy_tip,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
-              myDrawerButton(
-                label: 'language',
-
-                icon: Icons.language,
-                onPress: () {
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-
-                },
-              ),
+              storedValue == null
+                  ?_build_for_guest():_build_for_user()
+              //هون كمان بس يزبط الباك بضيف اذا احتمال اذا كان سمسار
             ],
           ),
         ),
       ),
     );
+  }
+  //هون حسب مين مسجل دحول بيطلعو الخيارات
+  Widget _build_for_guest() {
+
+        return Column(
+          children: [
+            myDrawerButton(
+                label: 'language',
+                icon: Icons.language,
+                onPress: (){}
+            ),
+            myDrawerButton(
+                label: 'Invite friends',
+                icon: Icons.mail,
+                onPress: (){}
+            ),
+            myDrawerButton(
+                label: 'Help Center',
+                icon: Icons.help_outline,
+                onPress: (){}
+            ),
+            myDrawerButton(
+                label: 'Connect with us',
+                icon: Icons.phone,
+                onPress: (){}
+            ),
+            myDrawerButton(
+                label: 'privacy policy',
+                icon: Icons.person,
+                onPress: (){}
+            ),
+
+            myDrawerButton(
+              label: 'Login',
+              icon: Icons.login,
+              onPress: () {
+                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+              },
+            ),
+          ],
+        );
+
+  }
+  Widget _build_for_user() {
+    return
+         Column(
+          children: [
+            myDrawerButton(
+                label: 'Account Information',
+                icon: Icons.person,
+                onPress: (){}
+            ),
+            myDrawerButton(
+              label: 'language',
+
+              icon: Icons.language,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'My posts',
+
+              icon: Icons.article,
+              onPress: () {
+                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.postsScreen));
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Invite friends',
+
+              icon: Icons.mail,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Help Center',
+
+              icon: Icons.help_outline,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Connect with us',
+
+              icon: Icons.phone,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'privacy policy',
+
+              icon: Icons.privacy_tip,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Logout',
+              icon: Icons.logout,
+              onPress: () {
+                BlocProvider.of<AuthCubit>(context).logOut(context);
+              },
+            ),
+          ],
+        );
+
+  }
+  Widget _build_for_Broker() {
+    return
+         Column(
+          children: [
+            myDrawerButton(
+                label: 'Account Information',
+                icon: Icons.person,
+                onPress: (){}
+            ),
+            myDrawerButton(
+              label: 'language',
+
+              icon: Icons.language,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'My real estate',
+
+              icon: Icons.home,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'My posts',
+
+              icon: Icons.article,
+              onPress: () {
+                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.postsScreen));
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Invite friends',
+
+              icon: Icons.mail,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Help Center',
+
+              icon: Icons.help_outline,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Connect with us',
+
+              icon: Icons.phone,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'privacy policy',
+
+              icon: Icons.privacy_tip,
+              onPress: () {
+
+              },
+            ),
+            myDrawerButton(
+              label: 'Logout',
+              icon: Icons.logout,
+              onPress: () {
+                BlocProvider.of<AuthCubit>(context).logOut(context);
+              },
+            ),
+          ],
+        );
+
   }
 }
 
