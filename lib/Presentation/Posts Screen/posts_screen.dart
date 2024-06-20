@@ -16,12 +16,12 @@ class PostsScreen extends StatelessWidget {
 
       },
       builder: (context, state) {
-        return Scaffold(backgroundColor: Colors.white,
+        return Scaffold(backgroundColor: Colors.white10,
 
           body: ListView(
             children: [
               PostCard(
-                budget: '2 مليون ل.س',
+                budget: '2  مليون ل.س',
                 description: 'شقة او مكتب يصلح للسكن ولو غرفة ومنتفعات',
                 timeAgo: 'منذ 14 ساعة',
               ),

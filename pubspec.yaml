@@ -87,6 +87,7 @@ flutter:
     - assets/images/General/
     - assets/images/Home/
     - assets/images/Drawer/
+    - assets/images/Posts/
 
     - assets/json test/
 

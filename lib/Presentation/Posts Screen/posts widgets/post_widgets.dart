@@ -5,7 +5,7 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // class CallButton extends StatelessWidget {
-//   final String phoneNumber = "1234567890";  // ضع رقم الهاتف هنا
+//   final String phoneNumber = "1234567890";
 //
 //   @override
 //   Widget build(BuildContext context) {
@@ -40,9 +40,13 @@ class PostCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {final String phoneNumber = "1234567890";  // ضع رقم الهاتف هنا
-    return Card(color: Constants.mainColor4,
+  Widget build(BuildContext context) {
+    final String phoneNumber = "0992093648";
+    return Card(
+      color: Colors.white,
       margin: EdgeInsets.all(15.0),
+      shadowColor: Constants.mainColor,
+      elevation: 5.0, // ارتفاع الظلة
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -50,12 +54,12 @@ class PostCard extends StatelessWidget {
           children: [
             Text(
               'مطلوب للإيجار عقار في دمشق',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),textDirection: TextDirection.ltr,
             ),
             SizedBox(height: 5.0),
             Text(
               'الميزانية: $budget',
-              style: TextStyle(fontSize: 16, color: Colors.blue[900]),
+              style: TextStyle(fontSize: 16, color: Colors.blue[900]),textDirection: TextDirection.ltr,
             ),
             SizedBox(height: 10.0),
             Text(
@@ -63,56 +67,32 @@ class PostCard extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 10.0),
-        GestureDetector(
-          onTap: () async {
-            final url = 'tel:$phoneNumber';
-            if (await canLaunch(url)) {
-              await launch(url);
-            } else {
-              throw 'Could not launch $url';
-            }
-          },
-          child: Row(
-            children: [
-              Icon(Icons.phone, color: Constants.mainColor),
-              SizedBox(width: 5.0),
-              Text('للتواصل', style: TextStyle(fontSize: 16)),
-            ],
-          ),
-        ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.phone, color: Constants.mainColor),
-                    SizedBox(width: 5.0),
-                    Text('للتواصل', style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-                Text(timeAgo, style: TextStyle(fontSize: 16, color: Colors.grey)),
-              ],
+            GestureDetector(
+              onTap: () async {
+                final url = 'tel:$phoneNumber';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.phone, color: Constants.mainColor),
+
+
+                  SizedBox(width: 5.0),
+                  Text('للتواصل', style: TextStyle(fontSize: 16),textDirection: TextDirection.ltr,),
+                ],
+              ),
             ),
             SizedBox(height: 10.0),
             Divider(),
-            SizedBox(height: 10.0),
-            // TextField(
-            //   decoration: InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     labelText: 'اكتب تعليقك هنا...',
-            //   ),
-            // ),
-            // SizedBox(height: 10.0),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: ElevatedButton(
-            //     onPressed: () {},
-            //     child: Text('إرسال'),
-            //   ),
-            // ),
+            // SizedBox(height:/ 5.0),
           ],
         ),
       ),
     );
+
   }
 }
