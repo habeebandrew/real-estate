@@ -78,7 +78,79 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
 
                 },
-              )
+              ),
+              myDrawerButton(
+                label: 'My real estate',
+
+                icon: Icons.home,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'My posts',
+
+                icon: Icons.article,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'My favorite',
+
+                icon: Icons.favorite,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'Invite friends',
+
+                icon: Icons.mail,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'Help Center',
+
+                icon: Icons.help_outline,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'Connect with us',
+
+                icon: Icons.phone,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'privacy policy',
+
+                icon: Icons.privacy_tip,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
+              myDrawerButton(
+                label: 'language',
+
+                icon: Icons.language,
+                onPress: () {
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+
+                },
+              ),
             ],
           ),
         ),
@@ -86,3 +158,4 @@ class _DrawerScreenState extends State<DrawerScreen> {
     );
   }
 }
+

@@ -43,8 +43,8 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
-  shimmer_animation: ^2.2.1
-
+  shimmer_animation:
+  url_launcher:
 flutter_native_splash:
   color: "#FFFFFF"
   image: "assets/images/General/App_Icon.png"
@@ -86,6 +86,7 @@ flutter:
     - assets/images/authentication/
     - assets/images/General/
     - assets/images/Home/
+    - assets/images/Drawer/
 
     - assets/json test/
 

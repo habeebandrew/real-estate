@@ -2,7 +2,32 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Util/constants.dart';
 
+import 'package:url_launcher/url_launcher.dart';
 
+// class CallButton extends StatelessWidget {
+//   final String phoneNumber = "1234567890";  // ضع رقم الهاتف هنا
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () async {
+//         final url = 'tel:$phoneNumber';
+//         if (await canLaunch(url)) {
+//           await launch(url);
+//         } else {
+//           throw 'Could not launch $url';
+//         }
+//       },
+//       child: Row(
+//         children: [
+//           Icon(Icons.phone, color: Constants.mainColor),
+//           SizedBox(width: 5.0),
+//           Text('للتواصل', style: TextStyle(fontSize: 16)),
+//         ],
+//       ),
+//     );
+//   }
+// }
 class PostCard extends StatelessWidget {
   final String budget;
   final String description;
@@ -15,7 +40,7 @@ class PostCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {final String phoneNumber = "1234567890";  // ضع رقم الهاتف هنا
     return Card(color: Constants.mainColor4,
       margin: EdgeInsets.all(15.0),
       child: Padding(
@@ -38,6 +63,23 @@ class PostCard extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 10.0),
+        GestureDetector(
+          onTap: () async {
+            final url = 'tel:$phoneNumber';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              throw 'Could not launch $url';
+            }
+          },
+          child: Row(
+            children: [
+              Icon(Icons.phone, color: Constants.mainColor),
+              SizedBox(width: 5.0),
+              Text('للتواصل', style: TextStyle(fontSize: 16)),
+            ],
+          ),
+        ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

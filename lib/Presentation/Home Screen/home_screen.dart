@@ -8,6 +8,8 @@ import 'package:pro_2/Presentation/Home%20Screen/Home%20Widgets/home_widgets.dar
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 
+import '../../Util/dimensions.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -31,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         },
         builder: (context, state) {
           AuthCubit cubit =AuthCubit.get(context);
-          return Scaffold(
+          return Scaffold(backgroundColor: Colors.white,
             endDrawer: AppRoutes.drawerScreen,
             body: CustomScrollView(
               slivers: <Widget>[
@@ -43,14 +45,47 @@ class HomeScreen extends StatelessWidget {
                   title: Row(
                     children: [
                       Image.asset(
-                        "assets/images/General/App_Icon.png",
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.15,
+                        "assets/images/General/App_Icon1.png",
+                        height: Dimensions.heightPercentage(context, 6.5),
                       ),
-                      const SizedBox(width: 10,),
-                      const Text('Real Estate'),
+                      const SizedBox(width: 5,),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'C',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Constants.mainColor,
+                                fontSize: 30.h,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'apital',
+                              style: TextStyle(
+                                color: Constants.mainColor,
+                                fontSize:26.h,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' E',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Constants.mainColor,
+                                fontSize: 30.h,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'states',
+                              style: TextStyle(
+                                color: Constants.mainColor,
+                                fontSize: 26.h,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
                     ],
                   ),
                 ),

@@ -1,8 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
 import 'package:pro_2/Util/constants.dart';
+
+import '../../Util/dimensions.dart';
 class splashscreen extends StatefulWidget {
   const splashscreen({super.key});
 
@@ -18,7 +21,7 @@ class _splashscreenState extends State<splashscreen> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 1,milliseconds: 50),
       vsync: this,
     )..repeat(reverse: true);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
@@ -43,14 +46,76 @@ class _splashscreenState extends State<splashscreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset("assets/images/General/App_Icon.png",width: 200,height: 200,),
+          Image.asset(
+            "assets/images/General/App_Icon.png",
+            width: Dimensions.widthPercentage(context, 75),
+            height: Dimensions.heightPercentage(context, 75),
+          ),
           SizedBox(height: 20),
-          Text(
-            'Welcome to Real Estate',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Constants.mainColor,
+                        fontSize: 30.h,
+                      ),
+                      children: [
+                        WidgetSpan(
+                          child: Transform.translate(
+                            offset: Offset(0, -20 * _animation.value),
+                            child: Text(
+                              'C',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Constants.mainColor,
+                                fontSize: 30.h,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextSpan(
+                      text: 'apital',
+                      style: TextStyle(
+                        color: Constants.mainColor,
+                        fontSize: 26.h,
+                      ),
+                    ),
+                    WidgetSpan(
+                      child: Transform.translate(
+                        offset: Offset(0, -20 * _animation.value),
+                        child: Text(
+                          ' E',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Constants.mainColor,
+                            fontSize: 30.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'states',
+                      style: TextStyle(
+                        color: Constants.mainColor,
+                        fontSize: 26.h,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
           SizedBox(height: 40),
           AnimatedBuilder(
