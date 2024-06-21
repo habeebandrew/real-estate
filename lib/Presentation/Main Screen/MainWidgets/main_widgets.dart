@@ -22,6 +22,14 @@ class CategorySection extends StatefulWidget {
 class _CategorySectionState extends State<CategorySection> {
   final List<Category> categories = [
     Category(
+      name: 'on_the_beach',
+      imageUrl: 'assets/images/Home/on_the_beach.jpg',
+      onTap: () {
+        print('Farm category tapped');
+        // Add your functionality here
+      },
+    ),
+    Category(
       name: 'farm',
       imageUrl: 'assets/images/Home/farm.jpg',
       onTap: () {
@@ -108,7 +116,7 @@ class _CategorySectionState extends State<CategorySection> {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            'Types of real estate>',
+            'Types of properties >',
             style: TextStyle(color: Colors.black87,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -180,6 +188,111 @@ class _CategorySectionState extends State<CategorySection> {
           ),
         ),
       ],
+    );
+  }
+}
+class mostviewer extends StatefulWidget {
+  const mostviewer({super.key});
+
+  @override
+  State<mostviewer> createState() => _mostviewerState();
+}
+
+class _mostviewerState extends State<mostviewer> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Constants.mainColor2,
+            // Color.fromARGB(255, 253, 253, 253),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(5, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                child: Image.asset(
+                  'assets/images/Home/on_the_beach.jpg',
+                  height: 150,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  color: Constants.mainColor,
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    'للبيع'
+                    ,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,fontSize: 18
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '35 مليار ل.س',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),textDirection:TextDirection.rtl,
+                ),
+                Text(
+                  'شاليه 200 م²',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.visibility),
+                        SizedBox(width: 5),
+                        Text('452'),
+                      ],
+                    ),
+                    Text(
+                      'طرطوس/المدينة',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

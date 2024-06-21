@@ -20,6 +20,18 @@ class MainScreen extends StatelessWidget {
             SearchBar(),//باخدها نفسها من مهدي بواجهة العقارات
             CategorySection(),
             SizedBox(height: 20),
+Padding(
+  padding: const EdgeInsets.all(12.0),
+  child: Row(children: [ Text(
+    'most watched',
+    style: TextStyle(color: Colors.black87,
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  ),SizedBox(width: 20,) ,Icon(Icons.visibility)],),
+),
+             mostviewer(),
+            SizedBox(height: 50,)
             // AdBanner(),
           ],
         ),
