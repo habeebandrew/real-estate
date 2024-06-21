@@ -71,6 +71,8 @@ class AuthCubit extends Cubit<AuthState>
             title: 'login successful',
           );
           await CacheHelper.putString(key: 'name', value: value.user.username);
+          await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
+
           await CacheHelper.putString(key: 'token', value: value.accessToken);
 
           logInEmailController.clear();
@@ -110,6 +112,7 @@ class AuthCubit extends Cubit<AuthState>
           );
           await CacheHelper.putString(key: 'name', value: value.user.username);
           await CacheHelper.putString(key: 'token', value: value.accessToken);
+          await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
 
           // Delay for 2 seconds and then navigate to the next screen
           Future.delayed(const Duration(seconds: 2), () {
@@ -130,6 +133,7 @@ class AuthCubit extends Cubit<AuthState>
     emit(AuthLoadingState());
     final navigator = Navigator.of(context);
     await CacheHelper.deleteString(key: 'name');
+    await CacheHelper.deleteInt(key: 'role_id');
     await CacheHelper.deleteString(key: 'token');
     emit(AuthLoadedState());
     navigator.push(MyAnimation.createRoute(AppRoutes.logInScreen));
