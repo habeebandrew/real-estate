@@ -9,6 +9,6 @@ class PostsCubit extends Cubit<PostsState> {
 
   void pressed(){
     emit(PostsLoadedState());
-    print("iam in property");
+    print("iam in posts");
   }
 }

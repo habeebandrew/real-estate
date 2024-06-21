@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
-import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
 import 'package:pro_2/Presentation/Posts%20Screen/posts%20widgets/post_widgets.dart';
-import 'package:pro_2/Util/constants.dart';
-import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
+
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});
