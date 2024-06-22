@@ -6,6 +6,7 @@ import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
+import 'package:share_plus/share_plus.dart';
 
 Widget myDrawerButton({
   required String label,
@@ -47,12 +48,15 @@ Widget build_for_guest(BuildContext context) {
   return SingleChildScrollView(
     child: Column(
       children: [
-        myDrawerButton(label: 'language', icon: Icons.language, onPress: () {}),
+        myDrawerButton(label: 'language', icon: Icons.language, onPress: () {
+          _showLanguageDialog(context);
+        }),
         SizedBox(
           height: 5,
         ),
         myDrawerButton(
-            label: 'Invite friends', icon: Icons.mail, onPress: () {}),
+            label: 'Invite friends', icon: Icons.mail, onPress:() => _shareInvite(context),
+        ),
         SizedBox(
           height: 5,
         ),
@@ -62,7 +66,7 @@ Widget build_for_guest(BuildContext context) {
           height: 5,
         ),
         myDrawerButton(
-            label: 'Connect with us', icon: Icons.phone, onPress: () {}),
+            label: 'Connect with us', icon: Icons.phone, onPress: () {Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.contactwithus));}),
         SizedBox(
           height: 5,
         ),
@@ -229,5 +233,119 @@ Widget build_for_Broker(BuildContext context) {
 }
 
 
+void _showLanguageDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      String selectedLanguage = 'english'; // Default selected value
 
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Capital Estate',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Constants.mainColor,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Divider(
+                    color: Constants.mainColor,
+                    thickness: 1,
+                  ),
+                  SizedBox(height: 20),
+                  ListTile(
+                    title: Text(
+                      'Arabic',
+                      style: TextStyle(
+                        color: Constants.mainColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    leading: Radio<String>(
+                      value: 'arabic',
+                      groupValue: selectedLanguage,
+                      activeColor: Constants.mainColor,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLanguage = value!;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'English',
+                      style: TextStyle(
+                        color: Constants.mainColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    leading: Radio<String>(
+                      value: 'english',
+                      groupValue: selectedLanguage,
+                      activeColor: Constants.mainColor,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLanguage = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Constants.mainColor4,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  print(selectedLanguage == 'arabic' ? "Arabic" : "English");
+                  Navigator.of(context).pop();
 
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Constants.mainColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+void _shareInvite(BuildContext context) {
+  final String text = "هل سمعت عن كابيتال ستيت؟ إنه تطبيق رائع لتسويق بيع وشراء واستئجار العقارات وللتحميل .....";
+
+  Share.share(
+    text,
+    subject: 'Invite to App',
+  );
+}

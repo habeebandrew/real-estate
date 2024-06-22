@@ -14,3 +14,4 @@ class Constants{
   static const Color mainColor4 =  Color(0xFFFEF7E4) ;
 
 }
+// Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.signUpScreen));

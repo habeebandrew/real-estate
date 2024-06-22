@@ -8,23 +8,6 @@ import 'package:pro_2/Util/constants.dart';
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({super.key});
 
-//   String? storedValue;
-//   int? typeofuser;
-//
-//   void initState() {
-//     super.initState();
-//     fetchStoredValue();
-//     fetchtypeofuser();
-//   }
-//
-//   void fetchStoredValue() {
-//     setState(() {
-//       storedValue = CacheHelper.getString(key: 'name');
-//     });
-//   }
-// void fetchtypeofuser(){setState(() {
-//   typeofuser=CacheHelper.getInt(key: 'role_id');
-// });}
 
   @override
   Widget build(BuildContext context) {
@@ -72,5 +55,6 @@ class DrawerScreen extends StatelessWidget {
       ),
     );
   }
+
 }
 

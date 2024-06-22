@@ -236,8 +236,8 @@ class _mostviewerState extends State<mostviewer> {
               Positioned(
                 top: 0,
                 right: 0,
-                child: Container(
-                  color: Constants.mainColor,
+                child: Container(decoration: BoxDecoration( color: Constants.mainColor,borderRadius: BorderRadius.circular(5)),
+                 
                   padding: EdgeInsets.all(5),
                   child: Text(
                     'للبيع'

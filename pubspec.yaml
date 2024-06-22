@@ -45,6 +45,7 @@ dependencies:
   flutter_native_splash: ^2.4.0
   shimmer_animation:
   url_launcher:
+  share_plus:
 flutter_native_splash:
   color: "#FFFFFF"
   image: "assets/images/General/App_Icon.png"
