@@ -43,16 +43,16 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
-  shimmer_animation:
-  url_launcher:
-  share_plus:
+  shimmer_animation: ^2.2.1
+  url_launcher: ^6.3.0
+  #share_plus: ^9.0.0
 flutter_native_splash:
   color: "#FFFFFF"
   image: "assets/images/General/App_Icon.png"
   android: true
   ios: true
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/General/App_Icon.png"

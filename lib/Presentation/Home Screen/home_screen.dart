@@ -36,6 +36,7 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(backgroundColor: Colors.white,
             endDrawer: AppRoutes.drawerScreen,
             body: CustomScrollView(
+              physics: const NeverScrollableScrollPhysics(),
               slivers: <Widget>[
                 //silver منشان لما اعمل scroll down تضل ابيض ما تغمق
                 SliverAppBar(

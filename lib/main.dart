@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
 import 'package:pro_2/Util/app_bloc_observer.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';

@@ -1,21 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pro_2/Util/constants.dart';
 
 class MyFormField extends StatelessWidget {
   final TextEditingController controller;
-  final String labelText;
+  final String?labelText;
+  final String?hintText;
   final int?maxLength;
   final bool?obscureText;
+  final bool?fill;
+  final Color?fillColor;
   final TextInputType?type;
+  final double radius;
   final String? Function(String?)? validator;
 
   const MyFormField({
     super.key,
     required this.controller,
-    required this.labelText,
+    this.labelText,
+    this.hintText,
     this.maxLength,
     this.obscureText,
+    this.fill,
+    this.fillColor,
     this.type,
+    this.radius=0,
     this.validator,
   });
 
@@ -25,9 +34,13 @@ class MyFormField extends StatelessWidget {
         controller: controller,
         keyboardType:type ,
         decoration: InputDecoration(
+          hintText:hintText ,
           labelText: labelText,
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
+          filled: fill,
+          fillColor: fillColor,
+          border:  OutlineInputBorder(
+            borderRadius: BorderRadius.circular(radius),
+            borderSide: const BorderSide(
                 color: Constants.mainColor
             ),
           ),

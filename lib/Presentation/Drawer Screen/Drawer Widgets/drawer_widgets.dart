@@ -6,7 +6,7 @@ import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
-import 'package:share_plus/share_plus.dart';
+
 
 Widget myDrawerButton({
   required String label,
@@ -54,12 +54,12 @@ Widget build_for_guest(BuildContext context) {
         SizedBox(
           height: 5,
         ),
-        myDrawerButton(
-            label: 'Invite friends', icon: Icons.mail, onPress:() => _shareInvite(context),
-        ),
-        SizedBox(
-          height: 5,
-        ),
+        // myDrawerButton(
+        //     label: 'Invite friends', icon: Icons.mail, onPress:() => _shareInvite(context),
+        // ),
+        // SizedBox(
+        //   height: 5,
+        // ),
         myDrawerButton(
             label: 'Help Center', icon: Icons.help_outline, onPress: () {}),
         SizedBox(
@@ -341,11 +341,11 @@ void _showLanguageDialog(BuildContext context) {
     },
   );
 }
-void _shareInvite(BuildContext context) {
-  final String text = "هل سمعت عن كابيتال ستيت؟ إنه تطبيق رائع لتسويق بيع وشراء واستئجار العقارات وللتحميل .....";
-
-  Share.share(
-    text,
-    subject: 'Invite to App',
-  );
-}
+// void _shareInvite(BuildContext context) {
+//   final String text = "هل سمعت عن كابيتال ستيت؟ إنه تطبيق رائع لتسويق بيع وشراء واستئجار العقارات وللتحميل .....";
+//
+//   Share.share(
+//     text,
+//     subject: 'Invite to App',
+//   );
+// }
