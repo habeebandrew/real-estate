@@ -11,7 +11,7 @@ import 'package:pro_2/Presentation/Onboarding%20Screens/onboarding1.dart';
 import 'package:pro_2/Presentation/Posts%20Screen/AddPost_screens/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
-import '../Presentation/Drawer Screen/ContactWithUs/ContactUsPage.dart';
+import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
 import '../Presentation/SplashScreen/splash_screen.dart';
