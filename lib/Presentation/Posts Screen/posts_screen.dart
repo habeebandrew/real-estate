@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
 import 'package:pro_2/Presentation/Posts%20Screen/posts%20widgets/post_widgets.dart';
 
-import '../../../Util/app_routes.dart';
-import '../../../Util/global Widgets/animation.dart';
+import '../../Util/app_routes.dart';
+import '../../Util/global Widgets/animation.dart';
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});

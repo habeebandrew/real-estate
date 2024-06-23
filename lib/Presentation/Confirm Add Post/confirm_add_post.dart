@@ -3,6 +3,7 @@ import 'package:pro_2/Presentation/Posts%20Screen/posts%20widgets/post_widgets.d
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
 import '../../../Util/app_routes.dart';
+import '../../Util/global Widgets/my_button.dart';
 
 class ConfirmAddPost extends StatelessWidget {
   const ConfirmAddPost({super.key});
@@ -12,7 +13,7 @@ class ConfirmAddPost extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("My Ads"),
+        title: Text("My Ad"),
         backgroundColor: Colors.white,
       ),
       body: Column(
@@ -32,23 +33,13 @@ class ConfirmAddPost extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MyAnimation.createRoute(AppRoutes.addPost));
-                },
-                child: Text('Edit'),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.mainColor4),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addpost2));
-                },
-                child: Text('Post'),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.mainColor2),
-              ),
+
+              MyButton(tittle: "Edit", onPreessed: (){ Navigator.of(context)
+                  .push(MyAnimation.createRoute(AppRoutes.addPost));}, minWidth: 100, height: 20),
+
+              MyButton(tittle: "Post", onPreessed: (){print("Post -->");}, minWidth: 100, height: 20),
+
+
             ],
           ),
         ],

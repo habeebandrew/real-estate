@@ -8,7 +8,7 @@ import 'package:pro_2/Presentation/LogIn%20Screen/LogIn_screen.dart';
 import 'package:pro_2/Presentation/Main%20Screen/main_screen.dart';
 import 'package:pro_2/Presentation/Onboarding%20Screens/onboarding1.dart';
 
-import 'package:pro_2/Presentation/Posts%20Screen/AddPost_screens/posts_screen.dart';
+import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
@@ -32,7 +32,7 @@ class NamedRoutes
   static const mainScreen='mainScreen';
   static const drawerScreen='drawerScreen';
   static const Contactwithus='ContactUsPage';
-  static const addpost='AddPost';
+  static const addpost='add_post_screen';
   static const confirmAddPost='ConfirmAddPost';
 
 // static const test1_json='doneTaskScreen';

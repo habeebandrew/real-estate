@@ -13,6 +13,7 @@ class MyFormField extends StatelessWidget {
   final TextInputType?type;
   final double radius;
   final String? Function(String?)? validator;
+  final int?maxLines;
 
   const MyFormField({
     super.key,
@@ -26,6 +27,8 @@ class MyFormField extends StatelessWidget {
     this.type,
     this.radius=0,
     this.validator,
+    this.maxLines,
+
   });
 
   @override
@@ -52,7 +55,7 @@ class MyFormField extends StatelessWidget {
         ),
         maxLength: maxLength,
         obscureText: obscureText??false,
-        validator: validator,
+        validator: validator,maxLines: maxLines,
     );
   }
 }
