@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_2/Presentation/Onboarding_screens/onBoarding%20Widgets/onboadring_widgets.dart';
+import 'package:pro_2/Presentation/Onboarding Screens/onBoarding%20Widgets/onboadring_widgets.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/constants.dart';

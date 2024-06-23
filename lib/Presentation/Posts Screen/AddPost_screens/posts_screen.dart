@@ -6,26 +6,28 @@ import 'package:pro_2/Presentation/Posts%20Screen/posts%20widgets/post_widgets.d
 import '../../../Util/app_routes.dart';
 import '../../../Util/global Widgets/animation.dart';
 
-
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PostsCubit, PostsState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        return Scaffold(backgroundColor: Colors.white10,
-appBar:AppBar(
-  actions: [
-  IconButton(
-  icon: Icon(Icons.add),
-  onPressed: () {
-    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addpost));
-  },
-),],automaticallyImplyLeading: false,) ,
+        return Scaffold(
+          backgroundColor: Colors.white10,
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MyAnimation.createRoute(AppRoutes.addPost));
+                },
+              ),
+            ],
+            automaticallyImplyLeading: false,
+          ),
           body: ListView(
             children: [
               PostCard(
@@ -35,56 +37,54 @@ appBar:AppBar(
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
               PostCard(
                 budget: '2  million s.p ',
-                description: 'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-
+                description:
+                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
                 timeAgo: 'منذ يوم',
               ),
-
             ],
           ),
-
         );
       },
     );
