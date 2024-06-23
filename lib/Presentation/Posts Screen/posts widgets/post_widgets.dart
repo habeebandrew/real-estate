@@ -53,20 +53,24 @@ class PostCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'مطلوب للإيجار عقار في دمشق',
+              'Wanted for buy properity in Damascus',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),textDirection: TextDirection.ltr,
             ),
             SizedBox(height: 5.0),
-            Text(
-              'الميزانية: $budget',
-              style: TextStyle(fontSize: 16, color: Colors.blue[900]),textDirection: TextDirection.ltr,
+            Row(
+              children: [Icon(Icons.monetization_on_outlined,color: Constants.mainColor,),SizedBox(width: 5,),
+                Text(
+                  'budget: $budget',
+                  style: TextStyle(fontSize: 16, color: Constants.mainColor,fontWeight: FontWeight.bold),textDirection: TextDirection.ltr,
+                ),
+              ],
             ),
             SizedBox(height: 10.0),
             Text(
               description,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 14),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () async {
                 final url = 'tel:$phoneNumber';
@@ -82,7 +86,7 @@ class PostCard extends StatelessWidget {
 
 
                   SizedBox(width: 5.0),
-                  Text('للتواصل', style: TextStyle(fontSize: 16),textDirection: TextDirection.ltr,),
+                  Text('Contact', style: TextStyle(fontSize: 16,color: Constants.mainColor,fontWeight: FontWeight.bold),textDirection: TextDirection.ltr,),
                 ],
               ),
             ),

@@ -7,10 +7,13 @@ import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
 import 'package:pro_2/Presentation/LogIn%20Screen/LogIn_screen.dart';
 import 'package:pro_2/Presentation/Main%20Screen/main_screen.dart';
 import 'package:pro_2/Presentation/Onboarding_screens/onboarding1.dart';
-import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
+
+import 'package:pro_2/Presentation/Posts%20Screen/AddPost_screens/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
 import '../Presentation/Drawer Screen/ContactWithUs/ContactUsPage.dart';
+import '../Presentation/Posts Screen/AddPost_screens/AddPost.dart';
+import '../Presentation/Posts Screen/AddPost_screens/AddPost2.dart';
 import '../Presentation/SplashScreen/splash_screen.dart';
 
 
@@ -29,6 +32,8 @@ class NamedRoutes
   static const mainScreen='mainScreen';
   static const drawerScreen='drawerScreen';
   static const Contactwithus='ContactUsPage';
+  static const addpost='AddPost';
+  static const addpost2='AddPost2';
 
 // static const test1_json='doneTaskScreen';
 
@@ -50,6 +55,8 @@ class AppRoutes
   static const mainScreen=MainScreen();
   static const drawerScreen=DrawerScreen();
    static ContactUsPage contactwithus=ContactUsPage();
+  static const addpost=AddPost();
+  static const addpost2=AddPost2();
 
   // static const  test1_json=theList();
 
@@ -68,6 +75,8 @@ class AppRoutes
     NamedRoutes.mainScreen:(context)=>AppRoutes.mainScreen,
     NamedRoutes.drawerScreen:(context)=>AppRoutes.drawerScreen,
     NamedRoutes.Contactwithus:(context)=>AppRoutes.contactwithus,
+    NamedRoutes.addpost:(context)=>AppRoutes.addpost,
+    NamedRoutes.addpost2:(context)=>AppRoutes.addpost2,
 
     // NamedRoutes.test1_json:(context)=>AppRoutes.test1_json,
 
