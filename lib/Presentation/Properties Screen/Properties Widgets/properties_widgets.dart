@@ -21,8 +21,6 @@ class _PropertyCardState extends State<PropertyCard> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
     return Container(
       width: double.infinity,
       height: 348.h,
@@ -65,14 +63,14 @@ class _PropertyCardState extends State<PropertyCard> {
                             return Image.network(
                               images[index],
                               fit: BoxFit.cover,
-                              width: screenWidth,
-                              height: screenHeight,
+                              width: Dimensions.screenHeight(context),
+                              height: Dimensions.screenHeight(context),
                             );
                           },
                           scrollDirection: Axis.horizontal,
                         ),
                         Positioned(
-                          bottom: screenHeight * 0.02,
+                          bottom: Dimensions.heightPercentage(context, 2),
                           left: 0.0,
                           right: 0.0,
                           child: Row(
@@ -82,10 +80,10 @@ class _PropertyCardState extends State<PropertyCard> {
                                 duration: const Duration(milliseconds: 300),
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 4.0),
-                                height: screenWidth * 0.02,
+                                height: Dimensions.widthPercentage(context, 2),
                                 width: currentIndex == index
-                                    ? screenWidth * 0.04
-                                    : screenWidth * 0.02,
+                                    ? Dimensions.widthPercentage(context, 4)
+                                    : Dimensions.widthPercentage(context, 2),
                                 decoration: BoxDecoration(
                                   color: currentIndex == index
                                       ? Constants.mainColor
