@@ -12,7 +12,7 @@ class PostsService {
     required int mobileNumber,
   }) async {
     var response = await NetworkHelper.post(
-      ApiAndEndpoints.signUp,
+      ApiAndEndpoints.createpost,
       headers: {
         'Content-Type': 'application/json',
       },

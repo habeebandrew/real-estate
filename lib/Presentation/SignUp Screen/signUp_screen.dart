@@ -51,7 +51,7 @@ class SignUp extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 20.h),
-                      MyFormField(
+                      MyFormField(maxLines: 1,
                         controller: cubit.user_nameController,
                         labelText: 'User Name',
                         maxLength: 55,
@@ -65,7 +65,7 @@ class SignUp extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      MyFormField(
+                      MyFormField(maxLines: 1,
                         controller: cubit.emailController,
                         labelText: 'Email',
                         type: TextInputType.emailAddress,
@@ -80,7 +80,7 @@ class SignUp extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      MyFormField(
+                      MyFormField(maxLines: 1,
                         controller: cubit.signUPasswordController,
                         labelText: 'Password',
                         obscureText: true,
@@ -94,7 +94,7 @@ class SignUp extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      MyFormField(
+                      MyFormField(maxLines: 1,
                         controller: cubit.confirmPasswordController,
                         labelText: 'Confirm Password',
                         obscureText: true,

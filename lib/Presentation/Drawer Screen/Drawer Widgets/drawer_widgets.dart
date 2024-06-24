@@ -7,6 +7,8 @@ import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
 
+import '../../../Util/cache_helper.dart';
+
 
 Widget myDrawerButton({
   required String label,
@@ -93,7 +95,9 @@ Widget build_for_user(BuildContext context) {
     child: Column(
       children: [
         myDrawerButton(
-            label: 'Account Information', icon: Icons.person, onPress: () {}),
+            label: 'Account Information', icon: Icons.person, onPress: () async {
+              String token;
+        token =(await CacheHelper.getString(key: 'token'))!;print(token);}),
         SizedBox(
           height: 5,
         ),

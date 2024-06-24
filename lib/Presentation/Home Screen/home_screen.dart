@@ -35,65 +35,89 @@ class HomeScreen extends StatelessWidget {
           AuthCubit cubit =AuthCubit.get(context);
           return Scaffold(backgroundColor: Colors.white,
             endDrawer: AppRoutes.drawerScreen,
-            body: CustomScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              slivers: <Widget>[
-                //silver منشان لما اعمل scroll down تضل ابيض ما تغمق
-                SliverAppBar(
-                  automaticallyImplyLeading: false, // لإزالة زر الرجوع
-                  backgroundColor: Colors.white,
-                  pinned: true, // يعني أنه يبقى مثبتًا في الأعلى
-                  title: Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/General/App_Icon1.png",
-                        height: Dimensions.heightPercentage(context, 6.5),
-                      ),
-                      const SizedBox(width: 5,),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'C',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Constants.mainColor,
-                                fontSize: 30.h,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'apital',
-                              style: TextStyle(
-                                color: Constants.mainColor,
-                                fontSize:26.h,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ' E',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Constants.mainColor,
-                                fontSize: 30.h,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'states',
-                              style: TextStyle(
-                                color: Constants.mainColor,
-                                fontSize: 26.h,
-                              ),
-                            ),
-                          ],
+            body: WillPopScope( onWillPop: () async {
+              return await showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('هل حقا تريد الخروج؟'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('لا'),
+                      onPressed: () {
+                        Navigator.of(context).pop(false); // لا تخرج
+                      },
+                    ),
+                    TextButton(
+                      child: Text('نعم'),
+                      onPressed: () {
+                        Navigator.of(context).pop(true); // نعم، اخرج
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+                child:
+              CustomScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                slivers: <Widget>[
+                  //silver منشان لما اعمل scroll down تضل ابيض ما تغمق
+                  SliverAppBar(
+                    automaticallyImplyLeading: false, // لإزالة زر الرجوع
+                    backgroundColor: Colors.white,
+                    pinned: true, // يعني أنه يبقى مثبتًا في الأعلى
+                    title: Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/General/App_Icon1.png",
+                          height: Dimensions.heightPercentage(context, 6.5),
                         ),
-                      ),
-
-                    ],
+                        const SizedBox(width: 5,),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'C',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Constants.mainColor,
+                                  fontSize: 30.h,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'apital',
+                                style: TextStyle(
+                                  color: Constants.mainColor,
+                                  fontSize:26.h,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' E',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Constants.mainColor,
+                                  fontSize: 30.h,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'states',
+                                style: TextStyle(
+                                  color: Constants.mainColor,
+                                  fontSize: 26.h,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+              
+                      ],
+                    ),
                   ),
-                ),
-                SliverFillRemaining(
-                  child: cubit.screens[cubit.currentIndex],
-                ),
-              ],
+                  SliverFillRemaining(
+                    child: cubit.screens[cubit.currentIndex],
+                  ),
+                ],
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               child: Icon(

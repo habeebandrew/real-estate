@@ -6,9 +6,14 @@ class PostsInitialState extends PostsState {}
 
 class PostsLoadingState extends PostsState {}
 
-class PostsLoadedState extends PostsState {}
-
-class PostsErrorState extends PostsState {
+class PostSuccess extends PostsState {
   final String message;
-  PostsErrorState({required this.message});
+
+  PostSuccess(this.message);
+}
+class PostFailed extends PostsState {
+  final int statusCode;
+  final String error;
+
+  PostFailed(this.statusCode, this.error);
 }

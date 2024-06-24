@@ -76,7 +76,7 @@ class LogInScreen extends StatelessWidget {
                             const SizedBox(height: 20.0),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: MyFormField(
+                              child: MyFormField(maxLines: 1,
                                 controller: cubit.passwordController,
                                 labelText: 'Password',
                                 obscureText: true,

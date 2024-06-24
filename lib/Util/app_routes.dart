@@ -33,7 +33,7 @@ class NamedRoutes
   static const drawerScreen='drawerScreen';
   static const Contactwithus='ContactUsPage';
   static const addpost='add_post_screen';
-  static const confirmAddPost='ConfirmAddPost';
+  // static const confirmAddPost='ConfirmAddPost';
 
 // static const test1_json='doneTaskScreen';
 
@@ -56,7 +56,7 @@ class AppRoutes
   static const drawerScreen=DrawerScreen();
    static ContactUsPage contactwithus=ContactUsPage();
   static const addPost=AddPostScreen();
-  static const confirmAddPost=ConfirmAddPost();
+  // static const confirmAddPost=ConfirmAddPost(selectedGovernorate: '', budget: null,status: ,selectedArea: ,phone: ,description: ,key: ,);
 
   // static const  test1_json=theList();
 
@@ -76,7 +76,7 @@ class AppRoutes
     NamedRoutes.drawerScreen:(context)=>AppRoutes.drawerScreen,
     NamedRoutes.Contactwithus:(context)=>AppRoutes.contactwithus,
     NamedRoutes.addpost:(context)=>AppRoutes.addPost,
-    NamedRoutes.confirmAddPost:(context)=>AppRoutes.confirmAddPost,
+    // NamedRoutes.confirmAddPost:(context)=>AppRoutes.confirmAddPost,
 
     // NamedRoutes.test1_json:(context)=>AppRoutes.test1_json,
 

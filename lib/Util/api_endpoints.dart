@@ -8,4 +8,6 @@ class ApiAndEndpoints{
 
  static const logout = 'logOut';
 
+ static const createpost = 'posts';
+
 }

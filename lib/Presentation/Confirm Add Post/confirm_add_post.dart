@@ -1,12 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:pro_2/Presentation/Posts%20Screen/posts%20widgets/post_widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:pro_2/Util/constants.dart';
+import 'dart:convert';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
 import '../../../Util/app_routes.dart';
+import '../../Bloc/Posts Cubit/posts_cubit.dart';
+import '../../Util/api_endpoints.dart';
+import '../../Util/cache_helper.dart';
+import '../../Util/global Widgets/mySnackBar.dart';
 import '../../Util/global Widgets/my_button.dart';
+import '../../Util/network_helper.dart';
+import '../Posts Screen/Posts widgets/post_widgets.dart';
 
 class ConfirmAddPost extends StatelessWidget {
-  const ConfirmAddPost({super.key});
+  final int budget;
+  final String description;
+  final int phone;
+  final String selectedArea;
+  final String selectedGovernorate;
+  final String status;
+
+  const ConfirmAddPost({
+    super.key,
+    required this.budget,
+    required this.description,
+    required this.phone,
+    required this.selectedArea,
+    required this.selectedGovernorate,
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,33 +39,77 @@ class ConfirmAddPost extends StatelessWidget {
         title: Text("My Ad"),
         backgroundColor: Colors.white,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 50,
-          ),
-          PostCard(
-            budget: "15000000",
-            description: "مطلوب منزل للشراء في دمشق ويفضل كسوة ديلوكس",
-            timeAgo: "asd",
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+      body: BlocProvider(
+        create: (context) => PostsCubit(),
+        child: BlocConsumer<PostsCubit, PostsState>(
+          listener: (context, state) {
+            // if (state is PostSuccess) {
+            //   mySnackBar(
+            //     context: context,
+            //     color:Constants.mainColor,
+            //     title: 'Published successfully:',
+            //   );
+            //   Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
+            //
+            // }
+            // else
+              if (state is PostFailed) {
+              mySnackBar(
+                context: context,
+                color: Colors.red,
+                title: 'Published failed: ${state.error}',
+              );
+              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
 
-              MyButton(tittle: "Edit", onPreessed: (){ Navigator.of(context)
-                  .push(MyAnimation.createRoute(AppRoutes.addPost));}, minWidth: 100, height: 20),
+            }
+          },
+          builder: (context, state) {
+            if (state is PostsLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-              MyButton(tittle: "Post", onPreessed: (){print("Post -->");}, minWidth: 100, height: 20),
-
-
-            ],
-          ),
-        ],
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 50),
+                post_card(
+                  budget: budget,
+                  description: description,
+                  phone: phone,
+                  selectedArea: selectedArea,
+                  selectedGovernorate: selectedGovernorate,
+                  status: status,
+                ),
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    MyButton(onPreessed: () {
+                      Navigator.of(context).push(
+                        MyAnimation.createRoute(AppRoutes.addPost),
+                      );
+                    },tittle: "Edit",
+                      minWidth: 100,
+                      height: 20,
+                    ),
+                    MyButton(
+                      minWidth: 100,
+                      height: 20, tittle: 'Post', onPreessed: () {   // Access the cubit and call postData
+                      context.read<PostsCubit>().postData(context,
+                        budget: budget,
+                        description: description,
+                        phone: phone,
+                        selectedArea: selectedArea,
+                        selectedGovernorate: selectedGovernorate,
+                        status: status,
+                      ); },
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
