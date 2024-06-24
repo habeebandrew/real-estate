@@ -14,14 +14,16 @@ import '../../Util/network_helper.dart';
 import '../Posts Screen/Posts widgets/post_widgets.dart';
 
 class ConfirmAddPost extends StatelessWidget {
-  final int budget;
+  String my_name = (CacheHelper.getString(key: 'name'))!;
+
+final int budget;
   final String description;
   final int phone;
   final String selectedArea;
   final String selectedGovernorate;
   final String status;
 
-  const ConfirmAddPost({
+   ConfirmAddPost({
     super.key,
     required this.budget,
     required this.description,
@@ -33,6 +35,7 @@ class ConfirmAddPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -73,14 +76,8 @@ class ConfirmAddPost extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 50),
-                post_card(
-                  budget: budget,
-                  description: description,
-                  phone: phone,
-                  selectedArea: selectedArea,
-                  selectedGovernorate: selectedGovernorate,
-                  status: status,
-                ),
+                // post_card_confirm()
+                post_card_confirm(budget: budget,selectedGovernorate: selectedGovernorate,status:status ,selectedArea:selectedArea ,phone: phone,description: description,),
                 SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

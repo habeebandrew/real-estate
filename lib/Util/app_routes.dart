@@ -47,7 +47,7 @@ class AppRoutes
   static const  signUpScreen= SignUp();
   static const  logInScreen=LogInScreen();
   static const  Splashscreen=splashscreen();
-  static const postsScreen=PostsScreen();
+  static PostsScreen  postsScreen=PostsScreen();
   static const favouriteScreen=FavouriteScreen();
   //لازم نضيف تبع اضافة طلب لليوزر
   static const adPropertyScreen=AdPropertyScreen();

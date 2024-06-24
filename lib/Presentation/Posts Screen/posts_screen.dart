@@ -1,92 +1,144 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
-import 'package:pro_2/Presentation/Posts%20Screen/posts%20widgets/post_widgets.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import '../../Util/app_routes.dart';
+import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/animation.dart';
+import 'Posts widgets/post_widgets.dart';
 
-class PostsScreen extends StatelessWidget {
-  const PostsScreen({super.key});
+
+class PostsScreen extends StatefulWidget {
+  @override
+  _PostScreenState createState() => _PostScreenState();
+}
+
+class _PostScreenState extends State<PostsScreen> {
+  // قائمة لتخزين البيانات المستلمة من API
+  List<Post> posts = [];
+
+  // استدعاء API ومعالجة البيانات
+  void fetchPosts() async {
+    String token = (await CacheHelper.getString(key: 'token'))!;
+
+    final response = await http.get(
+      Uri.parse('http://192.168.1.104:8000/api/posts'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body)['posts'];
+      setState(() {
+        posts = data.map((postJson) => Post.fromJson(postJson)).toList();
+      });
+    } else {
+      throw Exception('Failed to load posts');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PostsCubit, PostsState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Colors.white10,
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MyAnimation.createRoute(AppRoutes.addPost));
-                },
-              ),
-            ],
-            automaticallyImplyLeading: false,
-          ),
-          body: ListView(
-            children: [
-              PostCard(
-                budget: '2  million s.p ',
-                description: 'شقة او مكتب يصلح للسكن ولو غرفة ومنتفعات',
-                timeAgo: 'منذ 14 ساعة',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-              PostCard(
-                budget: '2  million s.p ',
-                description:
-                    'مطلوب شقة سوبر ديلوكس مفروشة للإيجار منطقة ابو رمانة او المالكي او روضة مع كهرباء 24 ساعة',
-                timeAgo: 'منذ يوم',
-              ),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: false,
+        title: TextButton(onPressed: (){
+          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+
+        },child: Text("+ add my ad"),)
+      ),
+      body: posts.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
+          var post = posts[index];
+          return
+
+            post_card(description:post.description ,phone: post.mobilenumber,
+              selectedArea: post.region,status:post.state
+              ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
+              userName: post.userId,userProfileImageUrl: post.profileImage,);
+          //   Card(
+          //   margin: EdgeInsets.all(8.0),
+          //   child: Padding(
+          //     padding: EdgeInsets.all(12.0),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Row(
+          //           children: [
+          //             CircleAvatar(
+          //               backgroundImage: NetworkImage(post.profileImage),
+          //               radius: 20.0,
+          //             ),
+          //             SizedBox(width: 8.0),
+          //             Text('ID: ${post.id}'),
+          //           ],
+          //         ),
+          //         SizedBox(height: 8.0),
+          //         Text('الاسم: ${post.userId}'),
+          //         Text('الحالة: ${post.state}'),
+          //         Text('المحافظة: ${post.governorate}'),
+          //         Text('المنطقة: ${post.region}'),
+          //         Text('الميزانية: ${post.budget}'),
+          //         Text('الوصف: ${post.description}'),
+          //         Text('رقم الجوال: ${post.mobilenumber}'),
+          //         Text('تاريخ الإنشاء: ${DateFormat('yyyy-MM-dd HH:mm').format(post.createdAt)}'),
+          //       ],
+          //     ),
+          //   ),
+          // );
+        },
+      ),
+    );
+  }
+}
+
+//Model
+class Post {
+  final int id;
+  final String userId;
+  final String state;
+  final String governorate;
+  final String region;
+  final int budget;
+  final String description;
+  final int mobilenumber;
+  final String profileImage;
+  final DateTime createdAt;
+
+  Post({
+    required this.id,
+    required this.userId,
+    required this.state,
+    required this.governorate,
+    required this.region,
+    required this.budget,
+    required this.description,
+    required this.mobilenumber,
+    required this.profileImage,
+    required this.createdAt,
+  });
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['id'],
+      userId: json['user_id'],
+      state: json['state'],
+      governorate: json['governorate'],
+      region: json['region'],
+      budget: json['budget'],
+      description: json['description'],
+      mobilenumber: json['mobilenumber'],
+      profileImage: json['profile_image'],
+      createdAt: DateTime.parse(json['created_at']),
     );
   }
 }

@@ -48,7 +48,7 @@ class PostsCubit extends Cubit<PostsState> {
         },
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         emit(PostSuccess(response.body));
         mySnackBar(
           context: context,
