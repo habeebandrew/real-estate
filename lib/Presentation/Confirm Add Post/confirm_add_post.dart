@@ -59,8 +59,9 @@ class ConfirmAddPost extends StatelessWidget {
                 color: Colors.red,
                 title: 'Published failed: ${state.error}',
               );
-              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
-
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
+              });
             }
           },
           builder: (context, state) {
@@ -94,7 +95,7 @@ class ConfirmAddPost extends StatelessWidget {
                     ),
                     MyButton(
                       minWidth: 100,
-                      height: 20, tittle: 'Post', onPreessed: () {   // Access the cubit and call postData
+                      height: 20, tittle: 'Post', onPreessed: () {
                       context.read<PostsCubit>().postData(context,
                         budget: budget,
                         description: description,

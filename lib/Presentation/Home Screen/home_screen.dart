@@ -7,6 +7,7 @@ import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Presentation/Home%20Screen/Home%20Widgets/home_widgets.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
+import 'package:flutter/services.dart';
 
 import '../../Util/dimensions.dart';
 
@@ -36,21 +37,23 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(backgroundColor: Colors.white,
             endDrawer: AppRoutes.drawerScreen,
             body: WillPopScope( onWillPop: () async {
+
               return await showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('هل حقا تريد الخروج؟'),
+                  title: Text('Do you really want to go out?'),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('لا'),
+                      child: Text('no'),
                       onPressed: () {
-                        Navigator.of(context).pop(false); // لا تخرج
+                        Navigator.of(context).pop(false);
                       },
                     ),
                     TextButton(
-                      child: Text('نعم'),
-                      onPressed: () {
-                        Navigator.of(context).pop(true); // نعم، اخرج
+                      child: Text('yes'),
+                      onPressed: () {SystemNavigator.pop();
+
+                      Navigator.of(context).pop(true);
                       },
                     ),
                   ],

@@ -22,7 +22,15 @@ class post_card extends StatelessWidget {
     required this.selectedArea,
 
   });
-
+  String formatBudget(int budget) {
+    if (budget >= 1000000000) {
+      return '${(budget / 1000000000).toStringAsFixed(1)} billion';
+    } else if (budget >= 1000000) {
+      return '${(budget / 1000000).toStringAsFixed(1)} million sp';
+    } else {
+      return budget.toString();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -42,10 +50,15 @@ class post_card extends StatelessWidget {
             SizedBox(height: 5.0),
             Row(
               children: [Icon(Icons.monetization_on_outlined,color: Constants.mainColor,),SizedBox(width: 5,),
-                Text(
-                  'budget: $budget',
-                  style: TextStyle(fontSize: 16, color: Constants.mainColor,fontWeight: FontWeight.bold),textDirection: TextDirection.ltr,
-                ),
+        Text(
+          'budget: ${formatBudget(budget)}',
+          style: TextStyle(
+            fontSize: 16,
+            color: Constants.mainColor,
+            fontWeight: FontWeight.bold,
+          ),
+          textDirection: TextDirection.ltr,
+        ),
               ],
             ),
             SizedBox(height: 10.0),

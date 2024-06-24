@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/my_button.dart';
-
 import '../../../Util/app_routes.dart';
 import '../../../Util/global Widgets/animation.dart';
-import '../../Util/global Widgets/mySnackBar.dart';
-import '../../Util/global Widgets/my_form_field.dart';
-
-import '../../Util/global Widgets/my_form_field.dart';
 import '../Confirm Add Post/confirm_add_post.dart';
 
 
@@ -322,7 +314,10 @@ class _AddPostState extends State<AddPostScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a budget';
+                      } if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return 'Please enter only numbers';
                       }
+                      return null;
                       return null;
                     },
                   ),
@@ -362,6 +357,10 @@ class _AddPostState extends State<AddPostScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a description';
+                      } // Check if the input contains 9 or more digits
+                      RegExp regex = RegExp(r'\d{9,}');
+                      if (regex.hasMatch(value.replaceAll(RegExp(r'\s+'), ''))) {
+                        return 'It is not allowed to enter your phone number in the description';
                       }
                       return null;
                     },
@@ -403,9 +402,16 @@ class _AddPostState extends State<AddPostScreen> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a mobile number';
                       }
+                        if (value.length < 7 || value.length > 13) {
+                        return 'Mobile number must be between 7 and 13 digits';
+                      } if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return 'Please enter only numbers';
+                      }
+                      return null;
                       return null;
                     },
                   ),
+
                   SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
