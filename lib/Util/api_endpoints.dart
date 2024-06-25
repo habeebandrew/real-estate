@@ -13,6 +13,7 @@ class ApiAndEndpoints{
 
  static const updateRole = 'updateRole';
  static const addComment = 'addComment';
+ static const getComments = 'comments?';
 
 
 }

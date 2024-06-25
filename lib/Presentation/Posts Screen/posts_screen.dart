@@ -310,11 +310,6 @@ class _PostScreenState extends State<PostsScreen> {
               ),
             ),
             Text('Posts: ${filteredPosts.length}',style: TextStyle(fontSize: 8),),
-
-
-
-
-
             Spacer(),
             SizedBox(width:  Dimensions.widthPercentage(context, 10),
               child: IconButton(

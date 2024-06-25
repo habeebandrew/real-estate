@@ -310,16 +310,36 @@ class _PostCardState extends State<PostCard_with_comments> {
   }
 
   Future<void> _fetchComments() async {
-    final response = await http.get(Uri.parse('https://yourapi.com/getComment?post_id=${widget.postId}'));
+    String token = (await CacheHelper.getString(key: 'token'))!;
+
+    var response = await NetworkHelper.get(
+      ApiAndEndpoints.getComments + "post_id=${widget.postId}",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
     if (response.statusCode == 200) {
-      final List<dynamic> commentList = jsonDecode(response.body);
-      setState(() {
-        comments = commentList.map((comment) => comment['content'] as String).toList();
-      });
+      print("comments get  ${widget.postId}");
+      final responseBody = jsonDecode(response.body);
+      print('Response Body: $responseBody');
+      if (responseBody is Map && responseBody['comments'] is List) {
+        setState(() {
+          comments = (responseBody['comments'] as List)
+              .map((comment) => CommentModel.fromJson(comment).content)
+              .toList();
+        });
+      } else {
+        print('Unexpected response format');
+        // Handle unexpected format
+      }
     } else {
       // Handle error
+      print('Failed to load comments');
     }
   }
+
 
   Future<void> _addComment(String comment) async {
     String token = (await CacheHelper.getString(key: 'token'))!;
@@ -464,6 +484,41 @@ class _PostCardState extends State<PostCard_with_comments> {
           ],
         ),
       ),
+    );
+  }
+}
+//comments model
+class CommentModel {
+  final int id;
+  final String createdAt;
+  final String updatedAt;
+  final int userId;
+  final int postId;
+  final String content;
+  // final String userName;
+  // final String userProfileImageUrl;
+
+  CommentModel({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.userId,
+    required this.postId,
+    required this.content,
+    // required this.userName,
+    // required this.userProfileImageUrl,
+  });
+
+  factory CommentModel.fromJson(Map<String, dynamic> json) {
+    return CommentModel(
+      id: json['id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      userId: json['user_id'],
+      postId: json['post_id'],
+      content: json['content'],
+      // userName: json['user']['name'],  // Assuming the user info is nested
+      // userProfileImageUrl: json['user']['profile_image_url'], // Assuming the user info is nested
     );
   }
 }
