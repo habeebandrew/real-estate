@@ -113,7 +113,13 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-
+Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.notifications_none_rounded),
+                          onPressed: () {
+                            // Handle the notification icon tap
+                          },
+                        ),
                       ],
                     ),
                   ),
