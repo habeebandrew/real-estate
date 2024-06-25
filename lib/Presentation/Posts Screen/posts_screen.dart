@@ -12,20 +12,15 @@ class PostsScreen extends StatefulWidget {
   @override
   _PostScreenState createState() => _PostScreenState();
 }
-
 class _PostScreenState extends State<PostsScreen> {
-  // قائمة لتخزين البيانات المستلمة من API
   List<Post> posts = [];
-
-  // استدعاء API ومعالجة البيانات
   void fetchPosts() async {
-    String token = (await CacheHelper.getString(key: 'token'))!;
-
+    // String token = (await CacheHelper.getString(key: 'token'))!;
     final response = await http.get(
       Uri.parse('http://192.168.1.104:8000/api/posts'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
+        // 'Authorization': 'Bearer $token',
       },
     );
     if (response.statusCode == 200) {
@@ -37,13 +32,11 @@ class _PostScreenState extends State<PostsScreen> {
       throw Exception('Failed to load posts');
     }
   }
-
   @override
   void initState() {
     super.initState();
     fetchPosts();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,47 +53,15 @@ class _PostScreenState extends State<PostsScreen> {
         itemBuilder: (context, index) {
           var post = posts[index];
           return
-
             post_card(description:post.description ,phone: post.mobilenumber,
               selectedArea: post.region,status:post.state
               ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
               userName: post.userId,userProfileImageUrl: post.profileImage,);
-          //   Card(
-          //   margin: EdgeInsets.all(8.0),
-          //   child: Padding(
-          //     padding: EdgeInsets.all(12.0),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             CircleAvatar(
-          //               backgroundImage: NetworkImage(post.profileImage),
-          //               radius: 20.0,
-          //             ),
-          //             SizedBox(width: 8.0),
-          //             Text('ID: ${post.id}'),
-          //           ],
-          //         ),
-          //         SizedBox(height: 8.0),
-          //         Text('الاسم: ${post.userId}'),
-          //         Text('الحالة: ${post.state}'),
-          //         Text('المحافظة: ${post.governorate}'),
-          //         Text('المنطقة: ${post.region}'),
-          //         Text('الميزانية: ${post.budget}'),
-          //         Text('الوصف: ${post.description}'),
-          //         Text('رقم الجوال: ${post.mobilenumber}'),
-          //         Text('تاريخ الإنشاء: ${DateFormat('yyyy-MM-dd HH:mm').format(post.createdAt)}'),
-          //       ],
-          //     ),
-          //   ),
-          // );
         },
       ),
     );
   }
 }
-
 //Model
 class Post {
   final int id;
@@ -113,7 +74,6 @@ class Post {
   final int mobilenumber;
   final String profileImage;
   final DateTime createdAt;
-
   Post({
     required this.id,
     required this.userId,
@@ -126,7 +86,6 @@ class Post {
     required this.profileImage,
     required this.createdAt,
   });
-
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
@@ -135,7 +94,7 @@ class Post {
       governorate: json['governorate'],
       region: json['region'],
       budget: json['budget'],
-      description: json['description'],
+        description: json['description'],
       mobilenumber: json['mobilenumber'],
       profileImage: json['profile_image'],
       createdAt: DateTime.parse(json['created_at']),

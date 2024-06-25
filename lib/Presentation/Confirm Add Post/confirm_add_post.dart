@@ -12,17 +12,14 @@ import '../../Util/global Widgets/mySnackBar.dart';
 import '../../Util/global Widgets/my_button.dart';
 import '../../Util/network_helper.dart';
 import '../Posts Screen/Posts widgets/post_widgets.dart';
-
 class ConfirmAddPost extends StatelessWidget {
   String my_name = (CacheHelper.getString(key: 'name'))!;
-
 final int budget;
   final String description;
   final int phone;
   final String selectedArea;
   final String selectedGovernorate;
   final String status;
-
    ConfirmAddPost({
     super.key,
     required this.budget,
@@ -32,10 +29,8 @@ final int budget;
     required this.selectedGovernorate,
     required this.status,
   });
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -46,16 +41,6 @@ final int budget;
         create: (context) => PostsCubit(),
         child: BlocConsumer<PostsCubit, PostsState>(
           listener: (context, state) {
-            // if (state is PostSuccess) {
-            //   mySnackBar(
-            //     context: context,
-            //     color:Constants.mainColor,
-            //     title: 'Published successfully:',
-            //   );
-            //   Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
-            //
-            // }
-            // else
               if (state is PostFailed) {
               mySnackBar(
                 context: context,
@@ -71,13 +56,13 @@ final int budget;
             if (state is PostsLoadingState) {
               return Center(child: CircularProgressIndicator());
             }
-
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 50),
                 // post_card_confirm()
-                post_card_confirm(budget: budget,selectedGovernorate: selectedGovernorate,status:status ,selectedArea:selectedArea ,phone: phone,description: description,),
+                post_card_confirm(budget: budget,selectedGovernorate: selectedGovernorate,status:status
+                  ,selectedArea:selectedArea ,phone: phone,description: description,),
                 SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

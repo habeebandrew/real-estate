@@ -138,23 +138,19 @@ class post_card extends StatelessWidget {
 //for confirm
 class post_card_confirm extends StatelessWidget {
   String name = (CacheHelper.getString(key: 'name'))!;
-
   final int budget;
   final String description;
   final String status;
   final int  phone;
   final String  selectedGovernorate;
   final String  selectedArea;
-
   post_card_confirm({
     required this.budget,
     required this.description,
     required this.status,
     required this.phone,
     required this.selectedGovernorate,
-
     required this.selectedArea,
-
   });
   String formatBudget(int budget) {
     if (budget >= 1000000000) {
@@ -236,8 +232,6 @@ class post_card_confirm extends StatelessWidget {
               child: Row(mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(Icons.phone, color: Constants.mainColor),
-
-
                   SizedBox(width: 5.0),
                   Text('Contact', style: TextStyle(fontSize: 16,color: Constants.mainColor,fontWeight: FontWeight.bold),
                     // textDirection: TextDirection.ltr
@@ -252,7 +246,6 @@ class post_card_confirm extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
 
