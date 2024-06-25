@@ -10,6 +10,7 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:flutter/services.dart';
 
 import '../../Util/dimensions.dart';
+import '../../Util/global Widgets/animation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -127,7 +128,8 @@ class HomeScreen extends StatelessWidget {
                 Icons.add,
                 size: 40.0.sp,
               ),
-              onPressed: () {},
+              onPressed: () {         Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+              },
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation
                 .centerDocked,
@@ -151,7 +153,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 myBottomNavBarItem(
                   icon: Icons.add,
-                  label: 'add',
+                  label: 'Add Post',
                 ),
                 myBottomNavBarItem(
                   icon: Icons.holiday_village,

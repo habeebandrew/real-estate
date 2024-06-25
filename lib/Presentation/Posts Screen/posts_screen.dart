@@ -8,66 +8,190 @@ import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/animation.dart';
 import 'Posts widgets/post_widgets.dart';
 
+//
+// class PostsScreen extends StatefulWidget {
+//   @override
+//   _PostScreenState createState() => _PostScreenState();
+// }
+// class _PostScreenState extends State<PostsScreen> {
+//   List<Post> posts = [];
+//   void fetchPosts() async {
+//     // String token = (await CacheHelper.getString(key: 'token'))!;
+//     final response = await http.get(
+//       Uri.parse(ApiAndEndpoints.api+ApiAndEndpoints.getpost),
+//       headers: {
+//         'Content-Type': 'application/json',
+//         // 'Authorization': 'Bearer $token',
+//       },
+//     );
+//     if (response.statusCode == 200) {
+//       List<dynamic> data = jsonDecode(response.body)['posts'];
+//       setState(() {
+//         posts = data.map((postJson) => Post.fromJson(postJson)).toList();
+//       });
+//     } else {
+//       throw Exception('Failed to load posts');
+//     }
+//   }
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchPosts();
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(automaticallyImplyLeading: false,
+//         title: TextButton(onPressed: (){
+//           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+//
+//         },child: Text("+ add my ad"),)
+//       ),
+//       body: posts.isEmpty
+//           ? Center(child: CircularProgressIndicator())
+//           : ListView.builder(
+//         itemCount: posts.length,
+//         itemBuilder: (context, index) {
+//           var post = posts[index];
+//           return
+//             // post_card(description:post.description ,phone: post.mobilenumber,
+//             //   selectedArea: post.region,status:post.state
+//             //   ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
+//             //   userName: post.userId,userProfileImageUrl: post.profileImage,id: post.id,);
+//           PostCard_with_comments(description:post.description ,phone: post.mobilenumber,
+//              selectedArea: post.region,status:post.state
+//               ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
+//               userName: post.userId,userProfileImageUrl: post.profileImage,postId: post.id);
+//         },
+//       ),
+//     );
+//   }
+// }
+//test with filter
 
 class PostsScreen extends StatefulWidget {
   @override
   _PostScreenState createState() => _PostScreenState();
 }
+
 class _PostScreenState extends State<PostsScreen> {
   List<Post> posts = [];
+  List<Post> filteredPosts = [];
+  String selectedState = 'All'; // 'All', 'For Sale', 'For Rent'
+  String selectedGovernorate = 'All'; // 'All' or specific governorate
+
   void fetchPosts() async {
-    // String token = (await CacheHelper.getString(key: 'token'))!;
     final response = await http.get(
-      Uri.parse(ApiAndEndpoints.api+ApiAndEndpoints.getpost),
+      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.getpost),
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer $token',
       },
     );
+
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body)['posts'];
       setState(() {
         posts = data.map((postJson) => Post.fromJson(postJson)).toList();
+        applyFilters();
       });
     } else {
       throw Exception('Failed to load posts');
     }
   }
+
+  void applyFilters() {
+    setState(() {
+      filteredPosts = posts.where((post) {
+        bool matchesState = selectedState == 'All' || post.state == selectedState;
+        bool matchesGovernorate = selectedGovernorate == 'All' || post.governorate == selectedGovernorate;
+        return matchesState && matchesGovernorate;
+      }).toList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     fetchPosts();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false,
-        title: TextButton(onPressed: (){
-          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
-
-        },child: Text("+ add my ad"),)
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            DropdownButton<String>(
+              value: selectedState,
+              items: ['All', 'buy', 'rental']
+                  .map((state) => DropdownMenuItem<String>(
+                value: state,
+                child: Text(state),
+              ))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  selectedState = value!;
+                  applyFilters();
+                });
+              },
+            ),
+            SizedBox(width: 16),
+            DropdownButton<String>(
+              value: selectedGovernorate,
+              items:
+              ['All','Damascus', 'Rural Damascus', 'Aleppo','Rural Aleppo','Homs',
+                'Rural Homs','Latakia','Rural Latakia','Tartous','Rural Tartous',
+              'Hama','Rural Hama','Idlib','Rural Idlib','Deir ez-Zor','Rural Deir ez-Zor','Raqqa','Rural Raqqa','Al-Hasakah','Rural Al-Hasakah','Daraa','Rural Daraa','As-Suwayda','Rural As-Suwayda'
+                ,'Quneitra','Rural Quneitra'
+              ] // Add your governorates here
+                  .map((governorate) => DropdownMenuItem<String>(
+                value: governorate,
+                child: Text(governorate),
+              ))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  selectedGovernorate = value!;
+                  applyFilters();
+                });
+              },
+            ),
+            Spacer(),
+            Text('Posts: ${filteredPosts.length}'),
+          ],
+        ),
       ),
-      body: posts.isEmpty
+      body: filteredPosts.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: posts.length,
+        itemCount: filteredPosts.length,
         itemBuilder: (context, index) {
-          var post = posts[index];
-          return
-            // post_card(description:post.description ,phone: post.mobilenumber,
-            //   selectedArea: post.region,status:post.state
-            //   ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
-            //   userName: post.userId,userProfileImageUrl: post.profileImage,id: post.id,);
-          PostCard_with_comments(description:post.description ,phone: post.mobilenumber,
-              selectedArea: post.region,status:post.state
-              ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
-              userName: post.userId,userProfileImageUrl: post.profileImage,postId: post.id);
+          var post = filteredPosts[index];
+          return PostCard_with_comments(
+            description: post.description,
+            phone: post.mobilenumber,
+            selectedArea: post.region,
+            status: post.state,
+            selectedGovernorate: post.governorate,
+            budget: post.budget,
+            postDate: post.createdAt,
+            userName: post.userId,
+            userProfileImageUrl: post.profileImage,
+            postId: post.id,
+          );
         },
       ),
     );
   }
 }
+
+
+
 //Model
+
+
 class Post {
   final int id;
   final String userId;
