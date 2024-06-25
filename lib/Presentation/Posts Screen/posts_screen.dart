@@ -83,8 +83,6 @@ class _PostScreenState extends State<PostsScreen> {
   String selectedState = 'All'; // 'All', 'For Sale', 'For Rent'
   String selectedGovernorate = 'All Cities'; // 'All' or specific governorate
   String selectedSortOrder = 'Newest'; // 'Newest', 'Oldest'
-  double minBudget = 0;
-  double maxBudget = 10000000000000;
   String selectedRegion = 'All';
 
   void fetchPosts() async {
@@ -105,16 +103,16 @@ class _PostScreenState extends State<PostsScreen> {
       throw Exception('Failed to load posts');
     }
   }
-
   void applyFilters() {
     setState(() {
       filteredPosts = posts.where((post) {
         bool matchesState = selectedState == 'All' || post.state == selectedState;
-        bool matchesGovernorate = selectedGovernorate == 'All Cities' || post.governorate == selectedGovernorate;
-        bool matchesBudget = post.budget >= minBudget && post.budget <= maxBudget;
+        bool matchesGovernorate =
+            selectedGovernorate == 'All Cities' || post.governorate == selectedGovernorate;
         bool matchesRegion = selectedRegion == 'All' || post.region == selectedRegion;
-        return matchesState && matchesGovernorate && matchesBudget && matchesRegion;
+        return matchesState && matchesGovernorate  && matchesRegion;
       }).toList();
+
       if (selectedSortOrder == 'Newest') {
         filteredPosts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       } else {
@@ -122,76 +120,8 @@ class _PostScreenState extends State<PostsScreen> {
       }
     });
   }
-  void showFilterDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        double tempMinBudget = minBudget;
-        double tempMaxBudget = maxBudget;
-        String tempSelectedRegion = selectedRegion;
 
-        return AlertDialog(
-          title: Text('Filters'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Budget Range'),
-              RangeSlider(
-                values: RangeValues(tempMinBudget, tempMaxBudget),
-                min: 0,
-                max: 10000000000000,
-                divisions: 100,
-                labels: RangeLabels(
-                  tempMinBudget.toString(),
-                  tempMaxBudget.toString(),
-                ),
-                onChanged: (RangeValues values) {
-                  setState(() {
-                    tempMinBudget = values.start;
-                    tempMaxBudget = values.end;
-                  });
-                },
-              ),
-              DropdownButton<String>(
-                value: tempSelectedRegion,
-                items: ['All', 'Region1', 'Region2'] // Add your regions here
-                    .map((region) => DropdownMenuItem<String>(
-                  value: region,
-                  child: Text(region),
-                ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    tempSelectedRegion = value!;
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  minBudget = tempMinBudget;
-                  maxBudget = tempMaxBudget;
-                  selectedRegion = tempSelectedRegion;
-                  applyFilters();
-                });
-                Navigator.of(context).pop();
-              },
-              child: Text('Apply'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   @override
   void initState() {
@@ -309,15 +239,17 @@ class _PostScreenState extends State<PostsScreen> {
                 ),
               ),
             ),
-            Text('Posts: ${filteredPosts.length}',style: TextStyle(fontSize: 8),),
             Spacer(),
-            SizedBox(width:  Dimensions.widthPercentage(context, 10),
-              child: IconButton(
-                icon: Icon(Icons.filter_list),
-                onPressed: showFilterDialog,
-                color: Colors.black,
-              ),
-            ),
+
+            Text('Posts: ${filteredPosts.length}',style: TextStyle(fontSize: 12),),
+            // Spacer(),
+            // SizedBox(width:  Dimensions.widthPercentage(context, 10),
+            //   child: IconButton(
+            //     icon: Icon(Icons.filter_list),
+            //     onPressed: (){},
+            //     color: Colors.black,
+            //   ),
+            // ),
           ],
         ),
 

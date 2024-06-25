@@ -469,7 +469,41 @@ class _PostCardState extends State<PostCard_with_comments> {
             ),
             if (showComments) ...[
               SizedBox(height: 10.0),
-              for (var comment in comments) Text(comment),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: comments.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(""
+                              // comments[index].userProfileImageUrl
+                          ),
+                          radius: 20.0,
+                        ),
+                        SizedBox(width: 10.0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              // comments[index].userName,
+                              "habeeb",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 4.0),
+                            Text(comments[index]),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 10.0),
               TextField(
                 controller: commentController,
                 decoration: InputDecoration(
@@ -481,6 +515,7 @@ class _PostCardState extends State<PostCard_with_comments> {
                 ),
               ),
             ],
+
           ],
         ),
       ),
