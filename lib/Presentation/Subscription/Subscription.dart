@@ -54,7 +54,6 @@ class Subscription extends StatelessWidget {
   //
   //     },
 Future<void> updateRole(BuildContext context) async {
-
 try {
 
 int my_id = (await CacheHelper.getInt(key: 'id'))!;

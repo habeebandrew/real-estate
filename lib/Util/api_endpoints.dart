@@ -12,6 +12,7 @@ class ApiAndEndpoints{
  static const getpost = 'posts';
 
  static const updateRole = 'updateRole';
+ static const addComment = 'addComment';
 
 
 }

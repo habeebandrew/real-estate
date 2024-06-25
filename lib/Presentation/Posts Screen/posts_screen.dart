@@ -54,10 +54,14 @@ class _PostScreenState extends State<PostsScreen> {
         itemBuilder: (context, index) {
           var post = posts[index];
           return
-            post_card(description:post.description ,phone: post.mobilenumber,
+            // post_card(description:post.description ,phone: post.mobilenumber,
+            //   selectedArea: post.region,status:post.state
+            //   ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
+            //   userName: post.userId,userProfileImageUrl: post.profileImage,id: post.id,);
+          PostCard_with_comments(description:post.description ,phone: post.mobilenumber,
               selectedArea: post.region,status:post.state
               ,selectedGovernorate: post.governorate,budget: post.budget,postDate:post.createdAt,
-              userName: post.userId,userProfileImageUrl: post.profileImage,);
+              userName: post.userId,userProfileImageUrl: post.profileImage,postId: post.id);
         },
       ),
     );
