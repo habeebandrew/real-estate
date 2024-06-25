@@ -72,6 +72,7 @@ class AuthCubit extends Cubit<AuthState>
           );
           await CacheHelper.putString(key: 'name', value: value.user.username);
           await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
+          await CacheHelper.putInt(key: 'id', value: value.user.id);
 
           await CacheHelper.putString(key: 'token', value: value.accessToken);
 
@@ -113,6 +114,7 @@ class AuthCubit extends Cubit<AuthState>
           await CacheHelper.putString(key: 'name', value: value.user.username);
           await CacheHelper.putString(key: 'token', value: value.accessToken);
           await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
+          await CacheHelper.putInt(key: 'id', value: value.user.id);
 
           // Delay for 2 seconds and then navigate to the next screen
           Future.delayed(const Duration(seconds: 2), () {

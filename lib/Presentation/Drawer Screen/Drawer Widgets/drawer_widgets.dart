@@ -102,6 +102,18 @@ Widget build_for_user(BuildContext context) {
           height: 5,
         ),
         myDrawerButton(
+          label: 'Subscription',
+          icon: Icons.business,
+          onPress: () async {
+
+
+            Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+          },
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        myDrawerButton(
           label: 'language',
           icon: Icons.language,
           onPress: () {},

@@ -15,6 +15,7 @@ import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
 import '../Presentation/SplashScreen/splash_screen.dart';
+import '../Presentation/Subscription/Subscription.dart';
 
 
 class NamedRoutes
@@ -34,7 +35,7 @@ class NamedRoutes
   static const Contactwithus='ContactUsPage';
   static const addpost='add_post_screen';
   // static const confirmAddPost='ConfirmAddPost';
-
+  static const subscription='Subscription';
 // static const test1_json='doneTaskScreen';
 
 
@@ -57,6 +58,7 @@ class AppRoutes
    static ContactUsPage contactwithus=ContactUsPage();
   static const addPost=AddPostScreen();
   // static const confirmAddPost=ConfirmAddPost(selectedGovernorate: '', budget: null,status: ,selectedArea: ,phone: ,description: ,key: ,);
+  static Subscription subscription=Subscription();
 
   // static const  test1_json=theList();
 
@@ -77,6 +79,7 @@ class AppRoutes
     NamedRoutes.Contactwithus:(context)=>AppRoutes.contactwithus,
     NamedRoutes.addpost:(context)=>AppRoutes.addPost,
     // NamedRoutes.confirmAddPost:(context)=>AppRoutes.confirmAddPost,
+    NamedRoutes.subscription:(context)=>AppRoutes.subscription,
 
     // NamedRoutes.test1_json:(context)=>AppRoutes.test1_json,
 

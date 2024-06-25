@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import '../../Util/api_endpoints.dart';
 import '../../Util/app_routes.dart';
 import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/animation.dart';
@@ -17,7 +18,7 @@ class _PostScreenState extends State<PostsScreen> {
   void fetchPosts() async {
     // String token = (await CacheHelper.getString(key: 'token'))!;
     final response = await http.get(
-      Uri.parse('http://192.168.1.104:8000/api/posts'),
+      Uri.parse(ApiAndEndpoints.api+ApiAndEndpoints.getpost),
       headers: {
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer $token',
