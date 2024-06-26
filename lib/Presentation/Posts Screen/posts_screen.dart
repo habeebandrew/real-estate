@@ -80,6 +80,7 @@ class PostsScreen extends StatefulWidget {
 class _PostScreenState extends State<PostsScreen> {
   List<Post> posts = [];
   List<Post> filteredPosts = [];
+  bool _isLoading = true;
   String selectedState = 'All'; // 'All', 'For Sale', 'For Rent'
   String selectedGovernorate = 'All Cities'; // 'All' or specific governorate
   String selectedSortOrder = 'Newest'; // 'Newest', 'Oldest'
@@ -127,6 +128,13 @@ class _PostScreenState extends State<PostsScreen> {
   void initState() {
     super.initState();
     fetchPosts();
+    Future.delayed(Duration(seconds: 1), () {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    });
   }
 
   @override
@@ -139,7 +147,7 @@ class _PostScreenState extends State<PostsScreen> {
         title:
         Row(
           children: [
-            SizedBox(width: Dimensions.widthPercentage(context, 15),
+            SizedBox(width: Dimensions.widthPercentage(context, 16),
               child: Expanded(
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
@@ -162,7 +170,7 @@ class _PostScreenState extends State<PostsScreen> {
                 ),
               ),
             ),
-            SizedBox(width:Dimensions.widthPercentage(context, 5),),
+            SizedBox(width:Dimensions.widthPercentage(context, 3),),
             // SizedBox(width: 8),
             SizedBox(width: Dimensions.widthPercentage(context, 25),
               child: Expanded(
@@ -215,8 +223,8 @@ class _PostScreenState extends State<PostsScreen> {
                 ),
               ),
             ),
-            SizedBox(width: Dimensions.widthPercentage(context, 5),),
-            SizedBox(width: Dimensions.widthPercentage(context, 20),
+            SizedBox(width: Dimensions.widthPercentage(context, 3),),
+            SizedBox(width: Dimensions.widthPercentage(context, 22),
               child: Expanded(
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
@@ -255,8 +263,10 @@ class _PostScreenState extends State<PostsScreen> {
 
       ),),
       body:
-      filteredPosts.isEmpty
+      _isLoading
           ? Center(child: CircularProgressIndicator())
+          : filteredPosts.isEmpty
+          ? Center(child: Text('There is no data', style: TextStyle(fontSize: 18)))
           : ListView.builder(
         itemCount: filteredPosts.length,
         itemBuilder: (context, index) {
@@ -278,7 +288,6 @@ class _PostScreenState extends State<PostsScreen> {
     );
   }
 }
-
 
 //Model
 

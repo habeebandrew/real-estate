@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                           "assets/images/General/App_Icon1.png",
                           height: Dimensions.heightPercentage(context, 6.5),
                         ),
-                        const SizedBox(width: 5,),
+                        const SizedBox(width: 1,),
                         RichText(
                           text: TextSpan(
                             children: [

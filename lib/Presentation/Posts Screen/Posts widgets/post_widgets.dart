@@ -182,43 +182,65 @@ class post_card_confirm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(""),//حط صورتي الشخصية
-                  radius: 20.0,
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Text(
-                      name,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(""), // حط صورتي الشخصية
+                      radius: 20.0,
                     ),
-                    Text(
-                      "Now",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    SizedBox(width: 10.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "Now",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   ],
                 ),
+                // PopupMenuButton<String>(
+                //   onSelected: (String value) {
+                //     if (value == 'report') {
+                //       print('Report post');
+                //
+                //     }
+                //   },
+                //   itemBuilder: (BuildContext context) {
+                //     return [
+                //       PopupMenuItem<String>(
+                //         value: 'report',
+                //         child: Text('Report the post'),
+                //       ),
+                //     ];
+                //   },
+                //   icon: Icon(Icons.more_vert),
+                // ),
               ],
             ),
             Text(
               'Wanted for $status properity in $selectedGovernorate _ $selectedArea',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              // textDirection: TextDirection.LTR,
             ),
             SizedBox(height: 5.0),
             Row(
-              children: [Icon(Icons.monetization_on_outlined,color: Constants.mainColor,),SizedBox(width: 5,),
+              children: [
+                Icon(Icons.monetization_on_outlined, color: Constants.mainColor,),
+                SizedBox(width: 5),
                 Text(
                   'budget: ${formatBudget(budget)}',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Constants.mainColor,
+                    color:Constants.mainColor,
                     fontWeight: FontWeight.bold,
                   ),
-                  // textDirection: TextDirection.ltr,
                 ),
               ],
             ),
@@ -237,26 +259,30 @@ class post_card_confirm extends StatelessWidget {
                   throw 'Could not launch $url';
                 }
               },
-              child: Row(mainAxisAlignment: MainAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.phone, color: Constants.mainColor),
+                  Icon(Icons.phone, color: Constants.mainColor,),
                   SizedBox(width: 5.0),
-                  Text('Contact', style: TextStyle(fontSize: 16,color: Constants.mainColor,fontWeight: FontWeight.bold),
-                    // textDirection: TextDirection.ltr
+                  Text(
+                    'Contact',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color:Constants.mainColor,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 10.0),
             Divider(),
-            // SizedBox(height:/ 5.0),
           ],
         ),
       ),
     );
   }
 }
-
 //for comments
 class PostCard_with_comments extends StatefulWidget {
   final int budget;
@@ -375,24 +401,45 @@ class _PostCardState extends State<PostCard_with_comments> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(widget.userProfileImageUrl!),
-                  radius: 20.0,
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    Text(
-                      widget.userName,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(widget.userProfileImageUrl!),
+                      radius: 20.0,
                     ),
-                    Text(
-                      DateFormat.yMMMd().format(widget.postDate!),
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    SizedBox(width: 10.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.userName,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          DateFormat.yMMMd().format(widget.postDate!),
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   ],
+                ),
+                PopupMenuButton<String>(
+                  onSelected: (String value) {
+                    if (value == 'report') {
+                      print('Report post');
+                    }
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem<String>(
+                        value: 'report',
+                        child: Text('Report the post'),
+                      ),
+                    ];
+                  },
+                  icon: Icon(Icons.expand_more_outlined),
                 ),
               ],
             ),
