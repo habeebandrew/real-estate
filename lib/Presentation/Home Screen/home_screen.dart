@@ -9,6 +9,7 @@ import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:flutter/services.dart';
 
+import '../../Util/cache_helper.dart';
 import '../../Util/dimensions.dart';
 import '../../Util/global Widgets/animation.dart';
 
@@ -134,7 +135,167 @@ Spacer(),
                 Icons.add,
                 size: 40.0.sp,
               ),
-              onPressed: () {         Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+              onPressed: () {
+               int? role_id= CacheHelper.getInt(key: 'role_id');
+                if(role_id==null){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          'alert',
+                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        ),
+                        content: Text('You do not have permission add any thing. Please log in!!'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+
+                }
+               if(role_id==1){
+
+                 showDialog(
+                   context: context,
+                   builder: (BuildContext context) {
+                     return AlertDialog(
+                       shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(15),
+                       ),
+                       title: Text(
+                         'Add',
+                         style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                       ),
+                       content: SingleChildScrollView(
+                         child: Column(
+                           // mainAxisSize: MainAxisSize.max,
+                           children: <Widget>[
+                             TextButton(onPressed: (){
+                               showDialog(
+                                 context: context,
+                                 builder: (BuildContext context) {
+                                   return AlertDialog(
+                                     shape: RoundedRectangleBorder(
+                                       borderRadius: BorderRadius.circular(15),
+                                     ),
+                                     title: Text(
+                                       'alert',
+                                       style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                                     ),
+                                     content: Text('You do not have permission to add areal estate ad. Please subscription as a broker!!'),
+                                     actions: <Widget>[
+                                       TextButton(
+                                         child: Text(
+                                           'Subscription',
+                                           style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                                         ),
+                                         onPressed: () {
+                                           Navigator.of(context).pop();
+                                           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                                         },
+                                       ),
+                                     ],
+                                   );
+                                 },
+                               );
+                               // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.));
+                             },
+                               child: ListTile(
+                                 leading: Icon(Icons.info, color: Constants.mainColor),
+                                 title: Text('Add a real estate ad'),
+
+                               ),
+                             ),
+                             Divider(),
+                             TextButton(onPressed: (){Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));},
+                               child: ListTile(
+                                 leading: Icon(Icons.info, color: Constants.mainColor),
+                                 title: Text('Add a post'),
+                               ),
+                             ),
+
+                           ],
+                         ),
+                       ),
+                       actions: <Widget>[
+                         TextButton(
+                           child: Text('إغلاق',style: TextStyle(color: Constants.mainColor),),
+                           onPressed: () {
+                             Navigator.of(context).pop();
+                           },
+                         ),
+                       ],
+                     );
+                   },
+                 );
+
+               }
+               if(role_id==2){
+                 showDialog(
+                   context: context,
+                   builder: (BuildContext context) {
+                     return AlertDialog(
+                       shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(15),
+                       ),
+                       title: Text(
+                         'Add',
+                         style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                       ),
+                       content: SingleChildScrollView(
+                         child: Column(
+                           // mainAxisSize: MainAxisSize.max,
+                           children: <Widget>[
+                             TextButton(onPressed: (){
+                               // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.));
+                               },
+                               child: ListTile(
+                                 leading: Icon(Icons.info, color: Constants.mainColor),
+                                 title: Text('Add a real estate ad'),
+
+                               ),
+                             ),
+                             Divider(),
+                             TextButton(onPressed: (){Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));},
+                               child: ListTile(
+                                 leading: Icon(Icons.info, color: Constants.mainColor),
+                                 title: Text('Add a post'),
+                               ),
+                             ),
+
+                           ],
+                         ),
+                       ),
+                       actions: <Widget>[
+                         TextButton(
+                           child: Text('إغلاق',style: TextStyle(color: Constants.mainColor),),
+                           onPressed: () {
+                             Navigator.of(context).pop();
+                           },
+                         ),
+                       ],
+                     );
+                   },
+                 );
+
+
+               }
+                // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
               },
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation
@@ -159,7 +320,8 @@ Spacer(),
                 ),
                 myBottomNavBarItem(
                   icon: Icons.add,
-                  label: 'Add Post',
+                  label:
+                   'Add'
                 ),
                 myBottomNavBarItem(
                   icon: Icons.holiday_village,

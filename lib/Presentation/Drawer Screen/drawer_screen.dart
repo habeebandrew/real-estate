@@ -47,8 +47,6 @@ class DrawerScreen extends StatelessWidget {
                       : (CacheHelper.getInt(key: 'role_id') == 2
                           ? build_for_Broker(context)
                           : const Text("Error confirming identity")),
-
-              //هون كمان بس يزبط الباك بضيف اذا احتمال اذا كان سمسار
             ],
           ),
         ),

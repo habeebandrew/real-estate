@@ -1,148 +1,14 @@
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../Data/Posts_model.dart';
 import '../../../Util/api_endpoints.dart';
+import '../../../Util/app_routes.dart';
 import '../../../Util/cache_helper.dart';
-import 'package:http/http.dart' as http;
-
+import '../../../Util/global Widgets/animation.dart';
 import '../../../Util/network_helper.dart';
-
-class post_card extends StatelessWidget {
-  final int budget;
-   int?  id;
-  final String description;
-   String? status;
-  final int  phone;
-  final String  selectedGovernorate;
-  final String  selectedArea;
-  final String userName;
-   String? userProfileImageUrl;
-   DateTime? postDate;//DateTime
-
-  post_card({
-    required this.budget,
-     this.id,
-    required this.description,
-     this.status,
-    required this.phone,
-    required this.selectedGovernorate,
-    required this.userName,
-     this.userProfileImageUrl,
-     this.postDate,
-    required this.selectedArea,
-
-  });
-  String formatBudget(int budget) {
-    if (budget >= 1000000000) {
-      return '${(budget / 1000000000).toStringAsFixed(1)} billion';
-    } else if (budget >= 1000000) {
-      return '${(budget / 1000000).toStringAsFixed(1)} million sp';
-    } else if (budget >= 1000) {
-      return '${(budget / 1000).toStringAsFixed(1)} K sp';
-    }else {
-      return budget.toString();
-    }
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      margin: EdgeInsets.all(15.0),
-      shadowColor: Constants.mainColor,
-      elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(userProfileImageUrl!),
-                  radius: 20.0,
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      userName,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      DateFormat.yMMMd().format(postDate!),
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              'Wanted for $status property in $selectedGovernorate _ $selectedArea',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              // textDirection: TextDirection.LTR,
-            ),
-            SizedBox(height: 5.0),
-            Row(
-              children: [
-                Icon(Icons.monetization_on_outlined, color: Constants.mainColor,),
-                SizedBox(width: 5.0),
-                Text(
-                  'Budget: ${formatBudget(budget)}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.mainColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  // textDirection: TextDirection.ltr,
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              description,
-              style: TextStyle(fontSize: 14),
-            ),
-            SizedBox(height: 20.0),
-            GestureDetector(
-              onTap: () async {
-                final url = 'tel:$phone';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [Text("$id"),//for del just test here !!!
-                  Icon(Icons.phone, color:Constants.mainColor,),
-                  SizedBox(width: 5.0),
-                  Text(
-                    'Contact',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color:Constants.mainColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    // textDirection: TextDirection.ltr,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Divider(),
-          ],
-        ),
-      ),
-    );
-  }
-}
 //for confirm
 class post_card_confirm extends StatelessWidget {
   String name = (CacheHelper.getString(key: 'name'))!;
@@ -206,23 +72,7 @@ class post_card_confirm extends StatelessWidget {
                     ),
                   ],
                 ),
-                // PopupMenuButton<String>(
-                //   onSelected: (String value) {
-                //     if (value == 'report') {
-                //       print('Report post');
-                //
-                //     }
-                //   },
-                //   itemBuilder: (BuildContext context) {
-                //     return [
-                //       PopupMenuItem<String>(
-                //         value: 'report',
-                //         child: Text('Report the post'),
-                //       ),
-                //     ];
-                //   },
-                //   icon: Icon(Icons.more_vert),
-                // ),
+
               ],
             ),
             Text(
@@ -317,7 +167,6 @@ class PostCard_with_comments extends StatefulWidget {
   @override
   _PostCardState createState() => _PostCardState();
 }
-
 class _PostCardState extends State<PostCard_with_comments> {
   bool showComments = false;
   List<String> comments = [];
@@ -428,7 +277,67 @@ class _PostCardState extends State<PostCard_with_comments> {
                 PopupMenuButton<String>(
                   onSelected: (String value) {
                     if (value == 'report') {
+
                       print('Report post');
+                      int? roleId = CacheHelper.getInt(key: 'role_id');
+                      if (roleId == null) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              title: Text(
+                                'alert',
+                                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                              ),
+                              content: Text('You do not have permission to report posts. Please log in and sign up as a broker!!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Log In',
+                                    style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+   else if (roleId == 1) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              title: Text(
+                                'alert',
+                                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                              ),
+                              content: Text('You do not have permission to to report posts. Please subscription as a broker!!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Subscription',
+                                    style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     }
                   },
                   itemBuilder: (BuildContext context) {
@@ -471,13 +380,71 @@ class _PostCardState extends State<PostCard_with_comments> {
             SizedBox(height: 20.0),
             GestureDetector(
               onTap: () async {
-                final url = 'tel:${widget.phone}';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
+    int? roleId = CacheHelper.getInt(key: 'role_id');
+    if (roleId == null) {  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Text(
+            'alert',
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+          ),
+          content: Text('You do not have permission to see the phone number. Please log in and sign up as a broker!!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Log In',
+                style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
               },
+            ),
+          ],
+        );
+      },
+    );
+    } else if (roleId == 1) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              'alert',
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+            content: Text('You do not have permission to see the phone number. Please subscription as a broker!!'),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'Subscription',
+                  style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (roleId == 2) {
+      // إجراء مكالمة هاتفية إذا كان المستخدم وسيط
+      final url = 'tel:${widget.phone}';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -497,7 +464,70 @@ class _PostCardState extends State<PostCard_with_comments> {
             SizedBox(height: 10.0),
             Divider(),
             GestureDetector(
-              onTap: _toggleComments,
+              onTap:  () {
+                int? roleId = CacheHelper.getInt(key: 'role_id');
+                if (roleId == null) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          'alert',
+                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        ),
+                        content: Text('You do not have permission to see comments. Please log in and sign up as a broker!!'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if (roleId == 1) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          'alert',
+                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        ),
+                        content: Text('You do not have permission to see comments,Please subscription as a broker!!'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'Subscription',
+                              style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if (roleId == 2) {
+                  _toggleComments();
+                } else {
+                  print("Unknown Role ID");
+                }
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -562,45 +592,10 @@ class _PostCardState extends State<PostCard_with_comments> {
                 ),
               ),
             ],
-
           ],
         ),
       ),
     );
   }
 }
-//comments model
-class CommentModel {
-  final int id;
-  final String createdAt;
-  final String updatedAt;
-  final int userId;
-  final int postId;
-  final String content;
-  // final String userName;
-  // final String userProfileImageUrl;
 
-  CommentModel({
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.userId,
-    required this.postId,
-    required this.content,
-    // required this.userName,
-    // required this.userProfileImageUrl,
-  });
-
-  factory CommentModel.fromJson(Map<String, dynamic> json) {
-    return CommentModel(
-      id: json['id'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      userId: json['user_id'],
-      postId: json['post_id'],
-      content: json['content'],
-      // userName: json['user']['name'],  // Assuming the user info is nested
-      // userProfileImageUrl: json['user']['profile_image_url'], // Assuming the user info is nested
-    );
-  }
-}

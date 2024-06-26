@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:pro_2/Util/constants.dart';
-import 'dart:convert';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
 import '../../../Util/app_routes.dart';
 import '../../Bloc/Posts Cubit/posts_cubit.dart';
-import '../../Util/api_endpoints.dart';
 import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/mySnackBar.dart';
 import '../../Util/global Widgets/my_button.dart';
-import '../../Util/network_helper.dart';
 import '../Posts Screen/Posts widgets/post_widgets.dart';
 class ConfirmAddPost extends StatelessWidget {
   String my_name = (CacheHelper.getString(key: 'name'))!;
