@@ -1,16 +1,19 @@
+
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pro_2/Util/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../Data/Posts_model.dart';
 import '../../../Util/api_endpoints.dart';
 import '../../../Util/app_routes.dart';
 import '../../../Util/cache_helper.dart';
+import '../../../Util/constants.dart';
 import '../../../Util/global Widgets/animation.dart';
 import '../../../Util/network_helper.dart';
-//for comments
-class PostCard_with_comments extends StatefulWidget {
+
+class PostCard_MYPOSTS extends StatefulWidget {
   final int budget;
   final String description;
   final String? status;
@@ -22,7 +25,7 @@ class PostCard_with_comments extends StatefulWidget {
   final DateTime? postDate;
   final int postId;
 
-  const PostCard_with_comments({super.key, required this.budget, required this.description,
+  const PostCard_MYPOSTS({super.key, required this.budget, required this.description,
     this.status, required this.phone, required this.selectedGovernorate, required this.selectedArea,
     required this.userName, this.userProfileImageUrl, this.postDate, required this.postId});
 
@@ -41,9 +44,9 @@ class PostCard_with_comments extends StatefulWidget {
   }
 
   @override
-  _PostCardState createState() => _PostCardState();
+  PostCard createState() => PostCard();
 }
-class _PostCardState extends State<PostCard_with_comments> {
+class PostCard extends State<PostCard_MYPOSTS> {
   bool showComments = false;
   List<CommentModel> comments = [];
   final TextEditingController commentController = TextEditingController();
@@ -153,75 +156,16 @@ class _PostCardState extends State<PostCard_with_comments> {
                 ),
                 PopupMenuButton<String>(
                   onSelected: (String value) {
-                    if (value == 'report') {
+                    if (value == 'DEL') {
 
-                      print('Report post');
-                      int? roleId = CacheHelper.getInt(key: 'role_id');
-                      if (roleId == null) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              title: Text(
-                                'alert',
-                                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                              ),
-                              content: Text('You do not have permission to report posts. Please log in and sign up as a broker!!'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Log In',
-                                    style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-   else if (roleId == 1) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              title: Text(
-                                'alert',
-                                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                              ),
-                              content: Text('You do not have permission to to report posts. Please subscription as a broker!!'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Subscription',
-                                    style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
+
                     }
                   },
                   itemBuilder: (BuildContext context) {
                     return [
                       PopupMenuItem<String>(
-                        value: 'report',
-                        child: Text('Report the post'),
+                        value: 'DEL',
+                        child: Text('DELETE the post'),
                       ),
                     ];
                   },
@@ -257,71 +201,71 @@ class _PostCardState extends State<PostCard_with_comments> {
             SizedBox(height: 20.0),
             GestureDetector(
               onTap: () async {
-    int? roleId = CacheHelper.getInt(key: 'role_id');
-    if (roleId == null) {  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          title: Text(
-            'alert',
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          ),
-          content: Text('You do not have permission to see the phone number. Please log in and sign up as a broker!!'),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'Log In',
-                style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-              },
-            ),
-          ],
-        );
-      },
-    );
-    } else if (roleId == 1) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            title: Text(
-              'alert',
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-            ),
-            content: Text('You do not have permission to see the phone number. Please subscription as a broker!!'),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  'Subscription',
-                  style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else if (roleId == 2) {
-      // إجراء مكالمة هاتفية إذا كان المستخدم وسيط
-      final url = 'tel:${widget.phone}';
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    } },
+                int? roleId = CacheHelper.getInt(key: 'role_id');
+                if (roleId == null) {  showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      title: Text(
+                        'alert',
+                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
+                      content: Text('You do not have permission to see the phone number. Please log in and sign up as a broker!!'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text(
+                            'Log In',
+                            style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+                } else if (roleId == 1) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          'alert',
+                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        ),
+                        content: Text('You do not have permission to see the phone number. Please subscription as a broker!!'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'Subscription',
+                              style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if (roleId == 2) {
+                  // إجراء مكالمة هاتفية إذا كان المستخدم وسيط
+                  final url = 'tel:${widget.phone}';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                } },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -444,7 +388,7 @@ class _PostCardState extends State<PostCard_with_comments> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              comments[index].userName,
+                  comments[index].userName,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 4.0),
@@ -474,4 +418,3 @@ class _PostCardState extends State<PostCard_with_comments> {
     );
   }
 }
-//for show my posts

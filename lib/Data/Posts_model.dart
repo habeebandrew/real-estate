@@ -22,10 +22,11 @@ class Post {
     required this.profileImage,
     required this.createdAt,
   });
-  factory Post.fromJson(Map<String, dynamic> json) {
+
+ factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
-      userId: json['user_id'],//user_id user_name
+      userId: json['user_name'],//user_id user_name
       state: json['state'],
       governorate: json['governorate'],
       region: json['region'],

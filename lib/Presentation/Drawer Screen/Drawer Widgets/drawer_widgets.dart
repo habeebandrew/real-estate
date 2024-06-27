@@ -202,7 +202,8 @@ Widget build_for_Broker(BuildContext context) {
       myDrawerButton(
         label: 'My posts',
         icon: Icons.article,
-        onPress: () {},
+        onPress: () {            Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.My_posts));
+        },
       ),
       SizedBox(
         height: 5,

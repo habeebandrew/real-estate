@@ -9,7 +9,7 @@ import 'package:pro_2/Util/network_helper.dart';
 
 class PropertyService{
 
- String token = (CacheHelper.getString(key: 'token'))!;
+ // String token = (CacheHelper.getString(key: 'token'))!;
 
   static Future getFavourite() async {
     try
