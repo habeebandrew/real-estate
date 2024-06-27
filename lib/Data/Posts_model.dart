@@ -25,7 +25,7 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
-      userId: json['user_id'],
+      userId: json['user_id'],//user_id user_name
       state: json['state'],
       governorate: json['governorate'],
       region: json['region'],
@@ -40,32 +40,32 @@ class Post {
 class CommentModel {
   final int id;
   final String createdAt;
-  final String updatedAt;
+  // final String updatedAt;
   final int userId;
-  final int postId;
+  // final int postId;
   final String content;
-  // final String userName;
-  // final String userProfileImageUrl;
+  final String userName;
+  final String userProfileImageUrl;
   CommentModel({
     required this.id,
     required this.createdAt,
-    required this.updatedAt,
+    // required this.updatedAt,
     required this.userId,
-    required this.postId,
+    // required this.postId,
     required this.content,
-    // required this.userName,
-    // required this.userProfileImageUrl,
+    required this.userName,
+    required this.userProfileImageUrl,
   });
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
       id: json['id'],
       createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
+      // updatedAt: json['updated_at'],
       userId: json['user_id'],
-      postId: json['post_id'],
+      // postId: json['post_id'],
       content: json['content'],
-      // userName: json['user']['name'],  // Assuming the user info is nested
-      // userProfileImageUrl: json['user']['profile_image_url'], // Assuming the user info is nested
+      userName: json['user_name'],  // Assuming the user info is nested
+      userProfileImageUrl: json['image'], // Assuming the user info is nested
     );
   }
 }

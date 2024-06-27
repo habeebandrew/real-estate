@@ -6,6 +6,7 @@ import 'package:pro_2/Presentation/Favourite%20Screen/favourite_screen.dart';
 import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
 import 'package:pro_2/Presentation/LogIn%20Screen/LogIn_screen.dart';
 import 'package:pro_2/Presentation/Main%20Screen/main_screen.dart';
+import 'package:pro_2/Presentation/My_Posts/My_Posts.dart';
 import 'package:pro_2/Presentation/Onboarding%20Screens/onboarding1.dart';
 
 import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
@@ -34,9 +35,8 @@ class NamedRoutes
   static const drawerScreen='drawerScreen';
   static const Contactwithus='ContactUsPage';
   static const addpost='add_post_screen';
-  // static const confirmAddPost='ConfirmAddPost';
   static const subscription='Subscription';
-// static const test1_json='doneTaskScreen';
+  static const My_Posts='My_Posts';
 
 
 }
@@ -60,8 +60,8 @@ class AppRoutes
   // static const confirmAddPost=ConfirmAddPost(selectedGovernorate: '', budget: null,status: ,selectedArea: ,phone: ,description: ,key: ,);
   static Subscription subscription=Subscription();
 
+  static My_Posts My_posts=My_Posts();
   // static const  test1_json=theList();
-
 
   static Map <String,Widget Function(BuildContext context)>routes=
   {
@@ -78,10 +78,7 @@ class AppRoutes
     NamedRoutes.drawerScreen:(context)=>AppRoutes.drawerScreen,
     NamedRoutes.Contactwithus:(context)=>AppRoutes.contactwithus,
     NamedRoutes.addpost:(context)=>AppRoutes.addPost,
-    // NamedRoutes.confirmAddPost:(context)=>AppRoutes.confirmAddPost,
     NamedRoutes.subscription:(context)=>AppRoutes.subscription,
-
-    // NamedRoutes.test1_json:(context)=>AppRoutes.test1_json,
-
+    NamedRoutes.My_Posts:(context)=>AppRoutes.My_posts,
   };
 }
