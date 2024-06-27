@@ -77,7 +77,7 @@ class AuthCubit extends Cubit<AuthState>
           await CacheHelper.putString(key: 'name', value: value.user.username);
           await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
           await CacheHelper.putInt(key: 'id', value: value.user.id);
-
+          await CacheHelper.putString(key: 'image', value: value.image);
           await CacheHelper.putString(key: 'token', value: value.accessToken);
 
           logInEmailController.clear();
@@ -117,6 +117,7 @@ class AuthCubit extends Cubit<AuthState>
           );
           await CacheHelper.putString(key: 'name', value: value.user.username);
           await CacheHelper.putString(key: 'token', value: value.accessToken);
+          await CacheHelper.putString(key: 'image', value: value.image);
           await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
           await CacheHelper.putInt(key: 'id', value: value.user.id);
 

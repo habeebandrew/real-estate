@@ -10,25 +10,25 @@ class PropertyService{
  String token = (CacheHelper.getString(key: 'token'))!;
 
   static Future getFavourite() async {
-    try {
-      String token = (CacheHelper.getString(key: 'token'))!;
-      debugPrint(token);
-      var data = await NetworkHelper.get(
-          ApiAndEndpoints.getFavourite,
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $token '
-          }
-      );
-      print(data.statusCode);
-      print(data.body);
-      if (data.statusCode == 200) {
-        return favouriteFromJson(data.body) ;
-      } else {
-        return 'Failed to load favourites';
-      }
-    } catch (e) {
-      return e.toString();
-    }
+    // try {
+    //   String token = (CacheHelper.getString(key: 'token'))!;
+    //   debugPrint(token);
+    //   var data = await NetworkHelper.get(
+    //       ApiAndEndpoints.getFavourite,
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         'Authorization': 'Bearer $token '
+    //       }
+    //   );
+    //   print(data.statusCode);
+    //   print(data.body);
+    //   if (data.statusCode == 200) {
+    //     return favouriteFromJson(data.body) ;
+    //   } else {
+    //     return 'Failed to load favourites';
+    //   }
+    // } catch (e) {
+    //   return e.toString();
+    // }
   }
 }

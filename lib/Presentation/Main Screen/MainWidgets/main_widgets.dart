@@ -257,7 +257,7 @@ class _mostviewerState extends State<mostviewer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '35 مليار ل.س',
+                  '35 million sp',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
