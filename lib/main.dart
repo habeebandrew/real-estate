@@ -57,7 +57,8 @@ class MyApp extends StatelessWidget {
             //نعرف الخطوط اللازمة
           ),
         ),
-         initialRoute:token!=null
+        initialRoute://NamedRoutes.logInScreen,
+        token!=null
             ?NamedRoutes.splashscreen
             :onBoardShowen==true
             ?NamedRoutes.logInScreen

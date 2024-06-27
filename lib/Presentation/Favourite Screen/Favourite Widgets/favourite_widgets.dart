@@ -39,12 +39,13 @@ class _FavouriteItemState extends State<FavouriteItem> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
+          vertical: 8.0,
           horizontal: 8.0,
       ),
       child: Dismissible(
         //key هو ايدي الشغلة يلي بدنا نحذفا من المفضلة
         key: Key(widget.id.toString()),
-        onDismissed: (DismissDirection dismissAction){
+        onDismissed: (dismiss){
 
         },
         child: InkWell(
@@ -88,7 +89,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                             Text(
                               widget.status=='sale'
                               ?'${widget.price} Million S.p'
-                              :'${widget.price} Million/MonthS.p',
+                              :'${widget.price} Million/Month S.p',
                               style: TextStyle(
                                 fontSize: 23.sp,
                                 fontWeight: FontWeight.bold,

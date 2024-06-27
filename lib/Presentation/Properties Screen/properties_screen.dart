@@ -115,6 +115,7 @@ class PropertiesScreen extends StatelessWidget {
                               backgroundColor: Constants.mainColor2,
                               groupValue: cubit.sliding,
                               onValueChanged: (value) {
+                                cubit.toggleSelectedFilter(value!);
                                 // cubit.toggleSelected(value!);
                               }
                           ),

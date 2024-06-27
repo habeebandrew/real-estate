@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
-import 'package:pro_2/Data/favourite_model.dart';
 import 'package:pro_2/Presentation/Favourite%20Screen/Favourite%20Widgets/favourite_widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
@@ -53,7 +52,7 @@ class FavouriteScreen extends StatelessWidget {
                             ),
                             child: Shimmer(
                               color: Constants.mainColor,
-                              duration: const Duration(milliseconds: 2000),
+                              duration: const Duration(milliseconds: 1000),
                               child: Container(),
                             ),
                           );

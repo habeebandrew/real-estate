@@ -25,6 +25,8 @@ class PropertyCubit extends Cubit<PropertyState> {
     }
   }
 
+  void addMyFavourite(BuildContext context)async{}
+
  void getMyFavourite(BuildContext context)async
  {
     emit(PropertyLoadingState());
@@ -35,6 +37,17 @@ class PropertyCubit extends Cubit<PropertyState> {
       emit(PropertyErrorState(error: response.toString()));
     }
  }
+  void deleteMyFavourite(BuildContext context,int id)async{
+     emit(PropertyLoadingState());
+     var response = await PropertyService.deleteFavourite(id);
+
+     if(response == 'message : "تم حذف العقار من المفضلة بنجاح'){
+         emit(PropertyLoadedState());
+
+     }
+
+
+  }
 
 
 }
