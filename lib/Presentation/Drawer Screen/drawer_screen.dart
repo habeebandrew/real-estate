@@ -11,6 +11,8 @@ class DrawerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? image=CacheHelper.getString(key: 'image');
+
     return Drawer(
       width: Dimensions.screenWidth(context) / 1.5,
       elevation: 0.0,
@@ -19,9 +21,16 @@ class DrawerScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const CircleAvatar(
+            image != null?
+            CircleAvatar(
+              backgroundImage:
+              NetworkImage(image!),
+              radius: 40.0,
+              backgroundColor: Colors.white,
+            ):
+              CircleAvatar(
                 backgroundImage:
-                    AssetImage("assets/images/General/App_Icon.png"),
+                AssetImage("assets/images/General/App_Icon.png"),
                 radius: 40.0,
                 backgroundColor: Colors.white,
               ),

@@ -89,6 +89,7 @@ class LogInScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(vertical: 10),
                                 child: MyFormField(
                                   controller: cubit.logInEmailController,
+                                  type: TextInputType.emailAddress,
                                   labelText: 'email',
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
