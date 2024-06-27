@@ -24,7 +24,6 @@ class AuthService {
     if (response.statusCode == 200) {
       try {
         var user = userFromJson(response.body);
-        print(user);
         return user;
       } catch (e) {
         print('Failed to parse JSON: $e');

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Auth%20Cubit/auth_service.dart';
 import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
+import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
+import 'package:pro_2/Bloc/Property%20Cubit/property_service.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 
@@ -46,6 +48,8 @@ class AuthCubit extends Cubit<AuthState>
     //وهاد مثال عن هل حكي
     if(currentIndex ==0){
       context.read<PostsCubit>().pressed();
+    } if(currentIndex ==1){
+      context.read<PropertyCubit>().getMyFavourite(context);
     }
   }
 

@@ -57,12 +57,11 @@ class MyApp extends StatelessWidget {
             //نعرف الخطوط اللازمة
           ),
         ),
-         initialRoute: NamedRoutes.splashscreen,
-        // token!=null
-        //     ?NamedRoutes.splashscreen
-        //     :onBoardShowen==true
-        //     ?NamedRoutes.logInScreen
-        //     :NamedRoutes.onBoardingScreen,
+         initialRoute:token!=null
+            ?NamedRoutes.splashscreen
+            :onBoardShowen==true
+            ?NamedRoutes.logInScreen
+            :NamedRoutes.onBoardingScreen,
         routes: AppRoutes.routes,
       ),
     );
