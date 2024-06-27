@@ -46,7 +46,6 @@ dependencies:
   shimmer_animation: ^2.1.0+1
   url_launcher: ^6.3.0
   intl:
-  flutter_local_notifications: ^17.1.2
   #share_plus: ^9.0.0
 flutter_native_splash:
   color: "#FFFFFF"
@@ -87,7 +86,6 @@ flutter:
     - assets/images/authentication/
     - assets/images/General/
     - assets/images/Home/
-    - assets/json test/test1.json
 
 
 
