@@ -7,6 +7,7 @@ import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/mySnackBar.dart';
 import '../../Util/global Widgets/my_button.dart';
 import '../Posts Screen/Posts widgets/post_widgets.dart';
+import 'Confirm_posts_Widgets/confirm_posts_widgets.dart';
 class ConfirmAddPost extends StatelessWidget {
   String my_name = (CacheHelper.getString(key: 'name'))!;
 final int budget;

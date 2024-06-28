@@ -14,6 +14,7 @@ import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/animation.dart';
 import '../../Util/network_helper.dart';
 import '../Posts Screen/Posts widgets/post_widgets.dart';
+import 'MY_Posts_Widgets/myposts_widgets.dart';
 
 class My_Posts extends StatefulWidget {
 
