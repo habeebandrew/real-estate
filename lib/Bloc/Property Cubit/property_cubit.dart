@@ -44,7 +44,7 @@ class PropertyCubit extends Cubit<PropertyState> {
 
      if(response == 'تم حذف العقار من المفضلة بنجاح'){
          emit(FavouriteDeletedState());
-
+         getMyFavourite(context);
      }else{
        emit(PropertyErrorState(error: response.toString()));
      }

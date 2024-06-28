@@ -41,7 +41,7 @@ class PropertyService{
       String token = (CacheHelper.getString(key: 'token'))!;
       debugPrint(token);
       var data = await NetworkHelper.delete(
-        '${ApiAndEndpoints.addFavourite}${ApiAndEndpoints.deleteFavourite}id=$id',
+        '${ApiAndEndpoints.addFavourite}${ApiAndEndpoints.deleteFavourite}property_id=$id',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
