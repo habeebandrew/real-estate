@@ -16,8 +16,10 @@ final class PropertyErrorState extends PropertyState {
   PropertyErrorState({required this.error});
 }
 
+final class FavouriteLoadingState extends PropertyState {}
 
 final class FavouriteLoadedState extends PropertyState {
   final List<Favourite> favouriteModel;
   FavouriteLoadedState({required this.favouriteModel});
 }
+final class FavouriteDeletedState extends PropertyState {}

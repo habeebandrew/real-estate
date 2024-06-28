@@ -33,26 +33,6 @@ class PropertyService{
     } catch (e) {
       return e.toString();
     }
-    // try {
-    //   String token = (CacheHelper.getString(key: 'token'))!;
-    //   debugPrint(token);
-    //   var data = await NetworkHelper.get(
-    //       ApiAndEndpoints.getFavourite,
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         'Authorization': 'Bearer $token '
-    //       }
-    //   );
-    //   print(data.statusCode);
-    //   print(data.body);
-    //   if (data.statusCode == 200) {
-    //     return favouriteFromJson(data.body) ;
-    //   } else {
-    //     return 'Failed to load favourites';
-    //   }
-    // } catch (e) {
-    //   return e.toString();
-    // }
   }
 
   static Future deleteFavourite(int id) async {
@@ -67,8 +47,10 @@ class PropertyService{
           'Authorization': 'Bearer $token'
         },
       );
+      print(data.statusCode);
+      print(data.body);
       if (data.statusCode == 200) {
-        var res= jsonDecode(data.body);
+        var res= jsonDecode(data.body)['message'];
         return res;
       } else {
         return 'Failed to delete favourites';

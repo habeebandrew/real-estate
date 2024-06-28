@@ -21,6 +21,13 @@ class FavouriteScreen extends StatelessWidget {
               color: Colors.red
           );
         }
+        if (state is FavouriteDeletedState) {
+          mySnackBar(
+              title: 'Deleted Successfully',
+              context: context,
+              color: Constants.mainColor,
+          );
+        }
       },
       builder: (context, state) {
         return Scaffold(
@@ -33,7 +40,7 @@ class FavouriteScreen extends StatelessWidget {
               },
               child: ListView(
                 children: [
-                  if(state is PropertyLoadingState)
+                  if(state is FavouriteLoadingState)
                     ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),

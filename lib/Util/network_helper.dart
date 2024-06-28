@@ -21,7 +21,7 @@ class NetworkHelper {
     return response;
   }
   static Future<http.Response> put(String endpoint, {Map<String, String>? headers, dynamic body}) async {
-    final url = Uri.parse(ApiAndEndpoints.api + endpoint);
+    final url = Uri.parse(ApiAndEndpoints.api+endpoint);
     final response = await http.put(
       url,
       headers: headers ?? {'Content-Type': 'application/json'},
@@ -29,12 +29,13 @@ class NetworkHelper {
     );
     return response;
   }
+
   static Future<http.Response> delete(String endpoint, {Map<String, String>? headers, dynamic body}) async {
-    final url = Uri.parse(ApiAndEndpoints.api + endpoint);
+    final url = Uri.parse(ApiAndEndpoints.api+endpoint);
     final response = await http.delete(
       url,
-      headers: headers ?? {'Content-Type': 'application/json'},
-      body: json.encode(body),
+      headers: headers,
+
     );
     return response;
   }
