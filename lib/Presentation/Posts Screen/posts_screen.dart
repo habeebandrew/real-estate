@@ -24,6 +24,7 @@ class _PostScreenState extends State<PostsScreen> {
       Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.getpost),
       headers: {
         'Content-Type': 'application/json',
+
       },
     );
 

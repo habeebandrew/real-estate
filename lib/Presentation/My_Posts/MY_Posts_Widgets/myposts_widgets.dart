@@ -17,7 +17,7 @@ class PostCard_MYPOSTS extends StatefulWidget {
   final int budget;
   final String description;
   final String? status;
-  final int phone;
+  final String phone;
   final String selectedGovernorate;
   final String selectedArea;
   final String userName;

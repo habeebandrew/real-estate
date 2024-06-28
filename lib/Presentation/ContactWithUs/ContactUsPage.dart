@@ -82,14 +82,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _subjectController,
-                decoration: InputDecoration(
-                  labelText: 'الموضوع',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              // SizedBox(height: 16),
+              // TextField(
+              //   controller: _subjectController,
+              //   decoration: InputDecoration(
+              //     labelText: 'الموضوع',
+              //     border: OutlineInputBorder(),
+              //   ),
+              // ),
               SizedBox(height: 16),
               TextField(
                 controller: _messageController,

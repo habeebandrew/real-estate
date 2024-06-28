@@ -7,7 +7,7 @@ class Post {
   final String region;
   final int budget;
   final String description;
-  final int mobilenumber;
+  final String mobilenumber;
   final String profileImage;
   final DateTime createdAt;
   Post({
