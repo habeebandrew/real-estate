@@ -12,6 +12,7 @@ import 'package:pro_2/Presentation/Onboarding%20Screens/onboarding1.dart';
 import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
+import '../Presentation/AccountInfoPage/AccountInfoPage.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
@@ -37,6 +38,7 @@ class NamedRoutes
   static const addpost='add_post_screen';
   static const subscription='Subscription';
   static const My_Posts='My_Posts';
+  static const accountInfoPage ='AccountInfoPage';
 
 
 }
@@ -59,9 +61,12 @@ class AppRoutes
   static const addPost=AddPostScreen();
   // static const confirmAddPost=ConfirmAddPost(selectedGovernorate: '', budget: null,status: ,selectedArea: ,phone: ,description: ,key: ,);
   static Subscription subscription=Subscription();
-
   static My_Posts My_posts=My_Posts();
-  // static const  test1_json=theList();
+  static AccountInfoPage accountInfoPage =AccountInfoPage();
+
+
+
+
 
   static Map <String,Widget Function(BuildContext context)>routes=
   {
@@ -80,5 +85,7 @@ class AppRoutes
     NamedRoutes.addpost:(context)=>AppRoutes.addPost,
     NamedRoutes.subscription:(context)=>AppRoutes.subscription,
     NamedRoutes.My_Posts:(context)=>AppRoutes.My_posts,
+    NamedRoutes.accountInfoPage :(context)=>AppRoutes.accountInfoPage ,
+
   };
 }

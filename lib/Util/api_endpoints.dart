@@ -1,6 +1,6 @@
 class ApiAndEndpoints{
 
- static const api = 'http://192.168.1.3:8000/api/';
+ static const api = 'http://192.168.1.106:8000/api/';
 //*HABEEB:   192.168.1.106
  static const signUp = 'register';
 
@@ -12,7 +12,7 @@ class ApiAndEndpoints{
  static const getpost = 'posts';
  static const get_My_Post = 'my-posts';
 
- static const updateRole = 'updateRole';
+  static const updateRole = 'updateRole';
  static const addComment = 'addComment';
  static const getComments = 'comments?';
 
@@ -21,5 +21,6 @@ class ApiAndEndpoints{
  static const  addFavourite ='favorites';
  //for delete addaFavourite+deleteFavourite
  static const deleteFavourite = '/delete?';
+ static const editProfile = 'editProfile?';//number or pic for user
 
 }

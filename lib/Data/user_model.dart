@@ -10,12 +10,14 @@ class User {
   UserClass user;
   String accessToken;
   String image;
+  String? number;
 
 
   User({
     required this.user,
     required this.accessToken,
     required this.image,
+    required this.number,
 
   });
 
@@ -23,6 +25,8 @@ class User {
     user: UserClass.fromJson(json["user"]),
     accessToken: json["access_token"],
     image: json["image"],
+    number: json["number"],
+
 
   );
 
@@ -30,6 +34,7 @@ class User {
     "user": user.toJson(),
     "access_token": accessToken,
     "image": image,
+    "number": number,
 
   };
 }

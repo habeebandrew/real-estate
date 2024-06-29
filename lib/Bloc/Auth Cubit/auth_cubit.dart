@@ -79,7 +79,10 @@ class AuthCubit extends Cubit<AuthState>
           await CacheHelper.putInt(key: 'id', value: value.user.id);
           await CacheHelper.putString(key: 'image', value: value.image);
           await CacheHelper.putString(key: 'token', value: value.accessToken);
-
+          try{
+            await CacheHelper.putString(key: 'number', value: value.number!);
+          }catch(e){print(e);
+            print("error in num!");}
           logInEmailController.clear();
           passwordController.clear();
           // Delay for 2 seconds and then navigate to the next screen
@@ -120,6 +123,11 @@ class AuthCubit extends Cubit<AuthState>
           await CacheHelper.putString(key: 'image', value: value.image);
           await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
           await CacheHelper.putInt(key: 'id', value: value.user.id);
+         try{
+           await CacheHelper.putString(key: 'number', value: value.number!);
+         }catch(e){
+           print("error in num!");}
+          // await CacheHelper.putInt(key: 'number', value: value.number!);
 
           // Delay for 2 seconds and then navigate to the next screen
           Future.delayed(const Duration(seconds: 2), () {

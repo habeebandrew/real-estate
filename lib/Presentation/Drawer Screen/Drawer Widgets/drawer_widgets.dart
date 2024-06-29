@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
+import 'package:pro_2/Presentation/AccountInfoPage/AccountInfoPage.dart';
+import 'package:pro_2/Presentation/AccountInfoPage/AccountInfoPage.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
 
 import '../../../Util/cache_helper.dart';
+import '../../AccountInfoPage/AccountInfoPage.dart';
 
 
 Widget myDrawerButton({
@@ -95,9 +98,9 @@ Widget build_for_user(BuildContext context) {
     child: Column(
       children: [
         myDrawerButton(
-            label: 'Account Information', icon: Icons.person, onPress: () async {
-              String token;
-        token =(await CacheHelper.getString(key: 'token'))!;print(token);}),
+            label: 'Account Information', icon: Icons.person, onPress: ()  {
+          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.accountInfoPage));
+      }),
         SizedBox(
           height: 5,
         ),
@@ -150,7 +153,7 @@ Widget build_for_user(BuildContext context) {
         myDrawerButton(
           label: 'Connect with us',
           icon: Icons.phone,
-          onPress: () {},
+          onPress: () {  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.contactwithus));},
         ),
         SizedBox(
           height: 5,
@@ -179,7 +182,11 @@ Widget build_for_Broker(BuildContext context) {
   return Column(
     children: [
       myDrawerButton(
-          label: 'Account Information', icon: Icons.person, onPress: () {}),
+          label: 'Account Information', icon: Icons.person, onPress: () {
+
+            Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.accountInfoPage));
+
+          }),
       SizedBox(
         height: 5,
       ),
@@ -227,7 +234,9 @@ Widget build_for_Broker(BuildContext context) {
       myDrawerButton(
         label: 'Connect with us',
         icon: Icons.phone,
-        onPress: () {},
+        onPress: () {
+          Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.contactwithus));
+        },
       ),
       SizedBox(
         height: 5,

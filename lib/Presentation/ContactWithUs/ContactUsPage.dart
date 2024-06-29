@@ -65,7 +65,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedCategory,
-                items: <String>['اقتراح', 'شكوى', 'استفسار']
+                items: <String>['اقتراح', 'شكوى', 'استفسار','طلب']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
