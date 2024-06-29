@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';  // إضافة مكتبة خدمات
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 import '../../Util/api_endpoints.dart';
 import '../../Util/cache_helper.dart';
@@ -17,13 +20,13 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   String? name = CacheHelper.getString(key: 'name');
   String? number = CacheHelper.getString(key: 'number');
   String phoneNumber = '';
+  File? _imageFile;
   final TextEditingController phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    // إذا لم يكن هناك رقم هاتف محفوظ، نقوم بتعيين قيمة افتراضية توضح عدم توفر رقم
     phoneNumber = number ?? '';
     phoneController.text = phoneNumber;
   }
@@ -41,10 +44,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
     }
 
     String? token = CacheHelper.getString(key: 'token');
-    if (token == null) {
-      // Handle error for missing token
-      return;
-    }
+
     var response = await NetworkHelper.post(
       ApiAndEndpoints.editProfile,
       headers: {
@@ -65,6 +65,45 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       // Handle error
     }
   }
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _imageFile = File(image.path);
+      });
+      await _uploadImage(); // تأكد من استخدام await هنا
+    }
+  }
+  Future<void> _uploadImage() async {
+    String? token = CacheHelper.getString(key: 'token');
+    if (_imageFile == null || token == null) {
+      // Handle error for missing token or image
+      print("No image file or token provided");
+      return;
+    }
+
+    final uri = Uri.parse('http://192.168.1.106:8000/api/editProfile'); // تأكد من صحة عنوان URL هنا
+    final request = http.MultipartRequest('POST', uri)
+      ..headers['Authorization'] = 'Bearer $token'
+      ..files.add(await http.MultipartFile.fromPath('image', _imageFile!.path));
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print("Image uploaded successfully");
+      await CacheHelper.putString(key: 'image', value: _imageFile!.path);
+      setState(() {
+        image = _imageFile!.path;
+      });
+    } else {
+      print("Failed to upload image");
+      final responseBody = await response.stream.bytesToString();
+      print("Response: $responseBody");
+    }
+  }
+
 
   void _showEditPhoneDialog() {
     showDialog(
@@ -78,7 +117,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               controller: phoneController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(hintText: "Enter the new phone number"),
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],  // تصفية الإدخال لقبول الأرقام فقط
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a phone number';
@@ -105,6 +144,32 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       },
     );
   }
+  _showEditImageDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Edit Profile Picture"),
+          content: Text("Select a new profile picture"),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await _pickImage();
+              },
+              child: Text("Choose from Gallery"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,23 +185,37 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               children: [
                 CircleAvatar(
                   radius: 75,
-                  backgroundImage: NetworkImage(image ?? 'https://via.placeholder.com/150'), // ضع صورة افتراضية إذا كانت الصورة null
+                  backgroundImage: image != null
+                      ? (File(image!).existsSync()
+                      ? FileImage(File(image!))
+                      : NetworkImage(image!)) as ImageProvider
+                      : AssetImage(''),
                 ),
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      // أضف هنا وظيفة لتعديل الصورة الشخصية
-                    },
+                  child: Material(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.blueAccent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      onTap: _showEditImageDialog,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 16),
             Text(
-              name ?? 'Unknown Name', // ضع نص افتراضي إذا كان الاسم null
+              name ?? 'Unknown Name',
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(height: 40),
@@ -149,7 +228,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -159,7 +238,9 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          phoneNumber.isEmpty ? 'No phone number added' : phoneNumber,
+                          phoneNumber.isEmpty
+                              ? 'No phone number added'
+                              : phoneNumber,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -170,7 +251,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 8), // إضافة مسافة بين النص والزر
+                SizedBox(width: 8),
                 Material(
                   elevation: 5,
                   borderRadius: BorderRadius.circular(8),

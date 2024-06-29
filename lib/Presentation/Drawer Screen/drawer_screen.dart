@@ -20,7 +20,18 @@ class DrawerScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: [TextButton(onPressed: (){
+              print(image);
+              image=CacheHelper.getString(key: 'image');
+              print("************************************************************");
+              print("************************************************************");
+              print("************************************************************");
+              print("************************************************************");
+              print("************************************************************");
+
+              print(image);
+
+            }, child: Text("dsd")),
             image != null?
             CircleAvatar(
               backgroundImage:

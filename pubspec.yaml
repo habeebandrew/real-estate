@@ -46,6 +46,7 @@ dependencies:
   shimmer_animation: ^2.1.0+1
   url_launcher: ^6.3.0
   intl:
+  image_picker: ^1.1.2
   #share_plus: ^9.0.0
 flutter_native_splash:
   color: "#FFFFFF"
