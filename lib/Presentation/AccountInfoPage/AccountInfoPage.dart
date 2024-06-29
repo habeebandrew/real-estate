@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';  // إضافة مكتبة خدمات
 
 import '../../Util/api_endpoints.dart';
 import '../../Util/cache_helper.dart';
@@ -17,11 +18,13 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   String? number = CacheHelper.getString(key: 'number');
   String phoneNumber = '';
   final TextEditingController phoneController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    phoneNumber = number ?? 'Add your phone number here';
+    // إذا لم يكن هناك رقم هاتف محفوظ، نقوم بتعيين قيمة افتراضية توضح عدم توفر رقم
+    phoneNumber = number ?? '';
     phoneController.text = phoneNumber;
   }
 
@@ -33,12 +36,15 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   }
 
   Future<void> editNumber() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     String? token = CacheHelper.getString(key: 'token');
     if (token == null) {
       // Handle error for missing token
       return;
     }
-
     var response = await NetworkHelper.post(
       ApiAndEndpoints.editProfile,
       headers: {
@@ -49,9 +55,10 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
         'phone_number': phoneController.text,
       },
     );
-
-    if (response.statusCode == 200) {print(response.body);
+    if (response.statusCode == 200) {
+      print(response.body);
       print("Phone number has been edited");
+      await CacheHelper.putString(key: 'number', value: phoneController.text);
       _editPhoneNumber();
       phoneController.clear();
     } else {
@@ -65,15 +72,26 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       builder: (context) {
         return AlertDialog(
           title: Text("Edit phone number"),
-          content: TextField(
-            controller: phoneController,
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(hintText: "Enter the new phone number"),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(hintText: "Enter the new phone number"),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],  // تصفية الإدخال لقبول الأرقام فقط
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a phone number';
+                } else if (value.length < 10 || value.length > 13) {
+                  return 'Phone number must be between 10 and 13 digits';
+                }
+                return null;
+              },
+            ),
           ),
           actions: [
             TextButton(
-              // onPressed: () => Navigator.of(context).pop(),
-              onPressed:(){ print(number);},
+              onPressed: () => Navigator.of(context).pop(),
               child: Text("Cancel"),
             ),
             TextButton(
@@ -141,7 +159,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          phoneNumber,
+                          phoneNumber.isEmpty ? 'No phone number added' : phoneNumber,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

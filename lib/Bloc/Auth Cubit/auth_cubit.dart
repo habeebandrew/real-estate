@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Auth%20Cubit/auth_service.dart';
@@ -7,11 +6,8 @@ import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_service.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
-
 import '../../Util/app_routes.dart';
 import '../../Util/global Widgets/animation.dart';
-
-
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState>
@@ -82,7 +78,9 @@ class AuthCubit extends Cubit<AuthState>
           try{
             await CacheHelper.putString(key: 'number', value: value.number!);
           }catch(e){print(e);
-            print("error in num!");}
+          await CacheHelper.putString(key: 'number', value: '');
+
+          print("error in num!");}
           logInEmailController.clear();
           passwordController.clear();
           // Delay for 2 seconds and then navigate to the next screen
@@ -125,8 +123,9 @@ class AuthCubit extends Cubit<AuthState>
           await CacheHelper.putInt(key: 'id', value: value.user.id);
          try{
            await CacheHelper.putString(key: 'number', value: value.number!);
-         }catch(e){
-           print("error in num!");}
+         }catch(e){          await CacheHelper.putString(key: 'number', value: '');
+print(e);
+         print("error in num!");}
           // await CacheHelper.putInt(key: 'number', value: value.number!);
 
           // Delay for 2 seconds and then navigate to the next screen
