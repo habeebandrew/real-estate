@@ -21,6 +21,8 @@ class ApiAndEndpoints{
  static const  addFavourite ='favorites';
  //for delete addaFavourite+deleteFavourite
  static const deleteFavourite = '/delete?';
- static const editProfile = 'editProfile?';//number or pic for user
+ static const editProfile = 'editProfile';//number or pic for user?
+ static const showMyImage = 'showMyImage';//pic for user
+
 
 }
