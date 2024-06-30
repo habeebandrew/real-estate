@@ -152,6 +152,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     );
 
     if (response.statusCode == 200) {
+
+
       final List data = json.decode(response.body);
       setState(() {
         cities = data.map((city) {
