@@ -1,23 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
 
 class PropertyCard extends StatefulWidget {
-  const PropertyCard({super.key});
+   PropertyCard({
+    super.key,
+    required this.id,
+    required this.propertyType,
+    required this.status,
+    required this.governorate,
+    required this.address,
+    required this.createdAt,
+    required this.size,
+    required this.price,
+    required this.viewers,
+    required this.inFavourite,
+    required this.images,
+
+  });
+
+  int id;
+  String propertyType;
+  String status;
+  String governorate;
+  String address;
+  String createdAt;
+  int size;
+  int price;
+  int viewers;
+  bool inFavourite=false;
+  List<String> images;
 
   @override
   State<PropertyCard> createState() => _PropertyCardState();
 }
 
 class _PropertyCardState extends State<PropertyCard> {
-  final List<String> images = [
-    'https://via.placeholder.com/600x400',
-    'https://via.placeholder.com/600x400',
-    'https://via.placeholder.com/600x400',
-  ];
+
 
   int currentIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +82,10 @@ class _PropertyCardState extends State<PropertyCard> {
                               currentIndex = index;
                             });
                           },
-                          itemCount: images.length,
+                          itemCount: widget.images.length,
                           itemBuilder: (context, index) {
                             return Image.network(
-                              images[index],
+                              widget.images[index],
                               fit: BoxFit.cover,
                               width: Dimensions.screenHeight(context),
                               height: Dimensions.screenHeight(context),
@@ -75,7 +99,7 @@ class _PropertyCardState extends State<PropertyCard> {
                           right: 0.0,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(images.length, (index) {
+                            children: List.generate(widget.images.length, (index) {
                               return AnimatedContainer(
                                 duration: const Duration(milliseconds: 300),
                                 margin:
@@ -104,9 +128,9 @@ class _PropertyCardState extends State<PropertyCard> {
                     ),
                   ),
                   padding: const EdgeInsets.all(5),
-                  child: const Text(
-                    'for rent',
-                    style: TextStyle(color: Colors.white),
+                  child:  Text(
+                    'for ${widget.status}',
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ],
@@ -122,12 +146,14 @@ class _PropertyCardState extends State<PropertyCard> {
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('house : 240 m²',
+                    Text('${widget.propertyType} : ${widget.size} m²',
                         style: TextStyle(
                             fontSize: 18.sp, fontWeight: FontWeight.w900)),
                     SizedBox(height: 8.h),
                     Text(
-                      '120 million S.p',
+                      widget.status=='sale'
+                          ?'${widget.price} Million S.p'
+                          :'${widget.price} Million/Month S.p',
                       style: TextStyle(
                           color: Constants.mainColor,
                           fontSize: 16.sp,
@@ -141,7 +167,7 @@ class _PropertyCardState extends State<PropertyCard> {
                           Icon(Icons.location_on, size: 16.sp),
                           SizedBox(width: 4.w),
                           Text(
-                            'Alassad Suburb - Damascus',
+                            '${widget.address} - ${widget.governorate}',
                             style: TextStyle(
                               fontSize: 15.sp,
                               color: Colors.grey,
@@ -151,7 +177,8 @@ class _PropertyCardState extends State<PropertyCard> {
                       ),
                     ),
                     SizedBox(height: 8.h),
-                    Text('8 hours ago',
+                    Text(
+                        widget.createdAt,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 15.sp,
@@ -164,17 +191,35 @@ class _PropertyCardState extends State<PropertyCard> {
                     Material(
                       color: Colors.white,
                       child: InkWell(
-                        onTap: () {},
-                        child: const Icon(Icons.favorite_border),
+                        onTap: (){
+                          final cubit = PropertyCubit.get(context);
+                          if (widget.inFavourite) {
+                            cubit.deleteMyFavourite(context,widget.id);
+                          } else {
+                            cubit.addMyFavourite(context,widget.id);
+                          }
+
+                          setState(() {
+                            widget.inFavourite = !widget.inFavourite;
+                          });
+                        },
+                        child:widget.inFavourite==true
+                        ?const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                        )
+                        :const Icon(
+                          Icons.favorite_border,
+                        ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10.0,
                     ),
                     Row(
                       children: [
                         Text(
-                          '240',
+                          '${widget.viewers}',
                           style: TextStyle(fontSize: 15.sp),
                         ),
                         SizedBox(width: 8.w),

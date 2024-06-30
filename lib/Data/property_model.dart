@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final favourite = favouriteFromJson(jsonString);
+//     final property = propertyFromJson(jsonString);
 
 import 'dart:convert';
 
-List<Favourite> favouriteFromJson(String str) => List<Favourite>.from(json.decode(str).map((x) => Favourite.fromJson(x)));
+List<Property> propertyFromJson(String str) => List<Property>.from(json.decode(str).map((x) => Property.fromJson(x)));
 
-String favouriteToJson(List<Favourite> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String propertyToJson(List<Property> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Favourite {
+class Property {
   int id;
   String propertyType;
   String status;
@@ -17,9 +17,11 @@ class Favourite {
   String createdAt;
   int size;
   int price;
+  int viewers;
+  bool existingFavorite;
   List<String> images;
 
-  Favourite({
+  Property({
     required this.id,
     required this.propertyType,
     required this.status,
@@ -28,9 +30,12 @@ class Favourite {
     required this.createdAt,
     required this.size,
     required this.price,
+    required this.viewers,
+    required this.existingFavorite,
     required this.images,
   });
-  factory Favourite.fromJson(Map<String, dynamic> json) => Favourite(
+
+  factory Property.fromJson(Map<String, dynamic> json) => Property(
     id: json["id"],
     propertyType: json["propertyType"],
     status: json["status"],
@@ -39,6 +44,8 @@ class Favourite {
     createdAt: json["created_at"],
     size: json["size"],
     price: json["price"],
+    viewers: json["viewers"],
+    existingFavorite: json["existing Favorite"],
     images: List<String>.from(json["Images"].map((x) => x)),
   );
 
@@ -51,6 +58,8 @@ class Favourite {
     "created_at": createdAt,
     "size": size,
     "price": price,
+    "viewers": viewers,
+    "existing Favorite": existingFavorite,
     "Images": List<dynamic>.from(images.map((x) => x)),
   };
 }

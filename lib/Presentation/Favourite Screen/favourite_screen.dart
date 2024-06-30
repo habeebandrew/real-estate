@@ -21,13 +21,6 @@ class FavouriteScreen extends StatelessWidget {
               color: Colors.red
           );
         }
-        if (state is FavouriteDeletedState) {
-          mySnackBar(
-              title: 'Deleted Successfully',
-              context: context,
-              color: Constants.mainColor,
-          );
-        }
       },
       builder: (context, state) {
         return Scaffold(
@@ -63,7 +56,8 @@ class FavouriteScreen extends StatelessWidget {
                               child: Container(),
                             ),
                           );
-                        }),
+                        }
+                    ),
 
                   if(state is FavouriteLoadedState)
                     ListView.builder(
@@ -89,8 +83,6 @@ class FavouriteScreen extends StatelessWidget {
                 ],
               )
           ),
-
-
         );
       },
     );

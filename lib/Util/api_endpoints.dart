@@ -1,6 +1,7 @@
 class ApiAndEndpoints{
 
- static const api = 'http://192.168.1.106:8000/api/';
+ static const api = 'http://192.168.1.5:8000/api/';
+
 //*HABEEB:   192.168.1.106
  static const signUp = 'register';
 
@@ -26,5 +27,14 @@ class ApiAndEndpoints{
  static const addPropertyAd = 'addPropertyAd';
  static const  fetchAllAddresses = 'fetchAllAddresses?governorate_id=';
 
+
+ static const getProperty = 'showPropertiesInListHome?user_id=';
+
+ //filter in home filterProperty+what you want to filter
+ // if you want all of them like for advanced search filterPropertyType&filterGovernorate&filterStatus
+ static const  filterProperty = 'filters?';
+ static const  filterPropertyType = 'property_type_id=';
+ static const  filterGovernorate = 'governorate_id=';
+ static const  filterStatus = 'status_id=';
 
 }

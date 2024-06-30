@@ -47,6 +47,9 @@ class AuthCubit extends Cubit<AuthState>
     } if(currentIndex ==1){
       context.read<PropertyCubit>().getMyFavourite(context);
     }
+    if(currentIndex==3){
+      context.read<PropertyCubit>().getProperty(context, (CacheHelper.getInt(key: 'id'))!);
+    }
   }
 
   void resetFormFields() {

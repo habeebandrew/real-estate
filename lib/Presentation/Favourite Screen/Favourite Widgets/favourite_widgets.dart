@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
+import 'package:pro_2/Data/favourite_model.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
 
@@ -35,7 +37,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
 
 
   int currentIndex = 0;
-
+  List<Favourite>fav =[];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,13 +45,15 @@ class _FavouriteItemState extends State<FavouriteItem> {
           vertical: 8.0,
           horizontal: 8.0,
       ),
-      child: Dismissible(
+      child: BlocBuilder<PropertyCubit, PropertyState>(
+  builder: (context, state) {
+    return Dismissible(
         //key هو ايدي الشغلة يلي بدنا نحذفا من المفضلة
         key: Key('${widget.id}'),
         onDismissed: (dismiss){
              debugPrint('delete');
              debugPrint('${widget.id}');
-              PropertyCubit.get(context).deleteMyFavourite(context,widget.id);
+               PropertyCubit.get(context).deleteMyFavourite(context,widget.id);
         },
         child: InkWell(
           onTap: () {},
@@ -215,7 +219,9 @@ class _FavouriteItemState extends State<FavouriteItem> {
             ],
           ),
         ),
-      ),
+      );
+  },
+),
     );
   }
 }
