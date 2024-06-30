@@ -186,7 +186,8 @@ Spacer(),
                          child: Column(
                            // mainAxisSize: MainAxisSize.max,
                            children: <Widget>[
-                             TextButton(onPressed: (){
+                             TextButton(
+                               onPressed: (){
                                showDialog(
                                  context: context,
                                  builder: (BuildContext context) {
@@ -263,7 +264,7 @@ Spacer(),
                            // mainAxisSize: MainAxisSize.max,
                            children: <Widget>[
                              TextButton(onPressed: (){
-                               // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.));
+                                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.adPropertyScreen));
                                },
                                child: ListTile(
                                  leading: Icon(Icons.info, color: Constants.mainColor),

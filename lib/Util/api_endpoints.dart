@@ -23,6 +23,6 @@ class ApiAndEndpoints{
  static const deleteFavourite = '/delete?';
  static const editProfile = 'editProfile';//number or pic for user?
  static const showMyImage = 'showMyImage';//pic for user
-
+ static const addPropertyAd = 'addPropertyAd';
 
 }
