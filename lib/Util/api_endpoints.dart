@@ -24,5 +24,7 @@ class ApiAndEndpoints{
  static const editProfile = 'editProfile';//number or pic for user?
  static const showMyImage = 'showMyImage';//pic for user
  static const addPropertyAd = 'addPropertyAd';
+ static const  fetchAllAddresses = 'fetchAllAddresses?governorate_id=';
+
 
 }

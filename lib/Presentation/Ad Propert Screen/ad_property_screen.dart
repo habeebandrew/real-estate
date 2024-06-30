@@ -33,9 +33,66 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
   final List<String> provinces = ['Damascus', 'Rif Damascus', 'Homs'];
 
+  // القيم الجديدة
+  double? price;
+  double? area;
+  String? ownershipType;
+  String? furnishing;
+  String? orientation;
+  String? condition;
+  String? rentalDuration;
+  int? numberOfRooms;
+  double? floors;
+  String? description;
+
+  final List<String> ownershipTypes = [
+    'طابو اخضر',
+    'عقد بيع قطعي',
+    'حكم المحكمة',
+    'وكالة كاتب العدل',
+    'طابو أسهم',
+    'طابو زراعي',
+    'طابو إسكان',
+    'فروغ'
+  ];
+
+  final List<String> furnishings = [
+    'مفروش',
+    'غير مفروش',
+    'نصف مفروش'
+  ];
+
+  final List<String> orientations = [
+    'شمال',
+    'جنوب',
+    'شرق',
+    'غرب',
+    'الشمال الشرقي',
+    'الجنوب الشرقي',
+    'الجنوب الغربي',
+    'الشمال الغربي',
+    'الشمال الجنوبي',
+    'الغرب الشرقي'
+  ];
+
+  final List<String> conditions = [
+    'سوبر ديلوكس',
+    'كسوة جديدة',
+    'حالة جيدة',
+    'كسوة قديمة',
+    'على العظم'
+  ];
+
+  final List<String> rentalDurations = [
+    'يومي',
+    'شهري',
+    'سنوي'
+  ];
+
   final TextEditingController propertyTypeController = TextEditingController();
   final TextEditingController provinceController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -49,7 +106,10 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
     final int provinceId = provinceIds[province]!;
     final response = await http.get(
-        Uri.parse('http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'),
+        Uri.parse(
+            // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
+           ApiAndEndpoints.api+ApiAndEndpoints.fetchAllAddresses+'$provinceId'
+        ),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -121,29 +181,41 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.106:8000/api/addPropertyAd'),
-      headers: {'Content-Type': 'application/json',
+      Uri.parse( ApiAndEndpoints.api+ApiAndEndpoints.addPropertyAd),
+      headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
       body: json.encode({
         'status_id': statusId,
         'property_type_id': propertyTypeId,
-        'governorate_id':  governorateId,
-        'address_id':  selectedCityId,
-        'user_id': user_id
+        'governorate_id': governorateId,
+        'address_id': selectedCityId,
+        'user_id': user_id,
+        'price': price,
+        'size': area,
+        'owner_of_the_property': ownershipType,
+        'Furnished': furnishing,
+        'direction': orientation,
+        'condition': condition,
+        'rental_period': rentalDuration,
+        'numberOfRoom': numberOfRooms,
+        'floor': floors,
+        // 'description': description,
       }),
     );
 
     if (response.statusCode == 200) {
       mySnackBar(
-      context: context,
-      title: 'send Property Data in successful',
-    );
+        context: context,
+        title: 'تم إرسال بيانات العقار بنجاح',
+      );
       print('Data sent successfully!');
     } else {
-      mySnackBar(color: Colors.red,
+      mySnackBar(
+        color: Colors.red,
         context: context,
-        title: 'send Property Data in successful',
+        title: 'فشل إرسال البيانات',
       );
       print('Failed to send data.');
     }
@@ -154,6 +226,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     propertyTypeController.dispose();
     provinceController.dispose();
     cityController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -282,6 +355,200 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                     }
                   },
                 ),
+              // Price
+              TextFormField(
+                decoration: InputDecoration(labelText: 'السعر'),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onChanged: (value) {
+                  price = double.tryParse(value);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى إدخال السعر';
+                  }
+                  return null;
+                },
+              ),
+              // Area
+              TextFormField(
+                decoration: InputDecoration(labelText: 'المساحة(م2)'),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onChanged: (value) {
+                  area = double.tryParse(value);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى إدخال المساحة';
+                  }
+                  return null;
+                },
+              ),
+              // Ownership Type
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'نوع الملكية'),
+                value: ownershipType,
+                items: ownershipTypes.map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    ownershipType = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى اختيار نوع الملكية';
+                  }
+                  return null;
+                },
+              ),
+              // Furnishing
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'الفرش'),
+                value: furnishing,
+                items: furnishings.map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    furnishing = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى اختيار نوع الفرش';
+                  }
+                  return null;
+                },
+              ),
+              // Orientation
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'الاتجاه'),
+                value: orientation,
+                items: orientations.map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    orientation = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى اختيار الاتجاه';
+                  }
+                  return null;
+                },
+              ),
+              // Condition
+
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText:
+                'الحالة'),
+                value: condition,
+                items: conditions.map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    condition = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى اختيار الحالة';
+                  }
+                  return null;
+                },
+              ),
+              // Rental Duration (shows only if isForSale is false)
+              if (!isForSale)
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(labelText: 'مدة الإيجار'),
+                  value: rentalDuration,
+                  items: rentalDurations.map((type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      rentalDuration = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى اختيار مدة الإيجار';
+                    }
+                    return null;
+                  },
+                ),
+              // Number of Rooms (shows only if propertyType is valid)
+              if (['فيلا', 'شقة', 'مكتب', 'مزرعة', 'محل تجاري', 'شاليه'].contains(selectedPropertyType))
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'عدد الغرف'),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    numberOfRooms = int.tryParse(value);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال عدد الغرف';
+                    }
+                    return null;
+                  },
+                ),
+              // Number of Floors (shows only if propertyType is Villa or Building)
+              if (['فيلا', 'بناء'].contains(selectedPropertyType))
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: selectedPropertyType == 'بناء' ? 'عدد الطوابق' :
+                    selectedPropertyType == 'فيلا'? 'عدد الطوابق' :
+                    'طابق',
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onChanged: (value) {
+                    if (selectedPropertyType == 'بناء') {
+                      floors = double.tryParse(value);
+                    } else {
+                      floors = double.tryParse(value);
+                    }
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال عدد الطوابق';
+                    }
+                    return null;
+                  },
+                ),
+              // Description
+              TextFormField(
+                decoration: InputDecoration(labelText: 'الوصف'),
+                maxLines: 3,
+                controller: descriptionController,
+                onChanged: (value) {
+                  description = value;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'يرجى إدخال الوصف';
+                  }
+                  return null;
+                },
+              ),
               // Submit Button
               SizedBox(height: 20),
               ElevatedButton(
