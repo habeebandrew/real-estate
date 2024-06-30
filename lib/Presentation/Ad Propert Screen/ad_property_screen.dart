@@ -89,14 +89,36 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'سنوي'
   ];
 
+  final List<String> specialFeatures = [
+    'مصعد',
+    'كهرباء بطاقة شمسية',
+    'تراس',
+    'كراج',
+    'مسبح',
+    'التسخين بطاقة الشمس',
+    'شرفة'
+  ];
+
   final TextEditingController propertyTypeController = TextEditingController();
   final TextEditingController provinceController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  Map<String, bool> selectedFeatures = {
+    'مصعد': false,
+    'كهرباء بطاقة شمسية': false,
+    'تراس': false,
+    'كراج': false,
+    'مسبح': false,
+    'التسخين بطاقة الشمس': false,
+    'شرفة': false
+  };
 
-  Future<List<Map<String, dynamic>>> fetchCities(String province) async {
+  List<Map<String, dynamic>> cities = [];
+  bool isLoadingCities = false;
+
+  Future<void> fetchCities(String province) async {
     final Map<String, int> provinceIds = {
       'Damascus': 1,
       'Rif Damascus': 2,
@@ -107,8 +129,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     final int provinceId = provinceIds[province]!;
     final response = await http.get(
         Uri.parse(
-            // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
-           ApiAndEndpoints.api+ApiAndEndpoints.fetchAllAddresses+'$provinceId'
+          // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
+            ApiAndEndpoints.api+ApiAndEndpoints.fetchAllAddresses+'$provinceId'
         ),
         headers: {
           'Content-Type': 'application/json',
@@ -118,12 +140,15 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
     if (response.statusCode == 200) {
       final List data = json.decode(response.body);
-      return data.map((city) {
-        return {
-          'id_address': city['id_address'],
-          'address': city['address']
-        };
-      }).toList();
+      setState(() {
+        cities = data.map((city) {
+          return {
+            'id_address': city['id_address'],
+            'address': city['address']
+          };
+        }).toList();
+        isLoadingCities = false;
+      });
     } else {
       throw Exception('Failed to load cities');
     }
@@ -180,6 +205,12 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
         propertyTypeId = 0; // قيمة افتراضية غير صحيحة
     }
 
+    // جمع الميزات الخاصة التي تم اختيارها
+    String selectedSpecialFeatures = selectedFeatures.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .join(',');
+
     final response = await http.post(
       Uri.parse( ApiAndEndpoints.api+ApiAndEndpoints.addPropertyAd),
       headers: {
@@ -201,7 +232,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
         'rental_period': rentalDuration,
         'numberOfRoom': numberOfRooms,
         'floor': floors,
-        // 'description': description,
+        'description': description,
+        'features': selectedSpecialFeatures,
       }),
     );
 
@@ -282,12 +314,11 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 onChanged: (value) {
                   setState(() {
                     selectedPropertyType = value!;
-                    propertyTypeController.text = value;
                   });
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار نوع العقار';
+                    return 'Please select a property type';
                   }
                   return null;
                 },
@@ -305,80 +336,78 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 onChanged: (value) {
                   setState(() {
                     selectedProvince = value!;
-                    selectedCity = ''; // Reset city to empty string
-                    selectedCityId = -1; // Reset city ID
-                    provinceController.text = value;
+                    selectedCity = ''; // لإعادة تعيين المدينة عند تغيير المحافظة
+                    selectedCityId = -1; // إعادة تعيين id_address
+                    isLoadingCities = true;
                   });
+                  fetchCities(selectedProvince);
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار المحافظة';
+                    return 'Please select a province';
                   }
                   return null;
                 },
               ),
               // City
-              if (selectedProvince.isNotEmpty)
-                FutureBuilder<List<Map<String, dynamic>>>(
-                  future: fetchCities(selectedProvince),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return DropdownButtonFormField<String>(
-                        decoration: InputDecoration(labelText: 'المدينة'),
-                        value: selectedCity.isEmpty ? null : selectedCity,
-                        items: snapshot.data!.map((city) {
-                          return DropdownMenuItem<String>(
-                            value: city['address'],
-                            child: Text(city['address']),
-                            onTap: () {
-                              selectedCityId = city['id_address'];
-                            },
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCity = value!;
-                            cityController.text = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'يرجى اختيار المدينة';
-                          }
-                          return null;
-                        },
-                      );
-                    }
-                  },
-                ),
-              // Price
-              TextFormField(
-                decoration: InputDecoration(labelText: 'السعر'),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'المدينة'),
+                value: selectedCity.isEmpty ? null : selectedCity,
+                items: cities.map((city) {
+                  return DropdownMenuItem<String>(
+                    value: city['address'],
+                    child: Text(city['address']),
+                    onTap: () {
+                      selectedCityId = city['id_address']; // تعيين id_address
+                    },
+                  );
+                }).toList(),
                 onChanged: (value) {
-                  price = double.tryParse(value);
+                  setState(() {
+                    selectedCity = value!;
+                  });
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى إدخال السعر';
+                    return 'Please select a city';
+                  }
+                  return null;
+                },
+              ),
+              // Price
+              TextFormField(
+                decoration: InputDecoration(labelText: 'السعر'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    price = double.tryParse(value);
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a price';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid price';
                   }
                   return null;
                 },
               ),
               // Area
               TextFormField(
-                decoration: InputDecoration(labelText: 'المساحة(م2)'),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(labelText: 'المساحة'),
+                keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  area = double.tryParse(value);
+                  setState(() {
+                    area = double.tryParse(value);
+                  });
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى إدخال المساحة';
+                    return 'Please enter an area';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid area';
                   }
                   return null;
                 },
@@ -400,14 +429,14 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار نوع الملكية';
+                    return 'Please select an ownership type';
                   }
                   return null;
                 },
               ),
               // Furnishing
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'الفرش'),
+                decoration: InputDecoration(labelText: 'التأثيث'),
                 value: furnishing,
                 items: furnishings.map((type) {
                   return DropdownMenuItem<String>(
@@ -422,7 +451,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار نوع الفرش';
+                    return 'Please select a furnishing type';
                   }
                   return null;
                 },
@@ -444,16 +473,14 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار الاتجاه';
+                    return 'Please select an orientation';
                   }
                   return null;
                 },
               ),
               // Condition
-
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText:
-                'الحالة'),
+                decoration: InputDecoration(labelText: 'الحالة'),
                 value: condition,
                 items: conditions.map((type) {
                   return DropdownMenuItem<String>(
@@ -468,96 +495,121 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار الحالة';
+                    return 'Please select a condition';
                   }
                   return null;
                 },
               ),
-              // Rental Duration (shows only if isForSale is false)
+              // Rental Duration
               if (!isForSale)
+
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'مدة الإيجار'),
-                  value: rentalDuration,
-                  items: rentalDurations.map((type) {
-                    return DropdownMenuItem<String>(
-                      value: type,
-                      child: Text(type),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      rentalDuration = value;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'يرجى اختيار مدة الإيجار';
-                    }
-                    return null;
-                  },
-                ),
-              // Number of Rooms (shows only if propertyType is valid)
-              if (['فيلا', 'شقة', 'مكتب', 'مزرعة', 'محل تجاري', 'شاليه'].contains(selectedPropertyType))
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'عدد الغرف'),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    numberOfRooms = int.tryParse(value);
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'يرجى إدخال عدد الغرف';
-                    }
-                    return null;
-                  },
-                ),
-              // Number of Floors (shows only if propertyType is Villa or Building)
-              if (['فيلا', 'بناء'].contains(selectedPropertyType))
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: selectedPropertyType == 'بناء' ? 'عدد الطوابق' :
-                    selectedPropertyType == 'فيلا'? 'عدد الطوابق' :
-                    'طابق',
-                  ),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  onChanged: (value) {
-                    if (selectedPropertyType == 'بناء') {
-                      floors = double.tryParse(value);
-                    } else {
-                      floors = double.tryParse(value);
-                    }
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'يرجى إدخال عدد الطوابق';
-                    }
-                    return null;
-                  },
-                ),
-              // Description
-              TextFormField(
-                decoration: InputDecoration(labelText: 'الوصف'),
-                maxLines: 3,
-                controller: descriptionController,
+                decoration: InputDecoration(labelText: 'مدة الايجار'),
+                value: rentalDuration,
+                items: rentalDurations.map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
                 onChanged: (value) {
-                  description = value;
+                  setState(() {
+                    rentalDuration = value;
+                  });
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى إدخال الوصف';
+                    return 'Please select a rental duration';
                   }
                   return null;
                 },
+              ),
+              // Number of Rooms
+              TextFormField(
+                decoration: InputDecoration(labelText: 'عدد الغرف'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    numberOfRooms = int.tryParse(value);
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the number of rooms';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Please enter a valid number of rooms';
+                  }
+                  return null;
+                },
+              ),
+              // Floors
+              TextFormField(
+                decoration: InputDecoration(labelText: 'عدد الطوابق'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    floors = double.tryParse(value);
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the number of floors';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid number of floors';
+                  }
+                  return null;
+                },
+              ),
+              // Description
+              TextFormField(
+                controller: descriptionController,
+                decoration: InputDecoration(labelText: 'الوصف'),
+                maxLines: 5,
+                onChanged: (value) {
+                  setState(() {
+                    description = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              // Special Features
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'ميزات خاصة',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  ...specialFeatures.map((feature) {
+                    return CheckboxListTile(
+                      title: Text(feature),
+                      value: selectedFeatures[feature],
+                      onChanged: (value) {
+                        setState(() {
+                          selectedFeatures[feature] = value!;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ],
               ),
               // Submit Button
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
+                  // print(selectedSpecialFeatures);
                   if (_formKey.currentState!.validate()) {
                     sendPropertyData();
                   }
                 },
-                child: Text('Submit'),
+                child: Text('إرسال'),
               ),
             ],
           ),
