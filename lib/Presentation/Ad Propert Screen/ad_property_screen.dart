@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
 
 import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/mySnackBar.dart';
@@ -14,6 +17,16 @@ class AdPropertyScreen extends StatefulWidget {
 }
 
 class _AdPropertyScreenState extends State<AdPropertyScreen> {
+  List<XFile> images = [];
+  Future<void> pickImage() async {
+    final XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (selectedImage != null) {
+      setState(() {
+        images!.add(selectedImage);
+      });
+    }
+  }
+
   bool isForSale = true;
   String selectedPropertyType = '';
   String selectedProvince = '';
@@ -153,7 +166,6 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       throw Exception('Failed to load cities');
     }
   }
-
   Future<void> sendPropertyData() async {
     String token = (await CacheHelper.getString(key: 'token'))!;
     int? user_id = (await CacheHelper.getInt(key: 'role_id'))!;
@@ -211,31 +223,37 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
         .map((entry) => entry.key)
         .join(',');
 
-    final response = await http.post(
-      Uri.parse( ApiAndEndpoints.api+ApiAndEndpoints.addPropertyAd),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: json.encode({
-        'status_id': statusId,
-        'property_type_id': propertyTypeId,
-        'governorate_id': governorateId,
-        'address_id': selectedCityId,
-        'user_id': user_id,
-        'price': price,
-        'size': area,
-        'owner_of_the_property': ownershipType,
-        'Furnished': furnishing,
-        'direction': orientation,
-        'condition': condition,
-        'rental_period': rentalDuration,
-        'numberOfRoom': numberOfRooms,
-        'floor': floors,
-        'description': description,
-        'features': selectedSpecialFeatures,
-      }),
+    // إعداد البيانات للإرسال
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.addPropertyAd),
     );
+    request.headers['Authorization'] = 'Bearer $token';
+
+    request.fields['status_id'] = statusId.toString();
+    request.fields['property_type_id'] = propertyTypeId.toString();
+    request.fields['governorate_id'] = governorateId.toString();
+    request.fields['address_id'] = selectedCityId.toString();
+    request.fields['user_id'] = user_id.toString();
+    request.fields['price'] = price.toString();
+    request.fields['size'] = area.toString();
+    request.fields['owner_of_the_property'] = ownershipType ?? '';
+    request.fields['Furnished'] = furnishing ?? '';
+    request.fields['direction'] = orientation ?? '';
+    request.fields['condition'] = condition ?? '';
+    request.fields['rental_period'] = rentalDuration ?? '';
+    request.fields['numberOfRoom'] = numberOfRooms.toString();
+    request.fields['floor'] = floors.toString();
+    request.fields['description'] = description ?? '';
+    request.fields['features'] = selectedSpecialFeatures;
+
+    // إضافة الصور للطلب
+    for (int i = 0; i < images.length; i++) {
+      var image = await http.MultipartFile.fromPath('url_image${i + 1}', images[i].path);
+      request.files.add(image);
+    }
+
+    var response = await request.send();
 
     if (response.statusCode == 200) {
       mySnackBar(
@@ -602,9 +620,62 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               ),
               // Submit Button
               SizedBox(height: 20),
+
+
+              ElevatedButton(
+                onPressed: pickImage,
+                child: Text('اختر الصور'),
+              ),
+              // عرض الصور المختارة
+    if (images != null && images!.isNotEmpty)
+      GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
+        ),
+        itemCount: images.length + 1,
+        itemBuilder: (context, index) {
+          if (index == images.length) {
+            return GestureDetector(
+              onTap: pickImage,
+              child: Container(
+                color: Colors.grey[300],
+                child: Icon(
+                  Icons.add,
+                  size: 50,
+                ),
+              ),
+            );
+          } else {
+            return Stack(
+              children: [
+                Image.file(
+                  File(images[index].path),
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      setState(() {
+                        images.removeAt(index);
+                      });
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+      ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // print(selectedSpecialFeatures);
                   if (_formKey.currentState!.validate()) {
                     sendPropertyData();
                   }
