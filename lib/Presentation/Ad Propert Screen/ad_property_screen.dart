@@ -170,7 +170,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
   }
   Future<void> sendPropertyData() async {
     String token = (await CacheHelper.getString(key: 'token'))!;
-    int? user_id = (await CacheHelper.getInt(key: 'role_id'))!;
+    int? user_id = (await CacheHelper.getInt(key: 'id'))!;
 
     // تحويل القيم
     int statusId = isForSale ? 1 : 2;
@@ -264,6 +264,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       );
       print('Data sent successfully!');
     } else {
+      print(await response.stream.bytesToString());
       mySnackBar(
         color: Colors.red,
         context: context,
