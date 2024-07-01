@@ -198,7 +198,6 @@ class _PropertyCardState extends State<PropertyCard> {
                           } else {
                             cubit.addMyFavourite(context,widget.id);
                           }
-
                           setState(() {
                             widget.inFavourite = !widget.inFavourite;
                           });

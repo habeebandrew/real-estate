@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_service.dart';
 import 'package:pro_2/Data/favourite_model.dart';
+import 'package:pro_2/Data/property_details_model.dart';
 import 'package:pro_2/Data/property_model.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
@@ -31,7 +32,6 @@ class PropertyCubit extends Cubit<PropertyState> {
     int? statusId;
     int? cityId;
 
-    // Determine propertyTypeId based on sliding value
     switch (sliding) {
       case 1:
         propertyTypeId = 1;
@@ -61,7 +61,6 @@ class PropertyCubit extends Cubit<PropertyState> {
         propertyTypeId = null;
     }
 
-    // Determine statusId based on dropDownStatus value
     if (dropDownStatus == 'sale') {
       statusId = 1;
     } else if (dropDownStatus == 'rent') {
@@ -70,7 +69,6 @@ class PropertyCubit extends Cubit<PropertyState> {
       statusId = null;
     }
 
-    // Determine cityId based on dropDownItemCites value
     if (dropDownItemCites == 'Damascus') {
       cityId = 1;
     } else if (dropDownItemCites == 'Rif-Damascus') {
@@ -81,39 +79,9 @@ class PropertyCubit extends Cubit<PropertyState> {
       cityId = null;
     }
 
-    // Call the appropriate function based on the combination of filters
-    filterProperty(context, statusId: statusId, propertyTypeId: propertyTypeId, cityId: cityId);
-    // if(sliding==0&&dropDownStatus=='all'&&dropDownItemCites=='all Cities'){
-    //   getProperty(context,(CacheHelper.getInt(key: 'id'))!);
-    // }
-    // if(sliding==0&&dropDownStatus=='sale'&&dropDownItemCites=='all Cities'){
-    //   filterProperty(context,statusId: 1,cityId: null,propertyTypeId: null);
-    // }
-    // if(sliding==0&&dropDownStatus=='rent'&&dropDownItemCites=='all Cities'){
-    //   filterProperty(context,statusId: 2,cityId: null,propertyTypeId: null);
-    // }
-    // if(sliding==0&&dropDownStatus=='all'&&dropDownItemCites=='Damascus'){
-    //   filterProperty(context,statusId: null,cityId: 1,propertyTypeId: null);
-    // }
-    // if(sliding==0&&dropDownStatus=='all'&&dropDownItemCites=='Rif-Damascus'){
-    //   filterProperty(context,statusId: null,cityId: 2,propertyTypeId: null);
-    // }
-    // if(sliding==0&&dropDownStatus=='sale'&&dropDownItemCites=='Damascus'){
-    //   filterProperty(context,statusId: 1,cityId: 1);
-    // }
-    // if(sliding==0&&dropDownStatus=='sale'&&dropDownItemCites=='Rif-Damascus'){
-    //   filterProperty(context,statusId: 1,cityId: 2);
-    // }
-    // if(sliding==0&&dropDownStatus=='rent'&&dropDownItemCites=='Damascus'){
-    //   filterProperty(context,statusId: 2,cityId: 1);
-    // }if(sliding==0&&dropDownStatus=='rent'&&dropDownItemCites=='Rif-Damascus'){
-    //   filterProperty(context,statusId: 2,cityId: 2);
-    // }
-
-
-
-
+    filterProperty(context, statusId: statusId, propertyTypeId: propertyTypeId, cityId: cityId,userId: CacheHelper.getInt(key: 'id'));
   }
+
   void getProperty(BuildContext context,int userId)async{
     emit(PropertyLoadingState());
     var response = await PropertyService.getProperty(userId);
@@ -123,15 +91,25 @@ class PropertyCubit extends Cubit<PropertyState> {
       emit(PropertyErrorState(error: response.toString()));
     }
   }
-  void filterProperty(BuildContext context,{int? statusId,int? propertyTypeId,int? cityId})async{
+  void filterProperty(BuildContext context,{int? statusId,int? propertyTypeId,int? cityId,int? userId})async{
     emit(PropertyLoadingState());
-    var response = await PropertyService.filterProperty(statusId: statusId,propertyTypeId: propertyTypeId,cityId:cityId);
+    var response = await PropertyService.filterProperty(statusId: statusId,propertyTypeId: propertyTypeId,cityId:cityId,userId: userId);
     if (response is List<Property>){
       emit(PropertyLoadedState(propertyModel: response));
     }else{
       emit(PropertyErrorState(error: response.toString()));
     }
+  }
 
+  void getPropertyDetails(int propertyId)async{
+
+    emit(PropertyLoadingState());
+    var response = await PropertyService.getPropertyDetails(propertyId);
+    if (response is PropertyDetails){
+      emit(PropertyDetailsLoadedState(propertyDetailsModel: response));
+    }else{
+      emit(PropertyErrorState(error: response.toString()));
+    }
   }
 
   void addMyFavourite(BuildContext context,int id)async{

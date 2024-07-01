@@ -4,10 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/Properties%20Widgets/properties_widgets.dart';
+import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_screen.dart';
 import 'package:pro_2/Util/api_endpoints.dart';
+import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
+import 'package:pro_2/Util/global%20Widgets/animation.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:pro_2/Util/global%20Widgets/my_form_field.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -32,19 +35,6 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
               color: Colors.red,
             );
           }
-          if(state is FavouriteAddedState){
-            mySnackBar(
-                title: 'Added Successfully',
-                context: context,
-            );
-          }
-          if(state is FavouriteDeletedState){
-            mySnackBar(
-                title: 'Deleted Successfully',
-                context: context,
-            );
-
-          }
         },
         builder: (context, state) {
           PropertyCubit cubit = PropertyCubit.get(context);
@@ -52,7 +42,6 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
             backgroundColor: Colors.white,
             body: RefreshIndicator(
               onRefresh: ()async{
-                //context.read<PropertyCubit>().getProperty(context,(CacheHelper.getInt(key: 'id'))!);
                 cubit.filterSelection(context);
               },
               child: Column(
@@ -324,18 +313,26 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                         itemCount: state.propertyModel.length,
                         itemBuilder: (context, index) {
                           final property = state.propertyModel[index];
-                          return PropertyCard(
-                            id: property.id,
-                            propertyType: property.propertyType,
-                            status: property.status,
-                            size: property.size,
-                            price: property.price,
-                            address: property.address,
-                            governorate: property.governorate,
-                            viewers: property.viewers,
-                            inFavourite: property.existingFavorite,
-                            createdAt: '${property.createdAt.substring(0,10)} - ${property.createdAt.substring(11,16)}',
-                            images: property.images,
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                  context, 
+                                  MyAnimation.createRoute(PropertyDetailsScreen(propertyId: property.id,favourite: property.existingFavorite,))
+                              );
+                            },
+                            child: PropertyCard(
+                              id: property.id,
+                              propertyType: property.propertyType,
+                              status: property.status,
+                              size: property.size,
+                              price: property.price,
+                              address: property.address,
+                              governorate: property.governorate,
+                              viewers: property.viewers,
+                              inFavourite: property.existingFavorite,
+                              createdAt: '${property.createdAt.substring(0,10)} - ${property.createdAt.substring(11,16)}',
+                              images: property.images,
+                            ),
                           );
                         },
                       ),

@@ -61,7 +61,7 @@ int my_id = (await CacheHelper.getInt(key: 'id'))!;
     var response = await NetworkHelper.put(
       ApiAndEndpoints.updateRole , headers: {'Content-Type': 'application/json'},  body: {
       "user_id": my_id,
-      "role_id": 4,
+      "role_id": 2,
 
     },
     );

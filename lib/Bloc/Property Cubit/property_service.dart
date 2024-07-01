@@ -1,67 +1,23 @@
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:pro_2/Data/favourite_model.dart';
+import 'package:pro_2/Data/property_details_model.dart';
 import 'package:pro_2/Data/property_model.dart';
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/network_helper.dart';
 
-class PropertyService{
-
-
+class PropertyService {
 
   static Future getProperty(int userId) async {
-    try
-    {
-
+    try {
       debugPrint(userId.toString());
       var data = await NetworkHelper.get(
           '${ApiAndEndpoints.getProperty}$userId',
           headers: {
             'Content-Type': 'application/json',
-          }
-      );
-      print(data.statusCode);
-      print(data.body);
-      if (data.statusCode == 200) {
-        return propertyFromJson(data.body) ;
-      } else {
-        return 'Failed to load properties';
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  static Future filterProperty({int? statusId, int? propertyTypeId, int? cityId}) async {
-    // Construct the base URL
-    String baseUrl = ApiAndEndpoints.filterProperty;
-
-    // Append filters to the URL based on provided parameters
-    if (cityId != null) {
-      baseUrl += '${ApiAndEndpoints.filterGovernorate}$cityId&';
-    }
-    if (statusId != null) {
-      baseUrl += '${ApiAndEndpoints.filterStatus}$statusId&';
-    }
-    if (propertyTypeId != null) {
-      baseUrl += '${ApiAndEndpoints.filterPropertyType}$propertyTypeId&';
-    }
-
-    // Remove the trailing '&' if there is one
-    if (baseUrl.endsWith('&')) {
-      baseUrl = baseUrl.substring(0, baseUrl.length - 1);
-    }
-
-    try {
-      var data = await NetworkHelper.get(
-          baseUrl,
-          headers: {
-            'Content-Type': 'application/json',
-          }
-      );
+          });
       print(data.statusCode);
       print(data.body);
       if (data.statusCode == 200) {
@@ -74,26 +30,78 @@ class PropertyService{
     }
   }
 
+  static Future filterProperty(
+      {int? statusId, int? propertyTypeId, int? cityId,int? userId}) async {
+    String baseUrl = ApiAndEndpoints.filterProperty;
 
-  static Future addFavourite(int id) async {
-    try
-    {
-      String token = (CacheHelper.getString(key: 'token'))!;
-      debugPrint(token);
-      var data = await NetworkHelper.post(
-          ApiAndEndpoints.addFavourite,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token'
-          },
-          body: {
-            'property_id': '$id',
-          }
+    if (cityId != null) {
+      baseUrl += '${ApiAndEndpoints.filterGovernorate}$cityId&';
+    }
+    if (statusId != null) {
+      baseUrl += '${ApiAndEndpoints.filterStatus}$statusId&';
+    }
+    if (propertyTypeId != null) {
+      baseUrl += '${ApiAndEndpoints.filterPropertyType}$propertyTypeId&';
+    }
+    if(userId != null){
+      baseUrl += 'user_id=$userId&';
+    }
+
+    if (baseUrl.endsWith('&')) {
+      baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+    }
+
+    try {
+      var data = await NetworkHelper.get(baseUrl, headers: {
+        'Content-Type': 'application/json',
+      });
+      print(data.statusCode);
+      print(data.body);
+      if (data.statusCode == 200) {
+        return propertyFromJson(data.body);
+      } else {
+        return 'Failed to load properties';
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  static Future getPropertyDetails(int id) async {
+    try {
+      var data = await NetworkHelper.get(
+        ApiAndEndpoints.getPropertyDetails+id.toString(),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       );
       print(data.statusCode);
       print(data.body);
+      if (data.statusCode == 200) {
+        return propertyDetailsFromJson(data.body);
+      }else {
+        return 'Failed to load details';
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  static Future addFavourite(int id) async {
+    try {
+      String token = (CacheHelper.getString(key: 'token'))!;
+      debugPrint(token);
+      var data =
+          await NetworkHelper.post(ApiAndEndpoints.addFavourite, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      }, body: {
+        'property_id': '$id',
+      });
+      print(data.statusCode);
+      print(data.body);
       if (data.statusCode == 200 || data.statusCode == 201) {
-        var res= jsonDecode(data.body)['message'];
+        var res = jsonDecode(data.body)['message'];
         return res;
       } else {
         return 'Failed to add to favourites';
@@ -101,25 +109,21 @@ class PropertyService{
     } catch (e) {
       return e.toString();
     }
-
   }
 
   static Future getFavourite() async {
-    try
-    {
+    try {
       String token = (CacheHelper.getString(key: 'token'))!;
       debugPrint(token);
-      var data = await NetworkHelper.get(
-          ApiAndEndpoints.getFavourite,
+      var data = await NetworkHelper.get(ApiAndEndpoints.getFavourite,
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token'
-          }
-      );
+          });
       print(data.statusCode);
       print(data.body);
       if (data.statusCode == 200) {
-        return favouriteFromJson(data.body) ;
+        return favouriteFromJson(data.body);
       } else {
         return 'Failed to load favourites';
       }
@@ -143,7 +147,7 @@ class PropertyService{
       print(data.statusCode);
       print(data.body);
       if (data.statusCode == 200) {
-        var res= jsonDecode(data.body)['message'];
+        var res = jsonDecode(data.body)['message'];
         return res;
       } else {
         return 'Failed to delete favourites';

@@ -11,6 +11,7 @@ import 'package:pro_2/Presentation/Onboarding%20Screens/onboarding1.dart';
 
 import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
+import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
 import '../Presentation/AccountInfoPage/AccountInfoPage.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
@@ -39,6 +40,7 @@ class NamedRoutes
   static const subscription='Subscription';
   static const My_Posts='My_Posts';
   static const accountInfoPage ='AccountInfoPage';
+  static const propertyDetails ='propertyDetails';
 
 
 }
@@ -63,6 +65,7 @@ class AppRoutes
   static Subscription subscription=Subscription();
   static My_Posts My_posts=My_Posts();
   static AccountInfoPage accountInfoPage =AccountInfoPage();
+  static PropertyDetailsScreen propertyDetails =PropertyDetailsScreen(propertyId: 0,favourite: false,);
 
 
 
@@ -86,6 +89,7 @@ class AppRoutes
     NamedRoutes.subscription:(context)=>AppRoutes.subscription,
     NamedRoutes.My_Posts:(context)=>AppRoutes.My_posts,
     NamedRoutes.accountInfoPage :(context)=>AppRoutes.accountInfoPage ,
+    NamedRoutes.propertyDetails :(context)=>AppRoutes.propertyDetails ,
 
   };
 }
