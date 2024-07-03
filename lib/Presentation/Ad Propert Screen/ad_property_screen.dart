@@ -6,7 +6,9 @@ import 'package:pro_2/Util/api_endpoints.dart';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 
+import '../../Util/app_routes.dart';
 import '../../Util/cache_helper.dart';
+import '../../Util/global Widgets/animation.dart';
 import '../../Util/global Widgets/mySnackBar.dart';
 
 class AdPropertyScreen extends StatefulWidget {
@@ -53,9 +55,10 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
   String? furnishing;
   String? orientation;
   String? condition;
+  // String? num_of_floor;
   String? rentalDuration;
   int? numberOfRooms;
-  double? floors;
+  int? floors;
   String? description;
 
   final List<String> ownershipTypes = [
@@ -75,6 +78,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'نصف مفروش'
   ];
 
+  //الاتجاهات
   final List<String> orientations = [
     'شمال',
     'جنوب',
@@ -94,6 +98,22 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'حالة جيدة',
     'كسوة قديمة',
     'على العظم'
+  ];
+
+
+  final List<int> _num_of_floor = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
   ];
 
   final List<String> rentalDurations = [
@@ -232,22 +252,22 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     );
     request.headers['Authorization'] = 'Bearer $token';
 
-    request.fields['status_id'] = statusId.toString();
-    request.fields['property_type_id'] = propertyTypeId.toString();
-    request.fields['governorate_id'] = governorateId.toString();
-    request.fields['address_id'] = selectedCityId.toString();
-    request.fields['user_id'] = user_id.toString();
-    request.fields['price'] = price.toString();
-    request.fields['size'] = area.toString();
+    request.fields['status_id'] = statusId.toString()?? '';
+    request.fields['property_type_id'] = propertyTypeId.toString()?? '';
+    request.fields['governorate_id'] = governorateId.toString()?? '';
+    request.fields['address_id'] = selectedCityId.toString()?? '';
+    request.fields['user_id'] = user_id.toString()?? '';
+    request.fields['price'] = price.toString()?? '';
+    request.fields['size'] = area.toString()?? '';
     request.fields['owner_of_the_property'] = ownershipType ?? '';
     request.fields['Furnished'] = furnishing ?? '';
     request.fields['direction'] = orientation ?? '';
     request.fields['condition'] = condition ?? '';
     request.fields['rental_period'] = rentalDuration ?? '';
-    request.fields['numberOfRoom'] = numberOfRooms.toString();
+    request.fields['numberOfRoom'] = numberOfRooms.toString() ?? '';
     request.fields['floor'] = floors.toString();
     request.fields['description'] = description ?? '';
-    request.fields['features'] = selectedSpecialFeatures;
+    request.fields['features'] = selectedSpecialFeatures?? '';
 
     // إضافة الصور للطلب
     for (int i = 0; i < images.length; i++) {
@@ -263,12 +283,15 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
         title: 'تم إرسال بيانات العقار بنجاح',
       );
       print('Data sent successfully!');
-    } else {
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
+      });    } else {
       print(await response.stream.bytesToString());
-      mySnackBar(
+      print('*********************');
+    mySnackBar(
         color: Colors.red,
         context: context,
-        title: 'فشل إرسال البيانات',
+        title: 'فشل إرسال البيانات الرجاء ادخال البيانات بشكلها الصحيح',
       );
       print('Failed to send data.');
     }
@@ -416,7 +439,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               ),
               // Area
               TextFormField(
-                decoration: InputDecoration(labelText: 'المساحة'),
+                decoration: InputDecoration(labelText: 'المساحة (م2)'),
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   setState(() {
@@ -478,7 +501,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
               ),
               // Orientation
-              DropdownButtonFormField<String>(
+              if (selectedPropertyType!="فيلا"&&selectedPropertyType!="أرض"&&selectedPropertyType!="بناء"&&selectedPropertyType!="مزرعة")
+                DropdownButtonFormField<String>(
                 decoration: InputDecoration(labelText: 'الاتجاه'),
                 value: orientation,
                 items: orientations.map((type) {
@@ -523,7 +547,6 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               ),
               // Rental Duration
               if (!isForSale)
-
                 DropdownButtonFormField<String>(
                 decoration: InputDecoration(labelText: 'مدة الايجار'),
                 value: rentalDuration,
@@ -546,6 +569,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
               ),
               // Number of Rooms
+
               TextFormField(
                 decoration: InputDecoration(labelText: 'عدد الغرف'),
                 keyboardType: TextInputType.number,
@@ -565,24 +589,69 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 },
               ),
               // Floors
-              TextFormField(
-                decoration: InputDecoration(labelText: 'عدد الطوابق'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    floors = double.tryParse(value);
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the number of floors';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid number of floors';
-                  }
-                  return null;
-                },
-              ),
+
+              if(selectedPropertyType=="شقة"||selectedPropertyType=="مكتب")
+                DropdownButtonFormField<int>(
+                  decoration: InputDecoration(labelText: 'رقم الطابق'),
+                  value: floors,
+                  items: _num_of_floor.map((type) {
+                    return DropdownMenuItem<int>(
+                      value: type,
+                      child: Text(type.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      floors = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a condition';
+                    }
+                    return null;
+                  },
+                ),
+              if(selectedPropertyType!="شقة"&&selectedPropertyType!="مكتب")
+                DropdownButtonFormField<int>(
+                  decoration: InputDecoration(labelText: 'عدد الطوابق'),
+                  value: floors,
+                  items: _num_of_floor.map((type) {
+                    return DropdownMenuItem<int>(
+                      value: type,
+                      child: Text(type.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      floors = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null ) {
+                      return 'Please select a condition';
+                    }
+                    return null;
+                  },
+                ),
+              // TextFormField(
+              //   decoration: InputDecoration(labelText: 'عدد الطوابق'),
+              //   keyboardType: TextInputType.number,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       floors = double.tryParse(value);
+              //     });
+              //   },
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please enter the number of floors';
+              //     }
+              //     if (double.tryParse(value) == null) {
+              //       return 'Please enter a valid number of floors';
+              //     }
+              //     return null;
+              //   },
+              // ),
               // Description
               TextFormField(
                 controller: descriptionController,
