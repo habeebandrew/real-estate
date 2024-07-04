@@ -114,6 +114,34 @@ class _PostCardState extends State<PostCard_with_comments> {
       }
     }
   }
+  Future<void> _add_Post_Report() async {
+    int postid=widget.postId;
+    int id = (await CacheHelper.getInt(key: 'id'))!;
+
+
+    String token = (await CacheHelper.getString(key: 'token'))!;
+
+      var response = await NetworkHelper.post(
+        ApiAndEndpoints.reports_post , headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },  body: {
+        // 'content': comment,
+        // 'post_id': widget.postId,
+        "reporter_id":id ,
+        "reportable_type": "post",
+        "reportable_id":postid,
+        "report": "This is a test report."
+      },
+      );
+      if (response.statusCode == 201) {
+
+        print("reporte successful");
+      } else {print(response.body);
+        print("failed reporte");
+        // Handle error
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -215,7 +243,13 @@ class _PostCardState extends State<PostCard_with_comments> {
                           },
                         );
                       }
-                    }
+    else if (roleId == 2) {
+
+_add_Post_Report();
+
+                      }
+
+    }
                   },
                   itemBuilder: (BuildContext context) {
                     return [
@@ -428,32 +462,75 @@ class _PostCardState extends State<PostCard_with_comments> {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: comments.length,
                 itemBuilder: (context, index) {
+                  Future<void> _add_Comment_Report() async {
+                    int commentid=comments[index].id;
+                    int id = (await CacheHelper.getInt(key: 'id'))!;
+                    String token = (await CacheHelper.getString(key: 'token'))!;
+                    var response = await NetworkHelper.post(
+                      ApiAndEndpoints.reports_post , headers: {'Content-Type': 'application/json',
+                      'Authorization': 'Bearer $token',
+                    },  body: {
+                      // 'content': comment,
+                      // 'post_id': widget.postId,
+                      "reporter_id":id ,
+                      "reportable_type": "comment",
+                      "reportable_id":commentid,
+                      "report": "This is a test report."
+                    },
+                    );
+                    if (response.statusCode == 201) {
+                      print("reporte successful");
+                    } else {print(response.body);
+                    print("failed reporte");
+                      // Handle error
+                    }
+                  };
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              comments[index].userProfileImageUrl
-                          ),
+                          backgroundImage: NetworkImage(comments[index].userProfileImageUrl),
                           radius: 20.0,
                         ),
-                        SizedBox(width: 10.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              comments[index].userName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 4.0),
-                            Text(comments[index].content),
-                          ],
+                        SizedBox(width: 5.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    comments[index].userName,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Spacer(),
+                                  PopupMenuButton<String>(
+                                    onSelected: (String result) {
+                                      if (result == 'report') {
+                                        // تنفيذ إجراء الإبلاغ هنا
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                                       PopupMenuItem<String>(onTap:_add_Comment_Report
+                                     ,
+                                        value: 'report',
+                                        child: Text('report'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                              Text(comments[index].content),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   );
+
                 },
               ),
               SizedBox(height: 10.0),

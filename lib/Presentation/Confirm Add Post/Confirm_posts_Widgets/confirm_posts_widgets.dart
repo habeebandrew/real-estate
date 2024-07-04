@@ -8,8 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../Util/cache_helper.dart';
 import '../../../Util/constants.dart';
 
-class post_card_confirm extends StatelessWidget {
-  String name = (CacheHelper.getString(key: 'name'))!;
+class post_card_confirm extends StatefulWidget {
+
   final int budget;
   final String description;
   final String status;
@@ -24,6 +24,14 @@ class post_card_confirm extends StatelessWidget {
     required this.selectedGovernorate,
     required this.selectedArea,
   });
+
+  @override
+  State<post_card_confirm> createState() => _post_card_confirmState();
+}
+
+class _post_card_confirmState extends State<post_card_confirm> {
+  String name = (CacheHelper.getString(key: 'name'))!;
+
   String formatBudget(int budget) {
     if (budget >= 1000000000) {
       return '${(budget / 1000000000).toStringAsFixed(1)} billion';
@@ -32,10 +40,11 @@ class post_card_confirm extends StatelessWidget {
     } else {
       return budget.toString();
     }
-  }
+  }    String? image = CacheHelper.getString(key: 'image');
+
+
   @override
   Widget build(BuildContext context) {
-    String? image=CacheHelper.getString(key: 'image');
 
   return Card(
       color: Colors.white,
@@ -54,10 +63,9 @@ class post_card_confirm extends StatelessWidget {
                   children: [
         image != null?
             CircleAvatar(
-            backgroundImage:
-            NetworkImage(image!),
+            backgroundImage:NetworkImage(image!),
+            // NetworkImage(image!),
         radius: 20.0,
-        backgroundColor: Colors.white,
       ):
       CircleAvatar(
       backgroundImage:
@@ -85,7 +93,7 @@ class post_card_confirm extends StatelessWidget {
               ],
             ),
             Text(
-              'Wanted for $status properity in $selectedGovernorate _ $selectedArea',
+              'Wanted for ${widget.status} properity in ${widget.selectedGovernorate} _ ${widget.selectedArea}',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 5.0),
@@ -94,7 +102,7 @@ class post_card_confirm extends StatelessWidget {
                 Icon(Icons.monetization_on_outlined, color: Constants.mainColor,),
                 SizedBox(width: 5),
                 Text(
-                  'budget: ${formatBudget(budget)}',
+                  'budget: ${formatBudget(widget.budget)}',
                   style: TextStyle(
                     fontSize: 16,
                     color:Constants.mainColor,
@@ -105,13 +113,13 @@ class post_card_confirm extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              description,
+              widget.description,
               style: TextStyle(fontSize: 14),
             ),
             SizedBox(height: 20),
             GestureDetector(
               onTap: () async {
-                final url = 'tel:$phone';
+                final url = 'tel:${widget.phone}';
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {

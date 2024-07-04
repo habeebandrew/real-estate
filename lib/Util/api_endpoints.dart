@@ -15,6 +15,8 @@ class ApiAndEndpoints {
   static const updateRole = 'updateRole';
   static const addComment = 'addComment';
   static const getComments = 'comments?';
+  static const reports_post = 'reports';
+
 
   static const getFavourite = 'showPropertiesInList';
 

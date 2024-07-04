@@ -83,8 +83,8 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       print("No image file or token provided");
       return;
     }
-
-    final uri = Uri.parse('http://192.168.1.106:8000/api/editProfile'); // تأكد من صحة عنوان URL هنا
+    // 'http://192.168.1.106:8000/api/editProfile'
+    final uri = Uri.parse(ApiAndEndpoints.api+ApiAndEndpoints.editProfile); // تأكد من صحة عنوان URL هنا
     final request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer $token'
       ..files.add(await http.MultipartFile.fromPath('image', _imageFile!.path));
