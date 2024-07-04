@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
+import 'package:pro_2/Util/constants.dart';
 
 import '../../Util/app_routes.dart';
 import '../../Util/cache_helper.dart';
@@ -308,8 +309,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Scaffold(backgroundColor: Colors.white,
+      appBar: AppBar(backgroundColor: Constants.mainColor2,
         title: Text('Property Form'),
       ),
       body: Padding(
@@ -347,12 +348,59 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               ),
               // Property Type
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'نوع العقار'),
+                decoration: InputDecoration(
+                  labelText: 'نوع العقار',
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color:  Constants.mainColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 value: selectedPropertyType.isEmpty ? null : selectedPropertyType,
                 items: propertyTypes.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
-                    child: Text(type),
+                    child: Text(
+                      type,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -366,15 +414,73 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   }
                   return null;
                 },
+                dropdownColor: Colors.white,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color:  Constants.mainColor,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
+SizedBox(height: 10,),
               // Province
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'المحافظة'),
+                decoration: InputDecoration(
+                  labelText: 'المحافظة',
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color:  Constants.mainColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 value: selectedProvince.isEmpty ? null : selectedProvince,
                 items: provinces.map((province) {
                   return DropdownMenuItem<String>(
                     value: province,
-                    child: Text(province),
+                    child: Text(
+                      province,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -392,15 +498,74 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   }
                   return null;
                 },
+                dropdownColor: Colors.white,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color:  Constants.mainColor,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
+              SizedBox(height: 10,),
+
               // City
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'المدينة'),
+                decoration: InputDecoration(
+                  labelText: 'المدينة',
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color:  Constants.mainColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 value: selectedCity.isEmpty ? null : selectedCity,
                 items: cities.map((city) {
                   return DropdownMenuItem<String>(
                     value: city['address'],
-                    child: Text(city['address']),
+                    child: Text(
+                      city['address'],
+                      style: TextStyle(fontSize: 14),
+                    ),
                     onTap: () {
                       selectedCityId = city['id_address']; // تعيين id_address
                     },
@@ -417,53 +582,206 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   }
                   return null;
                 },
+                dropdownColor: Colors.white,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: Constants.mainColor,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
+SizedBox(height: 10,),
               // Price
-              TextFormField(
-                decoration: InputDecoration(labelText: 'السعر'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    price = double.tryParse(value);
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a price';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid price';
-                  }
-                  return null;
-                },
-              ),
+              Container(
+                // width: 10, // تحديد عرض الحقل
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'السعر SP',
+                    labelStyle: TextStyle(
+                      fontSize: 14, // تقليل حجم نص التسمية
+                      fontWeight: FontWeight.bold,
+                      color:Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // تحسين الحشو
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true), // دعم الأرقام مع النقاط العشرية
+                  onChanged: (value) {
+                    setState(() {
+                      price = double.tryParse(value) ?? 0; // تعيين قيمة السعر
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a price';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Please enter a valid price';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(
+                    fontSize: 14, // تقليل حجم النص داخل الحقل
+                  ),
+                ),
+              )
+,
+
+              SizedBox(height: 10,),
+
               // Area
-              TextFormField(
-                decoration: InputDecoration(labelText: 'المساحة (م2)'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    area = double.tryParse(value);
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an area';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid area';
-                  }
-                  return null;
-                },
-              ),
+              Container(
+                width: 150, // تحديد عرض الحقل
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'السعر',
+                    labelStyle: TextStyle(
+                      fontSize: 14, // تقليل حجم نص التسمية
+                      fontWeight: FontWeight.bold,
+                      color:Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.redAccent,
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // تحسين الحشو
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true), // دعم الأرقام مع النقاط العشرية
+                  onChanged: (value) {
+                    setState(() {
+                      price = double.tryParse(value) ?? 0; // تعيين قيمة السعر
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a price';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Please enter a valid price';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(
+                    fontSize: 14, // تقليل حجم النص داخل الحقل
+                  ),
+                ),
+              )
+,
+              SizedBox(height: 10,),
+
               // Ownership Type
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'نوع الملكية'),
+                decoration: InputDecoration(
+                  labelText: 'نوع الملكية',
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color:  Constants.mainColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 value: ownershipType,
                 items: ownershipTypes.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
-                    child: Text(type),
+                    child: Text(
+                      type,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -477,15 +795,75 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   }
                   return null;
                 },
+                dropdownColor: Colors.white,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color:  Constants.mainColor,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
+
+              SizedBox(height: 10,),
+
               // Furnishing
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'التأثيث'),
+                decoration: InputDecoration(
+                  labelText: 'التأثيث',
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color:  Constants.mainColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 value: furnishing,
                 items: furnishings.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
-                    child: Text(type),
+                    child: Text(
+                      type,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -499,43 +877,163 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   }
                   return null;
                 },
+                dropdownColor: Colors.white,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color:  Constants.mainColor,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
-              // Orientation
-              if (selectedPropertyType!="فيلا"&&selectedPropertyType!="أرض"&&selectedPropertyType!="بناء"&&selectedPropertyType!="مزرعة")
+              SizedBox(height: 10,),
+
+// Orientation
+              if (selectedPropertyType != "فيلا" &&
+                  selectedPropertyType != "أرض" &&
+                  selectedPropertyType != "بناء" &&
+                  selectedPropertyType != "مزرعة")
                 DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'الاتجاه'),
-                value: orientation,
-                items: orientations.map((type) {
-                  return DropdownMenuItem<String>(
-                    value: type,
-                    child: Text(type),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    orientation = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select an orientation';
-                  }
-                  return null;
-                },
-              ),
+                  decoration: InputDecoration(
+                    labelText: 'الاتجاه',
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.redAccent,
+                        width: 2,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  value: orientation,
+                  items: orientations.map((type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(
+                        type,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      orientation = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select an orientation';
+                    }
+                    return null;
+                  },
+                  dropdownColor: Colors.white,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color:  Constants.mainColor,
+                  ),
+                  iconSize: 24,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                ),
+SizedBox(height: 10,),
               // Condition
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'الحالة'),
+                decoration: InputDecoration(
+                  labelText: 'الحالة',
+                  labelStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color:  Constants.mainColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color:  Constants.mainColor,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
                 value: condition,
                 items: conditions.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
-                    child: Text(type),
+                    child: Text(
+                      type,
+                      style: TextStyle(fontSize: 14),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    condition = value;
+                    condition = value!;
                   });
                 },
                 validator: (value) {
@@ -544,96 +1042,335 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   }
                   return null;
                 },
+                dropdownColor: Colors.white,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color:  Constants.mainColor,
+                ),
+                iconSize: 24,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
+SizedBox(height: 10,),
               // Rental Duration
               if (!isForSale)
                 DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'مدة الايجار'),
-                value: rentalDuration,
-                items: rentalDurations.map((type) {
-                  return DropdownMenuItem<String>(
-                    value: type,
-                    child: Text(type),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    rentalDuration = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a rental duration';
-                  }
-                  return null;
-                },
-              ),
-              // Number of Rooms
+                  decoration: InputDecoration(
+                    labelText: 'مدة الايجار',
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color:  Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.redAccent,
+                        width: 2,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  value: rentalDuration,
+                  items: rentalDurations.map((type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(
+                        type,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      rentalDuration = value!;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a rental duration';
+                    }
+                    return null;
+                  },
+                  dropdownColor: Colors.white,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Constants.mainColor,
+                  ),
+                  iconSize: 24,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                ),
 
-              TextFormField(
-                decoration: InputDecoration(labelText: 'عدد الغرف'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    numberOfRooms = int.tryParse(value);
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the number of rooms';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number of rooms';
-                  }
-                  return null;
-                },
-              ),
+              // Number of Rooms
+              SizedBox(height: 10,),
+
+              Container(
+                // width: 150, // تحديد عرض الحقل
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'عدد الغرف',
+                    labelStyle: TextStyle(
+                      fontSize: 14, // تقليل حجم نص التسمية
+                      fontWeight: FontWeight.bold,
+                      color: Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.redAccent,
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // تحسين الحشو
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  keyboardType: TextInputType.number, // دعم الأرقام فقط
+                  onChanged: (value) {
+                    setState(() {
+                      numberOfRooms = int.tryParse(value) ?? 0; // تعيين قيمة عدد الغرف
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the number of rooms';
+                    }
+                    if (int.tryParse(value) == null) {
+                      return 'Please enter a valid number of rooms';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(
+                    fontSize: 14, // تقليل حجم النص داخل الحقل
+                  ),
+                ),
+              )
+,
               // Floors
 
               if(selectedPropertyType=="شقة"||selectedPropertyType=="مكتب")
                 DropdownButtonFormField<int>(
-                  decoration: InputDecoration(labelText: 'رقم الطابق'),
+                  decoration: InputDecoration(
+                    labelText: 'رقم الطابق',
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.redAccent,
+                        width: 2,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
                   value: floors,
                   items: _num_of_floor.map((type) {
                     return DropdownMenuItem<int>(
                       value: type,
-                      child: Text(type.toString()),
+                      child: Text(
+                        type.toString(),
+                        style: TextStyle(fontSize: 14),
+                      ),
                     );
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      floors = value;
+                      floors = value!;
                     });
                   },
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select a condition';
+                      return 'Please select a floor number';
                     }
                     return null;
                   },
+                  dropdownColor: Colors.white,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color:  Constants.mainColor,
+                  ),
+                  iconSize: 24,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
                 ),
+
+              SizedBox(height: 10,),
               if(selectedPropertyType!="شقة"&&selectedPropertyType!="مكتب")
                 DropdownButtonFormField<int>(
-                  decoration: InputDecoration(labelText: 'عدد الطوابق'),
+                  decoration: InputDecoration(
+                    labelText: 'عدد الطوابق',
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color:  Constants.mainColor,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color:  Constants.mainColor,
+                        width: 2,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.redAccent,
+                        width: 2,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
                   value: floors,
                   items: _num_of_floor.map((type) {
                     return DropdownMenuItem<int>(
                       value: type,
-                      child: Text(type.toString()),
+                      child: Text(
+                        type.toString(),
+                        style: TextStyle(fontSize: 14),
+                      ),
                     );
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      floors = value;
+                      floors = value!;
                     });
                   },
                   validator: (value) {
-                    if (value == null ) {
-                      return 'Please select a condition';
+                    if (value == null) {
+                      return 'Please select the number of floors';
                     }
                     return null;
                   },
+                  dropdownColor: Colors.white,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Constants.mainColor,
+                  ),
+                  iconSize: 24,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
                 ),
+
               // TextFormField(
               //   decoration: InputDecoration(labelText: 'عدد الطوابق'),
               //   keyboardType: TextInputType.number,
@@ -669,6 +1406,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 20,),
               // Special Features
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -695,9 +1433,11 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
 
               ElevatedButton(
-                onPressed: pickImage,
-                child: Text('اختر الصور'),
-              ),
+                  onPressed: pickImage,
+                  child: Text('اختر الصور'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.mainColor2,
+                  ),),
               // عرض الصور المختارة
     if (images != null && images!.isNotEmpty)
       GridView.builder(
@@ -746,7 +1486,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
         },
       ),
               SizedBox(height: 20),
-              ElevatedButton(
+              ElevatedButton(  style: ElevatedButton.styleFrom(
+              backgroundColor: Constants.mainColor2,),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     sendPropertyData();
