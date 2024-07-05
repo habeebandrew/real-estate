@@ -50,7 +50,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                 title: const Text('Property'),
                 leading: IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context,widget.favourite);
                   },
                   icon: const Icon(Icons.arrow_back_ios_new),
                 ),
@@ -174,7 +174,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '${state.propertyDetailsModel.property.propertyType} ${state.propertyDetailsModel.property.size} m²',
+                                      '${state.propertyDetailsModel.property.propertyType} : ${state.propertyDetailsModel.property.size} m²',
                                       style: TextStyle(
                                           fontSize: 24.sp, fontWeight: FontWeight.bold),
                                     ),
@@ -209,6 +209,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                 child: TextButton(
                                   onPressed: () {},
                                   child: Row(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
                                         'show on map',
@@ -240,23 +241,23 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Text(
-                                  'Description',
+                                  'Description :',
                                   style: TextStyle(
                                       fontSize: 20.sp, fontWeight: FontWeight.bold),
                                 ),
                               ),
                                Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 8.0),
+                                    horizontal: 20.0, vertical: 8.0),
                                 child: Text(
-                                  state.propertyDetailsModel.property.description,
+                                  state.propertyDetailsModel.property.description!,
                                   style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                                 ),
                               ),
                               const Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text(
-                                  'Property characteristics.',
+                                  'Property characteristics :',
                                   style: TextStyle(
                                       fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
@@ -264,6 +265,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Table(
+
                                   border: TableBorder(
                                       horizontalInside: BorderSide(
                                     color: Colors.grey.shade100,
@@ -272,6 +274,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                     0: FixedColumnWidth(155),
                                   },
                                   children: [
+                                   if(state.propertyDetailsModel.property.rentalPeriod != null) 
                                     TableRow(
                                       children: [
                                         Padding(
@@ -304,7 +307,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    TableRow(
+
+                                   TableRow(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -336,7 +340,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    TableRow(
+                                    if(state.propertyDetailsModel.property.floor != null) 
+                                     TableRow(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -350,7 +355,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                               SizedBox(
                                                 width: 5.0.w,
                                               ),
-                                              Text('Floor Number',
+                                              Text('Number of Floors',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14.sp,
@@ -369,7 +374,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    TableRow(
+                                    if(state.propertyDetailsModel.property.ownerOfTheProperty != null) 
+                                     TableRow(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -394,7 +400,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            state.propertyDetailsModel.property.ownerOfTheProperty,
+                                            state.propertyDetailsModel.property.ownerOfTheProperty!,
                                             style: TextStyle(
                                                 fontSize: 14.sp,
                                                 color: Constants.mainColor),
@@ -402,7 +408,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    TableRow(
+                                    if(state.propertyDetailsModel.property.numberOfRoom != null) 
+                                     TableRow(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -435,6 +442,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                    if(state.propertyDetailsModel.property.furnished != null) 
                                     TableRow(
                                       children: [
                                         Padding(
@@ -460,7 +468,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            state.propertyDetailsModel.property.furnished,
+                                            state.propertyDetailsModel.property.furnished!,
                                             style: TextStyle(
                                                 fontSize: 14.sp,
                                                 color: Constants.mainColor),
@@ -468,7 +476,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    TableRow(
+                                    if(state.propertyDetailsModel.property.direction != null) 
+                                     TableRow(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -493,7 +502,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            state.propertyDetailsModel.property.direction,
+                                            state.propertyDetailsModel.property.direction!,
                                             style: TextStyle(
                                               color: Constants.mainColor,
                                               fontSize: 14.sp,
@@ -502,7 +511,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    TableRow(
+                                    if(state.propertyDetailsModel.property.condition != null) 
+                                     TableRow(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -527,7 +537,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            state.propertyDetailsModel.property.condition,
+                                            state.propertyDetailsModel.property.condition!,
                                             style: TextStyle(
                                               color: Constants.mainColor,
                                               fontSize: 14.sp,
@@ -539,15 +549,17 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                   ],
                                 ),
                               ),
-                              const Padding(
+                              if(state.propertyDetailsModel.features != []) 
+                               const Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text(
-                                  'Extra Features',
+                                  'Extra Features :',
                                   style: TextStyle(
                                       fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Column(
+                              if(state.propertyDetailsModel.features != []) 
+                               Column(
                                 children: List.generate(
                                   (state.propertyDetailsModel.features.length / 2).ceil(),
                                       (index) {
@@ -556,190 +568,23 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ? startIndex + 2
                                         : state.propertyDetailsModel.features.length;
                                     final pair = state.propertyDetailsModel.features.sublist(startIndex, endIndex);
-                                    return Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: pair.map((featureItem) => Text(featureItem.feature)).toList(),
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0
+                                        ),
+                                      child: Row(
+                                        mainAxisAlignment: state.propertyDetailsModel.features.length==1?MainAxisAlignment.end:MainAxisAlignment.spaceAround,
+                                        children: pair.map((featureItem) => Text(featureItem.feature)).toList(),
+                                      ),
                                     );
                                   },
                                 ),
-                              )
-
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                //   children: List.generate(
-                                //       state
-                                //           .propertyDetailsModel.features.length,
-                                //       (index) {
-                                //         final featureItem =state.propertyDetailsModel.features[index];
-                                //         return Text(featureItem.feature);
-                                //       }),
-                                // ),
-
-                                // Padding(
-                              //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                              //   child: Table(
-                              //     border: TableBorder(
-                              //         horizontalInside: BorderSide(
-                              //       color: Colors.grey.shade100,
-                              //     )),
-                              //     columnWidths: const {
-                              //       0: FixedColumnWidth(150),
-                              //     },
-                              //     children:
-                              //     [
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Rental Duration',
-                              //                 style: TextStyle(
-                              //                     fontSize: 14.sp,
-                              //                     fontWeight: FontWeight.bold)),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               '3',
-                              //               style: TextStyle(
-                              //                   fontSize: 14.sp,
-                              //                   color: Constants.mainColor),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Area (m²)',
-                              //                 style: TextStyle(
-                              //                     fontSize: 14.sp,
-                              //                     fontWeight: FontWeight.bold)),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               '240',
-                              //               style: TextStyle(
-                              //                   fontSize: 14.sp,
-                              //                   color: Constants.mainColor),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Floor Number',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.bold,
-                              //                   fontSize: 14.sp,
-                              //                 )),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               'Floor 2',
-                              //               style: TextStyle(
-                              //                   fontSize: 14.sp,
-                              //                   color: Constants.mainColor),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Owner of property',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.bold,
-                              //                   fontSize: 14.sp,
-                              //                 )),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               'mihdi',
-                              //               style: TextStyle(
-                              //                   fontSize: 14.sp,
-                              //                   color: Constants.mainColor),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Number of Rooms',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.bold,
-                              //                   fontSize: 14.sp,
-                              //                 )),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               '3',
-                              //               style: TextStyle(
-                              //                   fontSize: 14.sp,
-                              //                   color: Constants.mainColor),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Furnishing',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.bold,
-                              //                   fontSize: 14.sp,
-                              //                 )),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               'Furnished',
-                              //               style: TextStyle(
-                              //                   fontSize: 14.sp,
-                              //                   color: Constants.mainColor),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //       TableRow(
-                              //         children: [
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text('Direction',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.bold,
-                              //                   fontSize: 14.sp,
-                              //                 )),
-                              //           ),
-                              //           Padding(
-                              //             padding: const EdgeInsets.all(8.0),
-                              //             child: Text(
-                              //               'west',
-                              //               style: TextStyle(
-                              //                 color: Constants.mainColor,
-                              //                 fontSize: 14.sp,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
+                               )
+                             
                             ],
                           ),
                         ]
-                                      ),
+                      ),
                   ],
                 ),
               )

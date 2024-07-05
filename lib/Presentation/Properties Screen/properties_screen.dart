@@ -314,11 +314,33 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                         itemBuilder: (context, index) {
                           final property = state.propertyModel[index];
                           return GestureDetector(
-                            onTap: (){
-                              Navigator.push(
+                            onTap: ()async{
+                             Navigator.push(
                                   context, 
-                                  MyAnimation.createRoute(PropertyDetailsScreen(propertyId: property.id,favourite: property.existingFavorite,))
+                                  MyAnimation.createRoute(PropertyDetailsScreen(
+                                    propertyId: property.id,
+                                    favourite: property.existingFavorite,
+                                    )
+                                  )
                               );
+                              // final updatedFavourite = await Navigator.push<bool>(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => PropertyDetailsScreen(
+                              //       propertyId: property.id,
+                              //       favourite: property.existingFavorite,
+                              //     ),
+                              //   ),
+                              // );
+                              
+
+                                // // Handle the result here, updating the state if necessary
+                                // if (updatedFavourite != null && updatedFavourite != property.existingFavorite) {
+                                //   setState(() {
+                                //     property.existingFavorite = updatedFavourite;
+                                //   });
+                                // }
+
                             },
                             child: PropertyCard(
                               id: property.id,

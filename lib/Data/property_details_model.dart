@@ -74,14 +74,14 @@ class PropertyDet {
   String phone_number;
   int price;
   int size;
-  int floor;
-  String ownerOfTheProperty;
-  String furnished;
-  String direction;
-  String condition;
+  int?floor;
+  String?ownerOfTheProperty;
+  String?furnished;
+  String?direction;
+  String?condition;
   dynamic rentalPeriod;
-  int numberOfRoom;
-  String description;
+  int?numberOfRoom;
+  String?description;
   int viewers;
   DateTime createdAt;
 

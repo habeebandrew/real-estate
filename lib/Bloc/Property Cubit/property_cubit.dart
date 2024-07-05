@@ -21,6 +21,7 @@ class PropertyCubit extends Cubit<PropertyState> {
   int sliding=0;
   String dropDownStatus='all';
   String dropDownItemCites='all Cities';
+  
   void toggleSelectedFilter(int value,BuildContext context){
     emit(PropertyChangeFilterState());
     sliding = value;
@@ -91,6 +92,7 @@ class PropertyCubit extends Cubit<PropertyState> {
       emit(PropertyErrorState(error: response.toString()));
     }
   }
+  
   void filterProperty(BuildContext context,{int? statusId,int? propertyTypeId,int? cityId,int? userId})async{
     emit(PropertyLoadingState());
     var response = await PropertyService.filterProperty(statusId: statusId,propertyTypeId: propertyTypeId,cityId:cityId,userId: userId);
