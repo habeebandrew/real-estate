@@ -374,6 +374,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                    
                                     if(state.propertyDetailsModel.property.ownerOfTheProperty != null) 
                                      TableRow(
                                       children: [
@@ -408,6 +409,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                    
                                     if(state.propertyDetailsModel.property.numberOfRoom != null) 
                                      TableRow(
                                       children: [
@@ -442,6 +444,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                    
                                     if(state.propertyDetailsModel.property.furnished != null) 
                                     TableRow(
                                       children: [
@@ -476,6 +479,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                    
                                     if(state.propertyDetailsModel.property.direction != null) 
                                      TableRow(
                                       children: [
@@ -511,6 +515,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                    
                                     if(state.propertyDetailsModel.property.condition != null) 
                                      TableRow(
                                       children: [
