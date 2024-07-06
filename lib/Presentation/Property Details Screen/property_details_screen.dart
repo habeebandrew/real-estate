@@ -7,6 +7,7 @@ import 'package:pro_2/Util/dimensions.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:pro_2/Util/global%20Widgets/my_button.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetailsScreen extends StatefulWidget {
   PropertyDetailsScreen({
@@ -45,7 +46,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
           PropertyCubit cubit = PropertyCubit.get(context);
           return Scaffold(
              backgroundColor: Colors.white,
-              appBar: AppBar(
+             appBar: AppBar(
                 backgroundColor: Colors.white,
                 title: const Text('Property'),
                 leading: IconButton(
@@ -81,7 +82,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                   ),
                 ],
               ),
-              body: RefreshIndicator(
+             body: RefreshIndicator(
                 onRefresh: ()async{
                   context.read<PropertyCubit>().getPropertyDetails(widget.propertyId);
                 },
@@ -592,7 +593,55 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                       ),
                   ],
                 ),
-              )
+              ),
+            
+
+            bottomNavigationBar: state is PropertyDetailsLoadedState
+            ?InkWell(
+              onTap: () async{
+                final url = 'tel:${state.propertyDetailsModel.property.phone_number}';
+                debugPrint('phone:$url');
+                if (await canLaunchUrl(Uri.parse(url))) {
+                  await launchUrl(Uri.parse(url));
+                 } else {
+                  throw 'Could not launch $url';
+                 }
+              },
+              child: BottomAppBar(
+               
+                child:Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Contact with Broker',
+                      style:TextStyle(
+                        fontSize: 20.sp,
+                      )
+                    ),
+                    const Icon(Icons.phone)
+                  ],
+                )
+                
+                //ElevatedButton.icon(
+                    
+                //     onPressed: () {},
+                //     label: const Text('Contact with Broker'),
+                //     iconAlignment: IconAlignment.end,
+                //     icon: const Icon(Icons.phone),
+              
+                //     style: ElevatedButton.styleFrom(
+                //     c  
+                //     backgroundColor: Constants.mainColor3,  
+                //     textStyle: TextStyle(fontSize: 20.sp),
+                //   ),
+                // ),
+                
+                
+              ),
+            ):SizedBox(
+
+            ), 
           );
         },
       ),
