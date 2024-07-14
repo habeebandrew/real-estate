@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_2/generated/l10n.dart';
 
 import '../../Util/api_endpoints.dart';
 import '../../Util/cache_helper.dart';
@@ -65,6 +66,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       // Handle error
     }
   }
+
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -76,6 +78,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       await _uploadImage(); // تأكد من استخدام await هنا
     }
   }
+
   Future<void> _uploadImage() async {
     String? token = CacheHelper.getString(key: 'token');
     if (_imageFile == null || token == null) {
@@ -84,7 +87,8 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       return;
     }
     // 'http://192.168.1.106:8000/api/editProfile'
-    final uri = Uri.parse(ApiAndEndpoints.api+ApiAndEndpoints.editProfile); // تأكد من صحة عنوان URL هنا
+    final uri = Uri.parse(ApiAndEndpoints.api +
+        ApiAndEndpoints.editProfile); // تأكد من صحة عنوان URL هنا
     final request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer $token'
       ..files.add(await http.MultipartFile.fromPath('image', _imageFile!.path));
@@ -104,25 +108,25 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
     }
   }
 
-
   void _showEditPhoneDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Edit phone number"),
+          title: Text(S.of(context).Edit_phone_number),
           content: Form(
             key: _formKey,
             child: TextFormField(
               controller: phoneController,
               keyboardType: TextInputType.phone,
-              decoration: InputDecoration(hintText: "Enter the new phone number"),
+              decoration:
+                  InputDecoration(hintText: S.of(context).Enter_new_number),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a phone number';
+                  return S.of(context).Please_number;
                 } else if (value.length < 10 || value.length > 13) {
-                  return 'Phone number must be between 10 and 13 digits';
+                  return S.of(context).Phone_digits;
                 }
                 return null;
               },
@@ -131,39 +135,40 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("Cancel"),
+              child: Text(S.of(context).close),
             ),
             TextButton(
               onPressed: () {
                 editNumber();
               },
-              child: Text("Edit"),
+              child: Text(S.of(context).Edit),
             ),
           ],
         );
       },
     );
   }
+
   _showEditImageDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Edit Profile Picture"),
-          content: Text("Select a new profile picture"),
+          title: Text(S.of(context).Edit_Picture),
+          content: Text(S.of(context).Select_picture),
           actions: [
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _pickImage();
               },
-              child: Text("Choose from Gallery"),
+              child: Text(S.of(context).Choose_Gallery),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: Text(S.of(context).close),
             ),
           ],
         );
@@ -175,7 +180,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Account informations"),
+        title: Text(S.of(context).Account_Information),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -187,8 +192,8 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                   radius: 75,
                   backgroundImage: image != null
                       ? (File(image!).existsSync()
-                      ? FileImage(File(image!))
-                      : NetworkImage(image!)) as ImageProvider
+                          ? FileImage(File(image!))
+                          : NetworkImage(image!)) as ImageProvider
                       : AssetImage(''),
                 ),
                 Positioned(
@@ -239,7 +244,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                         SizedBox(width: 10),
                         Text(
                           phoneNumber.isEmpty
-                              ? 'No phone number added'
+                              ? S.of(context).No_phone
                               : phoneNumber,
                           style: TextStyle(
                             fontSize: 18,

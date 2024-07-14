@@ -7,10 +7,9 @@ import 'package:pro_2/Util/dimensions.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:pro_2/Util/global%20Widgets/my_button.dart';
 import 'package:pro_2/Util/global%20Widgets/my_form_field.dart';
-
+import 'package:pro_2/generated/l10n.dart';
 
 class SignUp extends StatelessWidget {
-
   const SignUp({super.key});
 
   @override
@@ -44,83 +43,85 @@ class SignUp extends StatelessWidget {
                       ),
                       SizedBox(height: 20.h),
                       Text(
-                        "Sign up as a user",
+                        S.of(context).Signup_user,
                         style: TextStyle(
                             fontSize: 18.sp,
                             color: Constants.mainColor,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 20.h),
-                      MyFormField(maxLines: 1,
+                      MyFormField(
+                        maxLines: 1,
                         controller: cubit.user_nameController,
-                        labelText: 'User Name',
+                        labelText: S.of(context).User_Name,
                         maxLength: 55,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your User name';
+                            return S.of(context).Please_name;
                           } else if (value.length > 55) {
-                            return 'User name cannot exceed 55 characters';
+                            return S.of(context).User_name_characters;
                           }
                           return null;
                         },
                       ),
                       SizedBox(height: 10.h),
-                      MyFormField(maxLines: 1,
+                      MyFormField(
+                        maxLines: 1,
                         controller: cubit.emailController,
-                        labelText: 'Email',
+                        labelText: S.of(context).email,
                         type: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          } else
-                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                            return 'Please enter a valid email';
+                            return S.of(context).Please_email;
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                              .hasMatch(value)) {
+                            return S.of(context).Please_valid_email;
                           }
                           return null;
                         },
                       ),
                       SizedBox(height: 10.h),
-                      MyFormField(maxLines: 1,
+                      MyFormField(
+                        maxLines: 1,
                         controller: cubit.signUPasswordController,
-                        labelText: 'Password',
+                        labelText: S.of(context).Password,
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
+                            return S.of(context).Please_password;
                           } else if (value.length < 8) {
-                            return 'Password must be at least 8 characters long';
+                            return S.of(context).Password_characters_long;
                           }
                           return null;
                         },
                       ),
                       SizedBox(height: 10.h),
-                      MyFormField(maxLines: 1,
+                      MyFormField(
+                        maxLines: 1,
                         controller: cubit.confirmPasswordController,
-                        labelText: 'Confirm Password',
+                        labelText: S.of(context).Confirm_Password,
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
-                          } else
-                          if (value != cubit.signUPasswordController.text) {
-                            return 'Passwords do not match';
+                            return S.of(context).Please_confirm_password;
+                          } else if (value !=
+                              cubit.signUPasswordController.text) {
+                            return S.of(context).Passwords_match;
                           }
                           return null;
                         },
                       ),
                       SizedBox(height: 20.h),
-                      state is AuthLoadingState ?
-                      const Center(
-                          child: CircularProgressIndicator()
-                      )
+                      state is AuthLoadingState
+                          ? const Center(child: CircularProgressIndicator())
                           : MyButton(
-                        tittle: "Sign up",
-                        onPreessed: () {
-                          cubit.signUp(context);
-                        },
-                        minWidth: Dimensions.widthPercentage(context, 50),
-                        height: Dimensions.heightPercentage(context, 7),
-                      ),
+                              tittle: S.of(context).Sign_up,
+                              onPreessed: () {
+                                cubit.signUp(context);
+                              },
+                              minWidth: Dimensions.widthPercentage(context, 50),
+                              height: Dimensions.heightPercentage(context, 7),
+                            ),
                     ],
                   ),
                 ),

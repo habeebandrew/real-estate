@@ -1,17 +1,20 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pro_2/generated/l10n.dart';
 
 import '../../../Util/constants.dart';
-
 
 class Category {
   final String name;
   final String imageUrl;
   final VoidCallback onTap;
 
-  Category({required this.name, required this.imageUrl, required this.onTap});
+  Category({
+    required this.name,
+    required this.imageUrl,
+    required this.onTap,
+  });
 }
 
 class CategorySection extends StatefulWidget {
@@ -20,68 +23,72 @@ class CategorySection extends StatefulWidget {
 }
 
 class _CategorySectionState extends State<CategorySection> {
-  final List<Category> categories = [
-    Category(
-      name: 'on_the_beach',
-      imageUrl: 'assets/images/Home/on_the_beach.jpg',
-      onTap: () {
-        print('Farm category tapped');
-        // Add your functionality here
-      },
-    ),
-    Category(
-      name: 'farm',
-      imageUrl: 'assets/images/Home/farm.jpg',
-      onTap: () {
-        print('Farm category tapped');
-        // Add your functionality here
-      },
-    ),
-    Category(
-      name: 'apartment',
-      imageUrl: 'assets/images/Home/apartment.jpg',
-      onTap: () {
-        print('Apartment category tapped');
-        // Add your functionality here
-      },
-    ),
-    Category(
-      name: 'office',
-      imageUrl: 'assets/images/Home/office.jpg',
-      onTap: () {
-        print('Office category tapped');
-        // Add your functionality here
-      },
-    ),
-    Category(
-      name: 'villa',
-      imageUrl: 'assets/images/Home/villa.jpg',
-      onTap: () {
-        print('Villa category tapped');
-        // Add your functionality here
-      },
-    ),
-    Category(
-      name: 'building',
-      imageUrl: 'assets/images/Home/skyscraper-sunset.jpg',
-      onTap: () {
-        print('Building category tapped');
-        // Add your functionality here
-      },
-    ),
-
-  ];
-
+  late List<Category> categories;
   late PageController _pageController;
   int _currentPage = 0;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // تهيئة قائمة الفئات بعد التحقق من أن context جاهز
+    categories = [
+      Category(
+        name: S.of(context).on_the_beach,
+        imageUrl: 'assets/images/Home/on_the_beach.jpg',
+        onTap: () {
+          print('On the beach category tapped');
+          // أضف وظيفتك هنا
+        },
+      ),
+      Category(
+        name: S.of(context).farm,
+        imageUrl: 'assets/images/Home/farm.jpg',
+        onTap: () {
+          print('Farm category tapped');
+          // أضف وظيفتك هنا
+        },
+      ),
+      Category(
+        name: S.of(context).apartment,
+        imageUrl: 'assets/images/Home/apartment.jpg',
+        onTap: () {
+          print('Apartment category tapped');
+          // أضف وظيفتك هنا
+        },
+      ),
+      Category(
+        name: S.of(context).office,
+        imageUrl: 'assets/images/Home/office.jpg',
+        onTap: () {
+          print('Office category tapped');
+          // أضف وظيفتك هنا
+        },
+      ),
+      Category(
+        name: S.of(context).villa,
+        imageUrl: 'assets/images/Home/villa.jpg',
+        onTap: () {
+          print('Villa category tapped');
+          // أضف وظيفتك هنا
+        },
+      ),
+      Category(
+        name: S.of(context).building,
+        imageUrl: 'assets/images/Home/skyscraper-sunset.jpg',
+        onTap: () {
+          print('Building category tapped');
+          // أضف وظيفتك هنا
+        },
+      ),
+    ];
+
+    // تهيئة PageController بعد التأكد من تهيئة الفئات
     _pageController = PageController(
       initialPage: _currentPage,
-      viewportFraction: 0.8, // تخفيض العرض المرئي لكل عنصر
+      viewportFraction: 0.8,
     );
+
     _startAutoScroll();
   }
 
@@ -116,8 +123,9 @@ class _CategorySectionState extends State<CategorySection> {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(
-            'Types of properties >',
-            style: TextStyle(color: Colors.black87,
+            S.of(context).Types,
+            style: TextStyle(
+              color: Colors.black87,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -132,24 +140,18 @@ class _CategorySectionState extends State<CategorySection> {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: InkWell(
-                  // splashColor: Colors.white,
-                  // focusColor:Colors.white,
-                  // hoverColor: Colors.white,
-                  // highlightColor: Colors.white,
                   splashColor: Constants.mainColor2,
-                  focusColor:Constants.mainColor2,
+                  focusColor: Constants.mainColor2,
                   hoverColor: Constants.mainColor2,
                   highlightColor: Constants.mainColor2,
                   onTap: categories[index].onTap,
                   child: Container(
                     decoration: BoxDecoration(
-                      color:Colors.white,
-                      // Constants.mainColor2,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
                           color: Constants.mainColor2,
-                          // Color.fromARGB(255, 253, 253, 253),
                           spreadRadius: 2,
                           blurRadius: 5,
                           offset: Offset(5, 5),
@@ -160,14 +162,12 @@ class _CategorySectionState extends State<CategorySection> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                              20), // تعديل الزاوية حسب ما تحتاج
+                          borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
                             categories[index].imageUrl,
                             width: MediaQuery.of(context).size.width * 0.6,
                             height: MediaQuery.of(context).size.width * 0.35,
-                            fit:
-                            BoxFit.cover, // لتغطية المساحة بالصورة بشكل جيد
+                            fit: BoxFit.cover,
                           ),
                         ),
                         SizedBox(height: 8),
@@ -191,6 +191,7 @@ class _CategorySectionState extends State<CategorySection> {
     );
   }
 }
+
 class mostviewer extends StatefulWidget {
   const mostviewer({super.key});
 
@@ -236,16 +237,17 @@ class _mostviewerState extends State<mostviewer> {
               Positioned(
                 top: 0,
                 right: 0,
-                child: Container(decoration: BoxDecoration( color: Constants.mainColor,borderRadius: BorderRadius.circular(5)),
-                 
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Constants.mainColor,
+                      borderRadius: BorderRadius.circular(5)),
                   padding: EdgeInsets.all(5),
                   child: Text(
-                    'للبيع'
-                    ,
+                    'للبيع',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,fontSize: 18
-                    ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
                   ),
                 ),
               ),
@@ -261,7 +263,8 @@ class _mostviewerState extends State<mostviewer> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                  ),textDirection:TextDirection.rtl,
+                  ),
+                  textDirection: TextDirection.rtl,
                 ),
                 Text(
                   'شاليه 200 م²',

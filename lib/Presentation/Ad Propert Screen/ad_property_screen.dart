@@ -659,7 +659,7 @@ SizedBox(height: 10,),
                 width: 150, // تحديد عرض الحقل
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'السعر',
+                    labelText: 'تصحيح هنا من اجل المساحة test',
                     labelStyle: TextStyle(
                       fontSize: 14, // تقليل حجم نص التسمية
                       fontWeight: FontWeight.bold,
@@ -707,7 +707,7 @@ SizedBox(height: 10,),
                   keyboardType: TextInputType.numberWithOptions(decimal: true), // دعم الأرقام مع النقاط العشرية
                   onChanged: (value) {
                     setState(() {
-                      price = double.tryParse(value) ?? 0; // تعيين قيمة السعر
+                      area = double.tryParse(value) ?? 0; 
                     });
                   },
                   validator: (value) {

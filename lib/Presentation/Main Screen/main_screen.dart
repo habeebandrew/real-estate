@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Main%20Screen/MainWidgets/main_widgets.dart';
+import 'package:pro_2/generated/l10n.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
+//S.of(context).Change_language,
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class MainScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'most watched',
+                    S.of(context).most_watched,
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 16,
@@ -54,7 +56,7 @@ class SearchBar extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Search real estate',
+          hintText: S.of(context).Search_real,
           prefixIcon: Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),

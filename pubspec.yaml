@@ -37,7 +37,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   shared_preferences: ^2.2.3
   simple_animations: ^5.0.2
-  flutter_screenutil:
+  flutter_screenutil: null
   http: ^1.2.1
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
@@ -45,7 +45,11 @@ dependencies:
   flutter_native_splash: ^2.4.0
   shimmer_animation: ^2.1.0+1
   url_launcher: ^6.3.0
-  intl:
+  intl_utils:
+  connectivity_plus:
+  flutter_localizations:
+    sdk: flutter
+  intl: null
   image_picker: ^1.1.2
   #share_plus: ^9.0.0
 flutter_native_splash:
@@ -72,7 +76,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -87,17 +90,11 @@ flutter:
     - assets/images/authentication/
     - assets/images/General/
     - assets/images/Home/
-
-
-
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -117,3 +114,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

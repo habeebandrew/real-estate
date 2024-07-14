@@ -1,60 +1,27 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_2/generated/l10n.dart';
 import '../../Data/Posts_model.dart';
 import '../../Util/api_endpoints.dart';
 import '../../Util/dimensions.dart';
 import 'Posts widgets/post_widgets.dart';
+
 class PostsScreen extends StatefulWidget {
   @override
   _PostScreenState createState() => _PostScreenState();
 }
+
 class _PostScreenState extends State<PostsScreen> {
   List<Post> posts = [];
   List<Post> filteredPosts = [];
   bool _isLoading = true;
-  String selectedState = 'All'; // 'All', 'For Sale', 'For Rent'
-  String selectedGovernorate = 'All Cities'; // 'All' or specific governorate
-  String selectedSortOrder = 'Newest'; // 'Newest', 'Oldest'
-  String selectedRegion = 'All';
-  void fetchPosts() async {
-    final response = await http.get(
-      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.getpost),
-      headers: {
-        'Content-Type': 'application/json',
+  late String selectedState;
+  late String selectedGovernorate;
+  late String selectedSortOrder;
+  late String selectedRegion;
 
-      },
-    );
-
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body)['posts'];
-      setState(() {
-        posts = data.map((postJson) => Post.fromJson(postJson)).toList();
-        applyFilters();
-      });
-    } else {
-      throw Exception('Failed to load posts');
-    }
-  }
-  void applyFilters() {
-    setState(() {
-      filteredPosts = posts.where((post) {
-        bool matchesState = selectedState == 'All' || post.state == selectedState;
-        bool matchesGovernorate =
-            selectedGovernorate == 'All Cities' || post.governorate == selectedGovernorate;
-        bool matchesRegion = selectedRegion == 'All' || post.region == selectedRegion;
-        return matchesState && matchesGovernorate  && matchesRegion;
-      }).toList();
-
-      if (selectedSortOrder == 'Newest') {
-        filteredPosts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      } else {
-        filteredPosts.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-      }
-    });
-  }
   @override
   void initState() {
     super.initState();
@@ -67,28 +34,92 @@ class _PostScreenState extends State<PostsScreen> {
       }
     });
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedState = S.of(context).All;
+    selectedGovernorate = S.of(context).All_Cities;
+    selectedSortOrder = S.of(context).Newest;
+    selectedRegion = S.of(context).All;
+    applyFilters();
+  }
+
+  void fetchPosts() async {
+    final response = await http.get(
+      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.getpost),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body)['posts'];
+      print("Fetched posts data: $data"); // تحقق من البيانات القادمة
+      setState(() {
+        posts = data.map((postJson) => Post.fromJson(postJson)).toList();
+        applyFilters();
+      });
+    } else {
+      throw Exception('Failed to load posts');
+    }
+  }
+
+  void applyFilters() {
+    setState(() {
+      filteredPosts = posts.where((post) {
+        // تحقق من مطابقة الحالة
+        bool matchesState = selectedState == S.of(context).All ||
+            post.translateState(context) == selectedState;
+
+        // تحقق من مطابقة المحافظة
+        bool matchesGovernorate =
+            selectedGovernorate == S.of(context).All_Cities ||
+                post.translateGovernorate(context) == selectedGovernorate;
+
+        // تحقق من مطابقة المنطقة
+        bool matchesRegion = selectedRegion == S.of(context).All ||
+            post.region == selectedRegion;
+
+        return matchesState && matchesGovernorate && matchesRegion;
+      }).toList();
+
+      // ترتيب النتائج
+      if (selectedSortOrder == S.of(context).Newest) {
+        filteredPosts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      } else {
+        filteredPosts.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
-      appBar:PreferredSize(
-    preferredSize: Size.fromHeight(30.0), // تعديل ارتفاع الـ AppBar هنا
-    child: AppBar(backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title:
-        Row(
-          children: [
-            SizedBox(width: Dimensions.widthPercentage(context, 16),
-              child: Expanded(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.0),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: Row(
+            children: [
+              SizedBox(
+                width: Dimensions.widthPercentage(context, 16),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedState,
                     isExpanded: true,
                     style: TextStyle(fontSize: 12, color: Colors.black),
-                    items: ['All', 'buy', 'rental']
+                    items: [
+                      S.of(context).All,
+                      S.of(context).buy,
+                      S.of(context).rental,
+                    ]
                         .map((state) => DropdownMenuItem<String>(
-                      value: state,
-                      child: Text(state),
-                    ))
+                              value: state,
+                              child: Text(state),
+                            ))
                         .toList(),
                     onChanged: (value) {
                       setState(() {
@@ -99,49 +130,49 @@ class _PostScreenState extends State<PostsScreen> {
                   ),
                 ),
               ),
-            ),
-            SizedBox(width:Dimensions.widthPercentage(context, 3),),
-            // SizedBox(width: 8),
-            SizedBox(width: Dimensions.widthPercentage(context, 25),
-              child: Expanded(
+              SizedBox(
+                width: Dimensions.widthPercentage(context, 3),
+              ),
+              SizedBox(
+                width: Dimensions.widthPercentage(context, 25),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedGovernorate,
                     isExpanded: true,
                     style: TextStyle(fontSize: 12, color: Colors.black),
                     items: [
-                      'All Cities',
-                      'Damascus',
-                      'Rural Damascus',
-                      'Aleppo',
-                      'Rural Aleppo',
-                      'Homs',
-                      'Rural Homs',
-                      'Latakia',
-                      'Rural Latakia',
-                      'Tartous',
-                      'Rural Tartous',
-                      'Hama',
-                      'Rural Hama',
-                      'Idlib',
-                      'Rural Idlib',
-                      'Deir ez-Zor',
-                      'Rural Deir ez-Zor',
-                      'Raqqa',
-                      'Rural Raqqa',
-                      'Al-Hasakah',
-                      'Rural Al-Hasakah',
-                      'Daraa',
-                      'Rural Daraa',
-                      'As-Suwayda',
-                      'Rural As-Suwayda',
-                      'Quneitra',
-                      'Rural Quneitra'
+                      S.of(context).All_Cities,
+                      S.of(context).Damascus,
+                      S.of(context).Rural_Damascus,
+                      S.of(context).Aleppo,
+                      S.of(context).Rural_Aleppo,
+                      S.of(context).Homs,
+                      S.of(context).Rural_Homs,
+                      S.of(context).Latakia,
+                      S.of(context).Rural_Latakia,
+                      S.of(context).Tartous,
+                      S.of(context).Rural_Tartous,
+                      S.of(context).Hama,
+                      S.of(context).Rural_Hama,
+                      S.of(context).Idlib,
+                      S.of(context).Rural_Idlib,
+                      S.of(context).Dei_ez_Zor,
+                      S.of(context).Rural_Deir_ez_Zor,
+                      S.of(context).Raqqa,
+                      S.of(context).Rural_Raqqa,
+                      S.of(context).Al_Hasakah,
+                      S.of(context).Rural_Al_Hasakah,
+                      S.of(context).Daraa,
+                      S.of(context).Rural_Daraa,
+                      S.of(context).As_Suwayda,
+                      S.of(context).Rural_As_Suwayda,
+                      S.of(context).Quneitra,
+                      S.of(context).Rural_Quneitra
                     ]
                         .map((governorate) => DropdownMenuItem<String>(
-                      value: governorate,
-                      child: Text(governorate),
-                    ))
+                              value: governorate,
+                              child: Text(governorate),
+                            ))
                         .toList(),
                     onChanged: (value) {
                       setState(() {
@@ -152,20 +183,21 @@ class _PostScreenState extends State<PostsScreen> {
                   ),
                 ),
               ),
-            ),
-            SizedBox(width: Dimensions.widthPercentage(context, 3),),
-            SizedBox(width: Dimensions.widthPercentage(context, 22),
-              child: Expanded(
+              SizedBox(
+                width: Dimensions.widthPercentage(context, 3),
+              ),
+              SizedBox(
+                width: Dimensions.widthPercentage(context, 22),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedSortOrder,
                     isExpanded: true,
                     style: TextStyle(fontSize: 12, color: Colors.black),
-                    items: ['Newest', 'Oldest']
+                    items: [S.of(context).Newest, S.of(context).Oldest]
                         .map((order) => DropdownMenuItem<String>(
-                      value: order,
-                      child: Text(order),
-                    ))
+                              value: order,
+                              child: Text(order),
+                            ))
                         .toList(),
                     onChanged: (value) {
                       setState(() {
@@ -176,48 +208,39 @@ class _PostScreenState extends State<PostsScreen> {
                   ),
                 ),
               ),
-            ),
-            Spacer(),
-
-            Text('Posts: ${filteredPosts.length}',style: TextStyle(fontSize: 12),),
-            // Spacer(),
-            // SizedBox(width:  Dimensions.widthPercentage(context, 10),
-            //   child: IconButton(
-            //     icon: Icon(Icons.filter_list),
-            //     onPressed: (){},
-            //     color: Colors.black,
-            //   ),
-            // ),
-          ],
+              Spacer(),
+              Text(
+                '${S.of(context).Posts} ${filteredPosts.length}',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
         ),
-
-      ),),
-      body:
-      _isLoading
+      ),
+      body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : filteredPosts.isEmpty
-          ? Center(child: Text('There is no data', style: TextStyle(fontSize: 18)))
-          : ListView.builder(
-        itemCount: filteredPosts.length,
-        itemBuilder: (context, index) {
-          var post = filteredPosts[index];
-          return PostCard_with_comments(
-            description: post.description,
-            phone: post.mobilenumber,
-            selectedArea: post.region,
-            status: post.state,
-            selectedGovernorate: post.governorate,
-            budget: post.budget,
-            postDate: post.createdAt,
-            userName: post.userId,
-            userProfileImageUrl: post.profileImage,
-            postId: post.id,
-          );
-        },
-      ),
+              ? Center(
+                  child: Text(S.of(context).no_data,
+                      style: TextStyle(fontSize: 18)))
+              : ListView.builder(
+                  itemCount: filteredPosts.length,
+                  itemBuilder: (context, index) {
+                    var post = filteredPosts[index];
+                    return PostCard_with_comments(
+                      description: post.description,
+                      phone: post.mobilenumber,
+                      selectedArea: post.region,
+                      status: post.translateState(context),
+                      selectedGovernorate: post.translateGovernorate(context),
+                      budget: post.budget,
+                      postDate: post.createdAt,
+                      userName: post.userId,
+                      userProfileImageUrl: post.profileImage,
+                      postId: post.id,
+                    );
+                  },
+                ),
     );
   }
 }
-
-
-

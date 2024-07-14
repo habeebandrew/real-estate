@@ -1,7 +1,7 @@
 class ApiAndEndpoints {
-  static const api = 'http://192.168.1.5:8000/api/';
+  static const api = 'http://192.168.1.103:8000/api/';
 
-//*HABEEB:   192.168.1.106
+//*HABEEB:    192.168.1.103
   static const signUp = 'register';
 
   static const logIn = 'signIn';
@@ -16,7 +16,6 @@ class ApiAndEndpoints {
   static const addComment = 'addComment';
   static const getComments = 'comments?';
   static const reports_post = 'reports';
-
 
   static const getFavourite = 'showPropertiesInList';
 

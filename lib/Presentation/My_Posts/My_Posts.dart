@@ -1,11 +1,9 @@
-
-
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pro_2/Util/constants.dart';
+import 'package:pro_2/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Data/Posts_model.dart';
 import '../../Util/api_endpoints.dart';
@@ -17,7 +15,6 @@ import '../Posts Screen/Posts widgets/post_widgets.dart';
 import 'MY_Posts_Widgets/myposts_widgets.dart';
 
 class My_Posts extends StatefulWidget {
-
   const My_Posts({super.key});
 
   @override
@@ -46,6 +43,7 @@ class _My_PostsState extends State<My_Posts> {
       throw Exception('Failed to load posts');
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -61,29 +59,36 @@ class _My_PostsState extends State<My_Posts> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
-appBar: AppBar(title: Text("My Posts"),backgroundColor: Constants.mainColor2,),
-body:_isLoading?
-      Center(child: CircularProgressIndicator(),)
-    :posts.isEmpty
-    ?Center(child: Text('There are no posts published previously !'
-    , style: TextStyle(fontSize: 18)))
-    :ListView.builder(itemCount: posts.length,itemBuilder:(context, index){
-      var post = posts[index];
-    return PostCard_MYPOSTS(
-      description: post.description,
-      phone: post.mobilenumber,
-      selectedArea: post.region,
-      status: post.state,
-      selectedGovernorate: post.governorate,
-      budget: post.budget,
-      postDate: post.createdAt,
-      userName: post.userId,
-      userProfileImageUrl: post.profileImage,
-      postId: post.id,
-    );
-    } )
-    );
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text(S.of(context).My_posts),
+          backgroundColor: Constants.mainColor2,
+        ),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : posts.isEmpty
+                ? Center(
+                    child: Text(S.of(context).There_are_no_posts,
+                        style: TextStyle(fontSize: 18)))
+                : ListView.builder(
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      var post = posts[index];
+                      return PostCard_MYPOSTS(
+                        description: post.description,
+                        phone: post.mobilenumber,
+                        selectedArea: post.region,
+                        status: post.state,
+                        selectedGovernorate: post.governorate,
+                        budget: post.budget,
+                        postDate: post.createdAt,
+                        userName: post.userId,
+                        userProfileImageUrl: post.profileImage,
+                        postId: post.id,
+                      );
+                    }));
   }
 }
-

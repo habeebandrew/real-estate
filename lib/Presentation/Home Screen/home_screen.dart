@@ -12,13 +12,13 @@ import 'package:flutter/services.dart';
 import '../../Util/cache_helper.dart';
 import '../../Util/dimensions.dart';
 import '../../Util/global Widgets/animation.dart';
+import '../../generated/l10n.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -32,39 +32,38 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
       child: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-
-        },
+        listener: (context, state) {},
         builder: (context, state) {
-          AuthCubit cubit =AuthCubit.get(context);
-          return Scaffold(backgroundColor: Colors.white,
+          AuthCubit cubit = AuthCubit.get(context);
+          return Scaffold(
+            backgroundColor: Colors.white,
             endDrawer: AppRoutes.drawerScreen,
-            body: WillPopScope( onWillPop: () async {
+            body: WillPopScope(
+              onWillPop: () async {
+                return await showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(S.of(context).go_out),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text(S.of(context).no),
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                      ),
+                      TextButton(
+                        child: Text(S.of(context).yes),
+                        onPressed: () {
+                          SystemNavigator.pop();
 
-              return await showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text('Do you really want to go out?'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('no'),
-                      onPressed: () {
-                        Navigator.of(context).pop(false);
-                      },
-                    ),
-                    TextButton(
-                      child: Text('yes'),
-                      onPressed: () {SystemNavigator.pop();
-
-                      Navigator.of(context).pop(true);
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-                child:
-              CustomScrollView(
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: CustomScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 slivers: <Widget>[
                   //silver منشان لما اعمل scroll down تضل ابيض ما تغمق
@@ -78,7 +77,9 @@ class HomeScreen extends StatelessWidget {
                           "assets/images/General/App_Icon1.png",
                           height: Dimensions.heightPercentage(context, 6.5),
                         ),
-                        const SizedBox(width: 1,),
+                        const SizedBox(
+                          width: 1,
+                        ),
                         RichText(
                           text: TextSpan(
                             children: [
@@ -94,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                                 text: 'apital',
                                 style: TextStyle(
                                   color: Constants.mainColor,
-                                  fontSize:26.h,
+                                  fontSize: 26.h,
                                 ),
                               ),
                               TextSpan(
@@ -115,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-Spacer(),
+                        Spacer(),
                         IconButton(
                           icon: Icon(Icons.notifications_none_rounded),
                           onPressed: () {
@@ -137,8 +138,8 @@ Spacer(),
                 size: 40.0.sp,
               ),
               onPressed: () {
-               int? role_id= CacheHelper.getInt(key: 'role_id');
-                if(role_id==null){
+                int? role_id = CacheHelper.getInt(key: 'role_id');
+                if (role_id == null) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -147,161 +148,191 @@ Spacer(),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         title: Text(
-                          'alert',
-                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                          S.of(context).alert,
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.bold),
                         ),
-                        content: Text('You do not have permission add any thing. Please log in!!'),
+                        content: Text(S.of(context).Please_log_in),
                         actions: <Widget>[
                           TextButton(
                             child: Text(
-                              'Log In',
-                              style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
+                              S.of(context).Log_In,
+                              style: TextStyle(
+                                  color: Constants.mainColor,
+                                  fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                              Navigator.of(context).push(
+                                  MyAnimation.createRoute(
+                                      AppRoutes.logInScreen));
                             },
                           ),
                         ],
                       );
                     },
                   );
-
-
                 }
-               if(role_id==1){
-
-                 showDialog(
-                   context: context,
-                   builder: (BuildContext context) {
-                     return AlertDialog(
-                       shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(15),
-                       ),
-                       title: Text(
-                         'Add',
-                         style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
-                       ),
-                       content: SingleChildScrollView(
-                         child: Column(
-                           // mainAxisSize: MainAxisSize.max,
-                           children: <Widget>[
-                             TextButton(
-                               onPressed: (){
-                               showDialog(
-                                 context: context,
-                                 builder: (BuildContext context) {
-                                   return AlertDialog(
-                                     shape: RoundedRectangleBorder(
-                                       borderRadius: BorderRadius.circular(15),
-                                     ),
-                                     title: Text(
-                                       'alert',
-                                       style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                                     ),
-                                     content: Text('You do not have permission to add areal estate ad. Please subscription as a broker!!'),
-                                     actions: <Widget>[
-                                       TextButton(
-                                         child: Text(
-                                           'Subscription',
-                                           style: TextStyle(color: Constants.mainColor,fontWeight: FontWeight.bold),
-                                         ),
-                                         onPressed: () {
-                                           Navigator.of(context).pop();
-                                           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
-                                         },
-                                       ),
-                                     ],
-                                   );
-                                 },
-                               );
-                               // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.));
-                             },
-                               child: ListTile(
-                                 leading: Icon(Icons.info, color: Constants.mainColor),
-                                 title: Text('Add a real estate ad'),
-
-                               ),
-                             ),
-                             Divider(),
-                             TextButton(onPressed: (){Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));},
-                               child: ListTile(
-                                 leading: Icon(Icons.info, color: Constants.mainColor),
-                                 title: Text('Add a post'),
-                               ),
-                             ),
-
-                           ],
-                         ),
-                       ),
-                       actions: <Widget>[
-                         TextButton(
-                           child: Text('إغلاق',style: TextStyle(color: Constants.mainColor),),
-                           onPressed: () {
-                             Navigator.of(context).pop();
-                           },
-                         ),
-                       ],
-                     );
-                   },
-                 );
-
-               }
-               if(role_id==2){
-                 showDialog(
-                   context: context,
-                   builder: (BuildContext context) {
-                     return AlertDialog(
-                       shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(15),
-                       ),
-                       title: Text(
-                         'Add',
-                         style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
-                       ),
-                       content: SingleChildScrollView(
-                         child: Column(
-                           // mainAxisSize: MainAxisSize.max,
-                           children: <Widget>[
-                             TextButton(onPressed: (){
-                                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.adPropertyScreen));
-                               },
-                               child: ListTile(
-                                 leading: Icon(Icons.info, color: Constants.mainColor),
-                                 title: Text('Add a real estate ad'),
-
-                               ),
-                             ),
-                             Divider(),
-                             TextButton(onPressed: (){Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));},
-                               child: ListTile(
-                                 leading: Icon(Icons.info, color: Constants.mainColor),
-                                 title: Text('Add a post'),
-                               ),
-                             ),
-
-                           ],
-                         ),
-                       ),
-                       actions: <Widget>[
-                         TextButton(
-                           child: Text('إغلاق',style: TextStyle(color: Constants.mainColor),),
-                           onPressed: () {
-                             Navigator.of(context).pop();
-                           },
-                         ),
-                       ],
-                     );
-                   },
-                 );
-
-
-               }
+                if (role_id == 1) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          S.of(context).Add,
+                          style: TextStyle(
+                              color: Constants.mainColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            // mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        title: Text(
+                                          S.of(context).alert,
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        content: Text(
+                                            S.of(context).Please_subscription),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text(
+                                              S.of(context).Subscription,
+                                              style: TextStyle(
+                                                  color: Constants.mainColor,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).push(
+                                                  MyAnimation.createRoute(
+                                                      AppRoutes.subscription));
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.));
+                                },
+                                child: ListTile(
+                                  leading: Icon(Icons.info,
+                                      color: Constants.mainColor),
+                                  title: Text(S.of(context).Add_real),
+                                ),
+                              ),
+                              Divider(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                      MyAnimation.createRoute(
+                                          AppRoutes.addPost));
+                                },
+                                child: ListTile(
+                                  leading: Icon(Icons.info,
+                                      color: Constants.mainColor),
+                                  title: Text(S.of(context).Add_post),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              S.of(context).close,
+                              style: TextStyle(color: Constants.mainColor),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+                if (role_id == 2) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        title: Text(
+                          S.of(context).Add,
+                          style: TextStyle(
+                              color: Constants.mainColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            // mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                      MyAnimation.createRoute(
+                                          AppRoutes.adPropertyScreen));
+                                },
+                                child: ListTile(
+                                  leading: Icon(Icons.info,
+                                      color: Constants.mainColor),
+                                  title: Text(S.of(context).Add_real),
+                                ),
+                              ),
+                              Divider(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                      MyAnimation.createRoute(
+                                          AppRoutes.addPost));
+                                },
+                                child: ListTile(
+                                  leading: Icon(Icons.info,
+                                      color: Constants.mainColor),
+                                  title: Text(S.of(context).Add_post),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              S.of(context).close,
+                              style: TextStyle(color: Constants.mainColor),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
                 // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
               },
             ),
-            floatingActionButtonLocation: FloatingActionButtonLocation
-                .centerDocked,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               currentIndex: cubit.currentIndex,
@@ -314,24 +345,20 @@ Spacer(),
               items: [
                 myBottomNavBarItem(
                   icon: Icons.announcement,
-                  label: 'Posts',
+                  label: S.of(context).Posts,
                 ),
                 myBottomNavBarItem(
                   icon: Icons.favorite,
-                  label: 'Favourite',
+                  label: S.of(context).Favourite,
                 ),
-                myBottomNavBarItem(
-                  icon: Icons.add,
-                  label:
-                   'Add'
-                ),
+                myBottomNavBarItem(icon: Icons.add, label: S.of(context).Add),
                 myBottomNavBarItem(
                   icon: Icons.holiday_village,
-                  label: 'Properties',
+                  label: S.of(context).Properties,
                 ),
                 myBottomNavBarItem(
                   icon: Icons.home,
-                  label: 'Home',
+                  label: S.of(context).Home,
                 ),
               ],
             ),
@@ -340,5 +367,4 @@ Spacer(),
       ),
     );
   }
-
 }
