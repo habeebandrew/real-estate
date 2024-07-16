@@ -1,0 +1,188 @@
+{ 
+    "go_out":"هل تريد حقا الخروج?",
+        "no":"لا",
+        "yes":"نعم",
+        "alert":"تنبيه",
+        "Please_log_in":"ليس لديك إذن بإضافة أي شيء. الرجاء تسجيل الدخول!!",
+        "Log_In":"تسجيل الدخول",
+        "Add":"إضافة",
+        "Please_subscription":"ليس لديك الإذن بإضافة إعلان عقاري. يرجى الاشتراك كوسيط عقاري !!",
+        "Subscription":"الاشتراك",
+        "Add_real":"إضافة إعلان عقاري",
+        "Add_post":"إضافة منشور",
+        "close":"إغلاق",
+        "Posts":"المنشورات",
+        "Favourite":"المفضلة",
+        "Properties":"العقارات",
+        "Home":"الأساسية",
+        "most_watched":"الأكثر مشاهدة",
+        "Search_real":"البحث عن عقارات",
+        "on_the_beach":"شاليه",
+        "Types":"أنواع العقارت>",
+        "farm":"مزرعة",
+        "apartment":"شقة",
+        "office":"مكتب",
+        "villa":"فيلا",
+        "building":"بناء",
+        "ok":"تطبيق",
+        "language":"اللغة",
+        "Help_Center":"مركز المساعدة",
+        "Connect_us":"اتصل بنا",
+        "privacy_policy":"سياسة الخصوصية",
+        "Account_Information":"معلومات الحساب",
+        "My_posts":"منشوراتي",
+        "Invite_friends":"دعوة الأصدفاء",
+        "Logout":"تسجيل الخروج",
+        "My_estate":"عقاراتي",
+        "email":"الإيميل",
+        "Password":"كلمة السر",
+        "Forget_password":"هل نسيت كلمة السر؟",
+        "new_member":"عضو جديد؟",
+        "Sign_up":"إنشاء حساب",
+        "Login_guest":"الدخول كضيف",
+        "Signup_user":"إنشاء حساب كمستخدم",
+        "User_Name":"اسم المستخدم",
+        "Please_password":"الرجاء إدخال كلمة السر",
+        "Password_characters_long":"يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+        "Please_name":"الرجاء إدخال اسم المستخدم",
+        "User_name_characters":"لا يمكن أن يتجاوز اسم المستخدم 55 حرفًا",
+        "Please_email":"الرجاء إدخال الإيميل",
+        "Please_valid_email":"يرجى إدخال البريد الإلكتروني بشكل صحيح",
+        "Confirm_Password":"تأكيد كلمة السر",
+        "Please_confirm_password":"الرجاء تأكيد كلمة السر",
+        "Passwords_match":"كلمة السر غير متطابقة",
+        "There_are_no_posts":"لا يوجد أي مشاركات نشرت سابقا !",
+        "DELETE":"حذف",
+        "DELETE_post":"حذف المنشور",
+        "Wanted_for":"مطلوب ل",
+        "property_in":" الممتلكات في",
+        "Budget":"ميزانية:",
+        "Please_loginandsignup_broker":"ليس لديك إذن لرؤية رقم الهاتف. الرجاء تسجيل الدخول والاشتراك كوسيط!!",
+        "Contact":"اتصال",
+        "Comments":"التعليقات",
+        "Add_comment":"إضافة تعليق...",
+        "report":"إبلاغ",
+        "Report_post":"إبلاغ عن المنشور",
+        "no_data": "لا يوجد معلومات",
+        "Newest": "الأجدد",
+        "Oldest":"الأقدم",
+        "All_Cities":"كل المدن",
+        "Damascus":"دمشق",
+        "Rural_Damascus":"ريف دمشق",
+        "Aleppo":"حلب",
+    "Rural_Aleppo":"ريف حلب",
+    "Homs":"حمص",
+    "Rural_Homs":"ريف حمص",
+    "Latakia":"لاذقية",
+    "Rural_Latakia":"ريف اللاذقية",
+    "Tartous":"طرطوس",
+    "Rural_Tartous":"ريف طرطوس",
+    "Hama":"حماة",
+    "Rural_Hama":"ريف حماة",
+    "Idlib":"ادلب",
+    "Rural_Idlib":"ريف ادلب",
+    "Dei_ez_Zor":"دير الزور",
+    "Rural_Deir_ez_Zor":"ريف دير الزور",
+    "Raqqa":"الرقة",
+    "Rural_Raqqa":"ريف الرقة",
+    "Al_Hasakah":"الحسكة",
+    "Rural_Al_Hasakah":"ريف الحسكة",
+    "Daraa":"درعا",
+    "Rural_Daraa":"ريف درعا",
+    "As_Suwayda":"السويداء",
+    "Rural_As_Suwayda":"ريف السويداء",
+    "Quneitra":"القنيطرة",
+    "Rural_Quneitra":"ريف القنيطرةس",
+    "All":"الجميع",
+    "buy":"شراء",
+    "rental":"إيجار",
+    "Edit_phone_number":"تغيير رقم الهاتف",
+    "Enter_new_number":"إدخال رقم الهاتف الجديد",
+    "Please_number":"الرجاء إدخال رقم هاتف",
+    "Phone_digits":"يجب أن يتراوح رقم الهاتف بين 10 و13 رقمًا",
+    "Edit":"تعديل",
+    "Edit_Picture":"تعديل صورة الملف الشخصي",
+    "Select_picture":"حدد صورة ملف شخصي جديدة",
+    "Choose_Gallery":"اختر من المعرض",
+    "Account_informations":"معلومات الحساب",
+    "No_phone":"لم تتم إضافة رقم الهاتف"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    }

@@ -37,12 +37,13 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   shared_preferences: ^2.2.3
   simple_animations: ^5.0.2
-  flutter_screenutil: null
-  http: ^1.2.1
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
+  flutter_rating_bar: ^4.0.1
+  flutter_screenutil: null
+  http: ^1.2.1
   shimmer_animation: ^2.1.0+1
   url_launcher: ^6.3.0
   intl_utils:
