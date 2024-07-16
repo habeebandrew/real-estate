@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:pro_2/Util/constants.dart';
 
 class MyButton extends StatelessWidget {
-
-  final Color?color;
+  final Color? color;
   final String tittle;
   final VoidCallback onPreessed;
   final double minWidth;
   final double height;
 
-  const MyButton({
-      super.key,
+  const MyButton(
+      {super.key,
       this.color,
       required this.tittle,
       required this.onPreessed,
       required this.minWidth,
-      required this.height
-  });
+      required this.height});
 
   @override
   Widget build(BuildContext context) {
