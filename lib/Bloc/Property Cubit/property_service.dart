@@ -156,4 +156,24 @@ class PropertyService {
       return e.toString();
     }
   }
+
+  static getPropertyAdsByBroker(int brokerId)async{
+    try {
+      debugPrint(brokerId.toString());
+      var data = await NetworkHelper.get(
+          '${ApiAndEndpoints.getBrokerProperties}$brokerId',
+          headers: {
+            'Content-Type': 'application/json',
+          });
+      print(data.statusCode);
+      print(data.body);
+      if (data.statusCode == 200) {
+        return propertyFromJson(data.body);
+      } else {
+        return 'Failed to load properties';
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }

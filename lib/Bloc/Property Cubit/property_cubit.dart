@@ -92,6 +92,15 @@ class PropertyCubit extends Cubit<PropertyState> {
       emit(PropertyErrorState(error: response.toString()));
     }
   }
+  void getBrokerProperty(BuildContext context,int userId)async{
+    emit(PropertyLoadingState());
+    var response = await PropertyService.getPropertyAdsByBroker(userId);
+    if (response is List<Property>){
+      emit(PropertyLoadedState(propertyModel: response));
+    }else{
+      emit(PropertyErrorState(error: response.toString()));
+    }
+  }
   
   void filterProperty(BuildContext context,{int? statusId,int? propertyTypeId,int? cityId,int? userId})async{
     emit(PropertyLoadingState());

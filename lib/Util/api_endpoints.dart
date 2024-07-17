@@ -1,5 +1,5 @@
 class ApiAndEndpoints {
-  static const api = 'http://192.168.1.103:8000/api/';
+  static const api = 'http://192.168.1.6:8000/api/';
 
 //*HABEEB:   192.168.1.106
   static const signUp = 'register';
@@ -30,6 +30,7 @@ class ApiAndEndpoints {
   static const fetchAllAddresses = 'fetchAllAddresses?governorate_id=';
 
   static const getProperty = 'showPropertiesInListHome?user_id=';
+  static const getBrokerProperties='showPropertyForBroker?user_id=';
   static const getPropertyDetails = 'showAllDetailsProperty?property_id=';
 
   //filter in home filterProperty+what you want to filter
