@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pro_2/Util/constants.dart';
 
 
 class ContactInformation extends StatefulWidget {
@@ -55,22 +53,6 @@ class _ContactInformationState extends State<ContactInformation> {
                 'Contact Information:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Row(
-            children: [
-              Icon(Icons.email),
-              SizedBox(width: 8),
-              Text('mohammadkhairanasalsarayji@gmail.com'),
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Row(
-            children: [
-              Icon(Icons.location_on),
-              SizedBox(width: 8),
-              Text('Damascus - Damascus'),
             ],
           ),
           const SizedBox(height: 8),

@@ -48,7 +48,7 @@ class _PropertyCardState extends State<PropertyCard> {
     return Container(
       width: double.infinity,
       height: 348.h,
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
-import 'package:pro_2/Presentation/Profile%20Screen/profile_screen.dart';
+import 'package:pro_2/Presentation/Broker%20Profile%20Screen/profile_screen.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
@@ -683,9 +683,10 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                             
                                             Navigator.push(context, 
                                               MaterialPageRoute(
-                                                builder:(context)=> ProfileScreen(
+                                                builder:(context)=> BrokerProfileScreen(
                                                   id: state.propertyDetailsModel.property.userId,
-                                                )
+                                                  name: state.propertyDetailsModel.property.userName,
+                                                ),
                                               )
                                             );
                                           },

@@ -18,6 +18,10 @@ final class PropertyDetailsLoadedState extends PropertyState {
   final PropertyDetails propertyDetailsModel;
   PropertyDetailsLoadedState({required this.propertyDetailsModel});
 }
+final class BrokerInfoLoadedState extends PropertyState {
+  final BrokerInfoModel info;
+  BrokerInfoLoadedState({required this.info});
+}
 
 final class PropertyErrorState extends PropertyState {
   final String error;

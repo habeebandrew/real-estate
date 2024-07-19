@@ -15,7 +15,7 @@ class ApiAndEndpoints {
   static const updateRole = 'updateRole';
   static const addComment = 'addComment';
   static const getComments = 'comments?';
-  static const reports_post = 'reports';
+  static const reports = 'reports';
 
 
   static const getFavourite = 'showPropertiesInList';
@@ -39,4 +39,8 @@ class ApiAndEndpoints {
   static const filterPropertyType = 'property_type_id=';
   static const filterGovernorate = 'governorate_id=';
   static const filterStatus = 'status_id=';
+
+  static const getBrokerInfo='showBrokerProfile?brokerId=';
+
+  static const rate='evaluations';
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:pro_2/Data/broker_Info_model.dart';
 import 'package:pro_2/Data/favourite_model.dart';
 import 'package:pro_2/Data/property_details_model.dart';
 import 'package:pro_2/Data/property_model.dart';
@@ -156,8 +157,27 @@ class PropertyService {
       return e.toString();
     }
   }
+  static Future getBrokerInfo(int brokerId)async{
+    try {
+      debugPrint(brokerId.toString());
+      var data = await NetworkHelper.get(
+          '${ApiAndEndpoints.getBrokerInfo}$brokerId',
+          headers: {
+            'Content-Type': 'application/json',
+          });
+      print(data.statusCode);
+      print(data.body);
+      if (data.statusCode == 200) {
+        return brokerInfoModelFromJson(data.body);
+      } else {
+        return 'Failed to load info';
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
 
-  static getPropertyAdsByBroker(int brokerId)async{
+  static Future getPropertyAdsByBroker(int brokerId)async{
     try {
       debugPrint(brokerId.toString());
       var data = await NetworkHelper.get(
@@ -176,4 +196,57 @@ class PropertyService {
       return e.toString();
     }
   }
+
+  static Future reportBroker(userId,brokerId)async{
+    try {
+      String token = (CacheHelper.getString(key: 'token'))!;
+      debugPrint(token);
+      var data =
+          await NetworkHelper.post(ApiAndEndpoints.reports, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      }, body: {
+        "reporter_id": userId,
+        "reportable_type": "user",
+        "reportable_id": brokerId,
+        "report": "there is a report on this broker."
+      });
+      debugPrint(data.statusCode.toString());
+      debugPrint(data.body);
+      if (data.statusCode == 200 || data.statusCode == 201) {
+        var res = jsonDecode(data.body)['message'];
+        return res;
+      } else {
+        return 'Failed to report';
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  } 
+   static Future rateBroker(userId,brokerId,double rate)async{
+    try {
+      String token = (CacheHelper.getString(key: 'token'))!;
+      debugPrint(token);
+      var data =
+          await NetworkHelper.post(ApiAndEndpoints.rate, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      }, body: {
+         'evaluate_id': '$userId',
+         'evaluated_id': '$brokerId',
+         'evaluation': '$rate'
+      });
+      debugPrint(data.statusCode.toString());
+      debugPrint(data.body);
+      if (data.statusCode == 200 || data.statusCode == 201) {
+        var res = jsonDecode(data.body)['message'];
+        return res;
+      } else {
+        return 'Failed to rate';
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  } 
+  
 }

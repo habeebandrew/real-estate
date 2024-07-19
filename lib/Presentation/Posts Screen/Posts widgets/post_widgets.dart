@@ -134,7 +134,7 @@ class _PostCardState extends State<PostCard_with_comments> {
     String token = (await CacheHelper.getString(key: 'token'))!;
 
     var response = await NetworkHelper.post(
-      ApiAndEndpoints.reports_post,
+      ApiAndEndpoints.reports,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -516,7 +516,7 @@ class _PostCardState extends State<PostCard_with_comments> {
                     int id = (await CacheHelper.getInt(key: 'id'))!;
                     String token = (await CacheHelper.getString(key: 'token'))!;
                     var response = await NetworkHelper.post(
-                      ApiAndEndpoints.reports_post,
+                      ApiAndEndpoints.reports,
                       headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer $token',

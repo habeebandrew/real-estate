@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_service.dart';
+import 'package:pro_2/Data/broker_Info_model.dart';
 import 'package:pro_2/Data/favourite_model.dart';
 import 'package:pro_2/Data/property_details_model.dart';
 import 'package:pro_2/Data/property_model.dart';
@@ -92,6 +93,7 @@ class PropertyCubit extends Cubit<PropertyState> {
       emit(PropertyErrorState(error: response.toString()));
     }
   }
+  
   void getBrokerProperty(BuildContext context,int userId)async{
     emit(PropertyLoadingState());
     var response = await PropertyService.getPropertyAdsByBroker(userId);
@@ -170,7 +172,42 @@ class PropertyCubit extends Cubit<PropertyState> {
       });
 
     }
+  
+  void getBrokerInfo(BuildContext context,int userId)async{
+    emit(PropertyLoadingState());
+    var response=await PropertyService.getBrokerInfo(userId);
+    if(response is BrokerInfoModel){
+       emit(BrokerInfoLoadedState(info: response));
+    }else{
+      emit(PropertyErrorState(error: response.toString()));
+    }
+  }
 
+  void reportOnBroker(BuildContext context, int userid, int brokerid)async{
+     await PropertyService.reportBroker(userid,brokerid).then((value){
+      if(value == "Report created successfully"){
+        mySnackBar(
+            context: context,
+            title: 'reported Successfully'
+        );
+      }else{
+        emit(PropertyErrorState(error: value.toString()));
+      }
+    });
+  }
+  
+  void rateOnBroker(BuildContext context, int userid, int brokerid,double rate)async{
+     await PropertyService.rateBroker( userid, brokerid, rate).then((value){
+      if(value == "Evaluation added successfully"){
+        mySnackBar(
+            context: context,
+            title: 'rated Successfully'
+        );
+      }else{
+        emit(PropertyErrorState(error: value.toString()));
+      }
+    });
+  }
 
 }
 
