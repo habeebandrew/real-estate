@@ -67,11 +67,12 @@ class Feature {
 class PropertyDet {
   int userId;
   String userName;
+  String imageUrl;
   String propertyType;
   String status;
   String governorate;
   String address;
-  String phone_number;
+  String?phone_number;
   int price;
   int size;
   int?floor;
@@ -88,6 +89,7 @@ class PropertyDet {
   PropertyDet({
     required this.userId,
     required this.userName,
+    required this.imageUrl,
     required this.propertyType,
     required this.status,
     required this.governorate,
@@ -110,6 +112,7 @@ class PropertyDet {
   factory PropertyDet.fromJson(Map<String, dynamic> json) => PropertyDet(
     userId: json["user_id"],
     userName: json["user_name"],
+    imageUrl:json["Image_URL"],
     propertyType: json["property_type"],
     status: json["status"],
     governorate: json["governorate"],
@@ -132,6 +135,7 @@ class PropertyDet {
   Map<String, dynamic> toJson() => {
     "user_id": userId,
     "user_name": userName,
+    "Image_URL" : imageUrl,
     "property_type": propertyType,
     "status": status,
     "governorate": governorate,

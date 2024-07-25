@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:pro_2/Data/add_rate_info_model.dart';
 import 'package:pro_2/Data/broker_Info_model.dart';
 import 'package:pro_2/Data/favourite_model.dart';
 import 'package:pro_2/Data/property_details_model.dart';
 import 'package:pro_2/Data/property_model.dart';
+import 'package:pro_2/Data/rate_info_model.dart';
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/network_helper.dart';
@@ -223,8 +225,8 @@ class PropertyService {
       return e.toString();
     }
   } 
-   static Future rateBroker(userId,brokerId,double rate)async{
-    try {
+   static Future<AddRateInfoModel?> rateBroker(userId,brokerId,double rate)async{
+    
       String token = (CacheHelper.getString(key: 'token'))!;
       debugPrint(token);
       var data =
@@ -234,19 +236,63 @@ class PropertyService {
       }, body: {
          'evaluate_id': '$userId',
          'evaluated_id': '$brokerId',
-         'evaluation': '$rate'
+         'evaluation': '${rate.toInt()}'
       });
       debugPrint(data.statusCode.toString());
       debugPrint(data.body);
       if (data.statusCode == 200 || data.statusCode == 201) {
-        var res = jsonDecode(data.body)['message'];
+        var res = addrateInfoModelFromJson(data.body);
         return res;
       } else {
-        return 'Failed to rate';
+        return null ;
       }
-    } catch (e) {
-      return e.toString();
-    }
+    
+  } 
+  static Future <RateInfoModel?>  updateRateBroker(userId,brokerId,double rate,int rateId)async{
+    
+      String token = (CacheHelper.getString(key: 'token'))!;
+      debugPrint(token);
+      //need the rate id 
+      var data =
+          await NetworkHelper.put('${ApiAndEndpoints.rate}/$rateId',//rateId 
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      }, body: {
+         'evaluate_id': userId,
+         'evaluated_id': brokerId,
+         'evaluation': rate.toInt()
+      });
+      debugPrint(data.statusCode.toString());
+      debugPrint(data.body);
+      if (data.statusCode == 200 || data.statusCode == 201) {
+        var res = rateInfoModelFromJson(data.body);
+        return res;
+      } else {
+        return null ;
+      }
+    
+  } 
+  static Future deleteRateBroker(int rateId)async{
+    
+      String token = (CacheHelper.getString(key: 'token'))!;
+      debugPrint(token);
+      //need the rate id 
+      var data =
+          await NetworkHelper.delete('${ApiAndEndpoints.rate}/delete?id=$rateId',//rateId 
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+      debugPrint(data.statusCode.toString());
+      debugPrint(data.body);
+      if (data.statusCode == 200 || data.statusCode == 201) {
+         var res = jsonDecode(data.body)['message'];
+        return res;
+      } else {
+        return 'failed to delete' ;
+      }
+    
   } 
   
 }

@@ -197,14 +197,42 @@ class PropertyCubit extends Cubit<PropertyState> {
   }
   
   void rateOnBroker(BuildContext context, int userid, int brokerid,double rate)async{
-     await PropertyService.rateBroker( userid, brokerid, rate).then((value){
-      if(value == "Evaluation added successfully"){
+     await PropertyService.rateBroker( userid, brokerid, rate).then((onValue){
+      if(onValue!.message == "Evaluation added successfully"){
+
+        CacheHelper.putInt(key: 'rateId', value: onValue.evaluation.id);
+        
         mySnackBar(
             context: context,
             title: 'rated Successfully'
         );
       }else{
-        emit(PropertyErrorState(error: value.toString()));
+        emit(PropertyErrorState(error: 'Failed to rate'));
+      }
+    });
+  }
+   Future updateRateOnBroker(BuildContext context, int userid, int brokerid,double rate)async{
+     await PropertyService.updateRateBroker( userid, brokerid, rate,(CacheHelper.getInt(key: 'rateId'))!).then((onValue){
+      if(onValue!.message == "Evaluation updated successfully"){
+        mySnackBar(
+            context: context,
+            title: 'rate updated Successfully'
+        );
+      }else{
+        emit(PropertyErrorState(error: 'Failed to update rate'));
+      }
+    });
+  }
+  Future deleteRateOnBroker(BuildContext context)async{
+     await PropertyService.deleteRateBroker((CacheHelper.getInt(key: 'rateId'))!).then((onValue){
+      if(onValue == "Evaluation deleted successfully"){
+        CacheHelper.deleteInt(key: 'rateId');
+        mySnackBar(
+            context: context,
+            title: 'rate deleted Successfully'
+        );
+      }else{
+        emit(PropertyErrorState(error: 'Failed to update rate'));
       }
     });
   }

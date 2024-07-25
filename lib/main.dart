@@ -7,7 +7,7 @@ import 'package:pro_2/Util/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

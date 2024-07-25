@@ -686,6 +686,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                                 builder:(context)=> BrokerProfileScreen(
                                                   id: state.propertyDetailsModel.property.userId,
                                                   name: state.propertyDetailsModel.property.userName,
+                                                  brokerImage: state.propertyDetailsModel.property.imageUrl,
                                                 ),
                                               )
                                             );
@@ -709,7 +710,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                 ],
               ),
             ),
-            bottomNavigationBar: state is PropertyDetailsLoadedState
+            bottomNavigationBar: state is PropertyDetailsLoadedState && state.propertyDetailsModel.property.phone_number != null
                 ? InkWell(
                     onTap: () async {
                       final url =
@@ -722,17 +723,20 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                       }
                     },
                     child: BottomAppBar(
+                        
                         child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Contact with Broker',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                            )),
-                        const Icon(Icons.phone)
-                      ],
-                    )),
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                        
+                            Text('Contact with Broker',
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                )),
+                            const Icon(Icons.phone),
+                          ],
+                        ),
+                    ),
                   )
                 : const SizedBox(),
           );

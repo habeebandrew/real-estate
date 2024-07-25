@@ -3,9 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
-import 'package:pro_2/Bloc/Property%20Cubit/property_service.dart';
-import 'package:pro_2/Data/broker_Info_model.dart';
-import 'package:pro_2/Presentation/Broker%20Profile%20Screen/Broker%20Profile%20Screen%20Widgets/profile_screen_widgets.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/Properties%20Widgets/properties_widgets.dart';
 import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_screen.dart';
 import 'package:pro_2/Util/cache_helper.dart';
@@ -18,8 +15,8 @@ class BrokerProfileScreen extends StatefulWidget {
 
   int id;
   String name;
-  
-  BrokerProfileScreen({super.key, required this.id,required this.name});
+  String brokerImage;
+  BrokerProfileScreen({super.key, required this.id,required this.name,required this.brokerImage});
 
   @override
   State<BrokerProfileScreen> createState() => _BrokerProfileScreen();
@@ -53,7 +50,7 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                   PopupMenuButton(
                     color: Constants.mainColor4,
                     itemBuilder: (_)=><PopupMenuItem<String>>[
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: '1',
                         child: Text('Report')
                       )
@@ -82,15 +79,15 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                       alignment: Alignment.topCenter,
                       children: [
                         Container(
-                          height: 150,
+                          height: 180,
                           width: double.infinity,
                           decoration: const BoxDecoration(
                             color: Constants.mainColor,
-                            image: DecorationImage(
-                              image: AssetImage('assets/car_image.png'),
-                              fit: BoxFit.cover,
+                            // image: DecorationImage(
+                            //   image: AssetImage('assets/car_image.png'),
+                            //   fit: BoxFit.cover,
                 
-                            ),
+                            // ),
                           ),
                         ),
                         Padding(
@@ -102,7 +99,7 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                                CircleAvatar(
                                 radius: 40,
                                 backgroundImage:
-                                    NetworkImage(state is BrokerInfoLoadedState ?state.info.imageUrl:''),
+                                    NetworkImage(widget.brokerImage),
                               ),
                               SizedBox(width: 16.w),
                               Text(
@@ -226,16 +223,41 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                                 ),
                                 const SizedBox(width: 8),
                                 RatingBar.builder(
-                                  initialRating: rate=state.info.evaluate.toDouble(),
+                                  initialRating: rate = state.info.evaluate.toDouble(),
                                   maxRating: 5,
                                   minRating: 0,
                                   allowHalfRating: false,
                                   onRatingUpdate: (rating) {
                                     setState(() {
                                       rate = rating;
+                                      
                                     });
-                                    //rate api
-                                    cubit.rateOnBroker(context, (CacheHelper.getInt(key: 'id'))!, widget.id, rate);
+                                    
+                                    if(rate > 0.0 && state.info.evaluate == 0){
+                                      cubit.rateOnBroker(
+                                        context, 
+                                        (CacheHelper.getInt(key: 'id'))!, 
+                                        widget.id, 
+                                        rate
+                                      );
+                                      state.info.evaluate=rate.toInt();
+                                    }
+
+                                    if(rate > 0.0 && state.info.evaluate > 0){
+                                       cubit.updateRateOnBroker(
+                                        context, 
+                                        (CacheHelper.getInt(key: 'id'))!, 
+                                        widget.id, 
+                                        rate
+                                      );
+                                      state.info.evaluate=rate.toInt();
+                                    }
+
+                                    if(rate == 0.0){
+                                       cubit.deleteRateOnBroker(context);
+                                       state.info.evaluate=0;
+                                    }   
+                        
                                   },
                                   itemBuilder: (context, index) => const Icon(
                                     Icons.star,
@@ -250,14 +272,17 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                               ],
                             ),
                              const SizedBox(height: 16),
-                            Text(
+                            if(state.info.phoneNumber != null)
+                            const Text(
                               'Contact Information:',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17.0
                               ),
                             ),
+                            if(state.info.phoneNumber != null)
                             const SizedBox(height: 8),
+                            if(state.info.phoneNumber != null)
                              Padding(
                                padding: const EdgeInsetsDirectional.only(
                                 end: 150.0
@@ -265,7 +290,7 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                                child: InkWell(
                                  onTap: ()async{
                                   final url =
-                                        'tel:${state.info.phoneNumber}';
+                                        'tel:${state.info.phoneNumber!}';
                                     debugPrint('phone:$url');
                                     if (await canLaunchUrl(Uri.parse(url))) {
                                       await launchUrl(Uri.parse(url));
@@ -285,10 +310,10 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                  
                                     children: [
-                                      Icon(Icons.phone),
-                                      SizedBox(width: 20.0),
-                                      Text(state.info.phoneNumber,
-                                       style: TextStyle(
+                                      const Icon(Icons.phone),
+                                      const SizedBox(width: 20.0),
+                                      Text(state.info.phoneNumber!,
+                                       style: const TextStyle(
                                         fontSize: 18.0
                                        ),
                                     
@@ -299,6 +324,7 @@ class _BrokerProfileScreen extends State<BrokerProfileScreen> {
                                  ),
                                ),
                              ),
+                            
                           ],
                         ),
                      ),

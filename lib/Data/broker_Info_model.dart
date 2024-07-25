@@ -9,7 +9,7 @@ BrokerInfoModel brokerInfoModelFromJson(String str) => BrokerInfoModel.fromJson(
 String brokerInfoModelToJson(BrokerInfoModel data) => json.encode(data.toJson());
 
 class BrokerInfoModel {
-    String phoneNumber;
+    String?phoneNumber;
     String imageUrl;
     int evaluate;
 
