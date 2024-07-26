@@ -1,6 +1,13 @@
-class ApiAndEndpoints {
-  static const api = 'http://192.168.1.3:8000/api/';
+import 'package:pro_2/Util/cache_helper.dart';
 
+class ApiAndEndpoints {
+  // static const api = 'http://192.168.1.3:8000/api/';
+  static Future<String> getApi() async {
+    String? ip = await CacheHelper.getString(key: 'ip');
+    return 'http://$ip:8000/api/';
+  }
+
+  static Future<String> api = getApi();
 //*HABEEB:   192.168.1.106
   static const signUp = 'register';
 
@@ -17,7 +24,6 @@ class ApiAndEndpoints {
   static const getComments = 'comments?';
   static const reports = 'reports';
 
-
   static const getFavourite = 'showPropertiesInList';
 
   static const addFavourite = 'favorites';
@@ -30,7 +36,7 @@ class ApiAndEndpoints {
   static const fetchAllAddresses = 'fetchAllAddresses?governorate_id=';
 
   static const getProperty = 'showPropertiesInListHome?user_id=';
-  static const getBrokerProperties='showPropertyForBroker?user_id=';
+  static const getBrokerProperties = 'showPropertyForBroker?user_id=';
   static const getPropertyDetails = 'showAllDetailsProperty?property_id=';
 
   //filter in home filterProperty+what you want to filter
@@ -40,7 +46,7 @@ class ApiAndEndpoints {
   static const filterGovernorate = 'governorate_id=';
   static const filterStatus = 'status_id=';
 
-  static const getBrokerInfo='showBrokerProfile?brokerId=';
+  static const getBrokerInfo = 'showBrokerProfile?brokerId=';
 
-  static const rate='evaluations';
+  static const rate = 'evaluations';
 }
