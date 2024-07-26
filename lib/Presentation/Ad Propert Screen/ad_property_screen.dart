@@ -159,12 +159,13 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       'Homs': 3
     };
     String token = (await CacheHelper.getString(key: 'token'))!;
+    String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
 
     final int provinceId = provinceIds[province]!;
     final response = await http.get(
         Uri.parse(
           // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
-            ApiAndEndpoints.api+ApiAndEndpoints.fetchAllAddresses+'$provinceId'
+          api+ApiAndEndpoints.fetchAllAddresses+'$provinceId'
         ),
         headers: {
           'Content-Type': 'application/json',
@@ -245,14 +246,15 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
         .where((entry) => entry.value)
         .map((entry) => entry.key)
         .join(',');
+    String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
 
     // إعداد البيانات للإرسال
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.addPropertyAd),
+      Uri.parse(api+ ApiAndEndpoints.addPropertyAd),
     );
     request.headers['Authorization'] = 'Bearer $token';
-
+                               
     request.fields['status_id'] = statusId.toString()?? '';
     request.fields['property_type_id'] = propertyTypeId.toString()?? '';
     request.fields['governorate_id'] = governorateId.toString()?? '';
@@ -286,7 +288,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       print('Data sent successfully!');
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
-      });    } else {
+      });    }
+    else {
       print(await response.stream.bytesToString());
       print('*********************');
     mySnackBar(
@@ -649,11 +652,8 @@ SizedBox(height: 10,),
                     fontSize: 14, // تقليل حجم النص داخل الحقل
                   ),
                 ),
-              )
-,
-
+              ),
               SizedBox(height: 10,),
-
               // Area
               Container(
                 width: 150, // تحديد عرض الحقل

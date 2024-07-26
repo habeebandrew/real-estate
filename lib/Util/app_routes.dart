@@ -57,7 +57,7 @@ class AppRoutes
   //لازم نضيف تبع اضافة طلب لليوزر
   static const adPropertyScreen=AdPropertyScreen();
   static const propertiesScreen=PropertiesScreen();
-  static const mainScreen=MainScreen();
+  static MainScreen mainScreen=MainScreen();
   static const drawerScreen=DrawerScreen();
    static ContactUsPage contactwithus=ContactUsPage();
   static const addPost=AddPostScreen();

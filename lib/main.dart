@@ -16,7 +16,6 @@ void main() async {
 
   bool? onBoardShowen = CacheHelper.getData(key: "showHome") ?? false;
   String? token = CacheHelper.getString(key: "token");
-
   debugPrint(onBoardShowen.toString());
   debugPrint(token.toString());
 
@@ -100,19 +99,15 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
 class LanguageChangeProvider extends InheritedWidget {
   final Function(Locale) changeLanguage;
-
   const LanguageChangeProvider({
     required this.changeLanguage,
     required Widget child,
   }) : super(child: child);
-
   static LanguageChangeProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<LanguageChangeProvider>();
   }
-
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
 }

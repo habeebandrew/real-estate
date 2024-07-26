@@ -80,6 +80,8 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   }
 
   Future<void> _uploadImage() async {
+    String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
+
     String? token = CacheHelper.getString(key: 'token');
     if (_imageFile == null || token == null) {
       // Handle error for missing token or image
@@ -87,7 +89,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
       return;
     }
     // 'http://192.168.1.106:8000/api/editProfile'
-    final uri = Uri.parse(ApiAndEndpoints.api +
+    final uri = Uri.parse(api +
         ApiAndEndpoints.editProfile); // تأكد من صحة عنوان URL هنا
     final request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer $token'

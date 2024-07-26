@@ -27,8 +27,10 @@ class _My_PostsState extends State<My_Posts> {
 
   void fetchPosts() async {
     String token = (await CacheHelper.getString(key: 'token'))!;
+    String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
+
     final response = await http.get(
-      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.get_My_Post),
+      Uri.parse(api + ApiAndEndpoints.get_My_Post),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

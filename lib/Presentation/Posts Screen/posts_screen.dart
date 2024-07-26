@@ -46,8 +46,10 @@ class _PostScreenState extends State<PostsScreen> {
   }
 
   void fetchPosts() async {
+    String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
+
     final response = await http.get(
-      Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.getpost),
+      Uri.parse(api + ApiAndEndpoints.getpost),
       headers: {
         'Content-Type': 'application/json',
       },

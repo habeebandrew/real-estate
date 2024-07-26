@@ -2,11 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Main%20Screen/MainWidgets/main_widgets.dart';
 import 'package:pro_2/generated/l10n.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
-//S.of(context).Change_language,
+import '../../Util/cache_helper.dart';
+
+class MainScreen extends StatefulWidget {
+   MainScreen({super.key});
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  TextEditingController _ipController = TextEditingController();
+  String? _ip;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadIp();
+  }
+
+  Future<void> _loadIp() async {
+    String? ip = await CacheHelper.getString(key: 'ip');
+    setState(() {
+      _ip = ip;
+      _ipController.text = ip ?? '';
+    });
+  }
+
+  Future<void> _updateIp() async {
+    String newIp = _ipController.text;
+    await CacheHelper.putString(key: 'ip', value: newIp);
+    setState(() {
+      _ip = newIp;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -15,6 +45,16 @@ class MainScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            TextField(
+              controller: _ipController,
+              decoration: InputDecoration(
+                hintText: _ip ?? 'Enter IP Address',
+              ),
+            ),
+            TextButton(
+              onPressed: _updateIp,
+              child: Text('Update IP'),
+            ),
             SearchBar(), //باخدها نفسها من مهدي بواجهة العقارات
             CategorySection(),
             SizedBox(height: 20),
