@@ -1,17 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../Data/Posts_model.dart';
 import '../../Util/api_endpoints.dart';
-import '../../Util/app_routes.dart';
 import '../../Util/cache_helper.dart';
-import '../../Util/global Widgets/animation.dart';
-import '../../Util/network_helper.dart';
-import '../Posts Screen/Posts widgets/post_widgets.dart';
 import 'MY_Posts_Widgets/myposts_widgets.dart';
 
 class My_Posts extends StatefulWidget {
@@ -50,7 +44,7 @@ class _My_PostsState extends State<My_Posts> {
   void initState() {
     super.initState();
     fetchPosts();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -68,13 +62,13 @@ class _My_PostsState extends State<My_Posts> {
           backgroundColor: Constants.mainColor2,
         ),
         body: _isLoading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : posts.isEmpty
                 ? Center(
                     child: Text(S.of(context).There_are_no_posts,
-                        style: TextStyle(fontSize: 18)))
+                        style: const TextStyle(fontSize: 18)))
                 : ListView.builder(
                     itemCount: posts.length,
                     itemBuilder: (context, index) {

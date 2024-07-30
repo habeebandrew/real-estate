@@ -5,9 +5,6 @@ import '../../../Util/app_routes.dart';
 import '../../../Util/global Widgets/animation.dart';
 import '../Confirm Add Post/confirm_add_post.dart';
 
-
-
-
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
 
@@ -35,7 +32,11 @@ class _AddPostState extends State<AddPostScreen> {
     'Rural Latakia': ['Jableh', 'Qardaha', 'Haffa'],
     'Tartous': ['Baniyas', 'Safita', 'Dreikish'],
     'Rural Tartous': ['Sheikh Badr', 'Al-Qadmous', 'Mashta al-Helou'],
-    'Hama': ['Al-Qusour Neighborhood', 'Al-Sharia Neighborhood', 'Al-Arbaeen Neighborhood'],
+    'Hama': [
+      'Al-Qusour Neighborhood',
+      'Al-Sharia Neighborhood',
+      'Al-Arbaeen Neighborhood'
+    ],
     'Rural Hama': ['Salamiyah', 'Masyaf', 'Soran'],
     'Idlib': ['Maarrat al-Numan', 'Ariha', 'Jisr al-Shughur'],
     'Rural Idlib': ['Kafranbel', 'Khan Shaykhun', 'Saraqib'],
@@ -57,7 +58,8 @@ class _AddPostState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -72,7 +74,7 @@ class _AddPostState extends State<AddPostScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                     children: [
                       TextSpan(
                         text: 'C',
@@ -254,18 +256,18 @@ class _AddPostState extends State<AddPostScreen> {
                     items: selectedGovernorate == null
                         ? []
                         : governorateToAreas[selectedGovernorate]!
-                        .map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      );
-                    }).toList(),
+                            .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            );
+                          }).toList(),
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedArea = newValue!;
@@ -314,7 +316,8 @@ class _AddPostState extends State<AddPostScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a budget';
-                      } if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                      }
+                      if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                         return 'Please enter only numbers';
                       }
                       return null;
@@ -359,7 +362,8 @@ class _AddPostState extends State<AddPostScreen> {
                         return 'Please enter a description';
                       } // Check if the input contains 9 or more digits
                       RegExp regex = RegExp(r'\d{9,}');
-                      if (regex.hasMatch(value.replaceAll(RegExp(r'\s+'), ''))) {
+                      if (regex
+                          .hasMatch(value.replaceAll(RegExp(r'\s+'), ''))) {
                         return 'It is not allowed to enter your phone number in the description';
                       }
                       return null;
@@ -402,24 +406,25 @@ class _AddPostState extends State<AddPostScreen> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a mobile number';
                       }
-                        if (value.length < 7 || value.length > 13) {
+                      if (value.length < 7 || value.length > 13) {
                         return 'Mobile number must be between 7 and 13 digits';
-                      } if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                      }
+                      if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                         return 'Please enter only numbers';
                       }
                       return null;
                       return null;
                     },
                   ),
-
                   SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       MyButton(
                           tittle: "Cancel",
-                          onPreessed: () {       Navigator.of(context)
-                              .push(MyAnimation.createRoute(AppRoutes.homeScreen));
+                          onPreessed: () {
+                            Navigator.of(context).push(
+                                MyAnimation.createRoute(AppRoutes.homeScreen));
                           },
                           minWidth: 100,
                           height: 20),
@@ -430,14 +435,15 @@ class _AddPostState extends State<AddPostScreen> {
                               int budget = int.parse(budgetController.text);
                               int phone = int.parse(phoneController.text);
 
-                            Navigator.of(context).push(
+                              Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => ConfirmAddPost(
                                     budget: budget,
                                     description: descriptionController.text,
                                     phone: phone,
                                     selectedArea: selectedArea ?? '',
-                                    selectedGovernorate: selectedGovernorate ?? '',
+                                    selectedGovernorate:
+                                        selectedGovernorate ?? '',
                                     status: State,
                                   ),
                                 ),

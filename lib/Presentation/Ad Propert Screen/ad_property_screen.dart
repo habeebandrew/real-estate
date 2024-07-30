@@ -22,7 +22,8 @@ class AdPropertyScreen extends StatefulWidget {
 class _AdPropertyScreenState extends State<AdPropertyScreen> {
   List<XFile> images = [];
   Future<void> pickImage() async {
-    final XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final XFile? selectedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
       setState(() {
         images!.add(selectedImage);
@@ -73,11 +74,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'فروغ'
   ];
 
-  final List<String> furnishings = [
-    'مفروش',
-    'غير مفروش',
-    'نصف مفروش'
-  ];
+  final List<String> furnishings = ['مفروش', 'غير مفروش', 'نصف مفروش'];
 
   //الاتجاهات
   final List<String> orientations = [
@@ -101,7 +98,6 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'على العظم'
   ];
 
-
   final List<int> _num_of_floor = [
     1,
     2,
@@ -117,11 +113,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     12,
   ];
 
-  final List<String> rentalDurations = [
-    'يومي',
-    'شهري',
-    'سنوي'
-  ];
+  final List<String> rentalDurations = ['يومي', 'شهري', 'سنوي'];
 
   final List<String> specialFeatures = [
     'مصعد',
@@ -162,27 +154,18 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
 
     final int provinceId = provinceIds[province]!;
-    final response = await http.get(
-        Uri.parse(
-          // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
-          api+ApiAndEndpoints.fetchAllAddresses+'$provinceId'
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        }
-    );
+    final response = await http.get(Uri.parse(
+        // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
+        api + ApiAndEndpoints.fetchAllAddresses + '$provinceId'), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
 
     if (response.statusCode == 200) {
-
-
       final List data = json.decode(response.body);
       setState(() {
         cities = data.map((city) {
-          return {
-            'id_address': city['id_address'],
-            'address': city['address']
-          };
+          return {'id_address': city['id_address'], 'address': city['address']};
         }).toList();
         isLoadingCities = false;
       });
@@ -190,6 +173,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       throw Exception('Failed to load cities');
     }
   }
+
   Future<void> sendPropertyData() async {
     String token = (await CacheHelper.getString(key: 'token'))!;
     int? user_id = (await CacheHelper.getInt(key: 'id'))!;
@@ -251,17 +235,17 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     // إعداد البيانات للإرسال
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse(api+ ApiAndEndpoints.addPropertyAd),
+      Uri.parse(api + ApiAndEndpoints.addPropertyAd),
     );
     request.headers['Authorization'] = 'Bearer $token';
-                               
-    request.fields['status_id'] = statusId.toString()?? '';
-    request.fields['property_type_id'] = propertyTypeId.toString()?? '';
-    request.fields['governorate_id'] = governorateId.toString()?? '';
-    request.fields['address_id'] = selectedCityId.toString()?? '';
-    request.fields['user_id'] = user_id.toString()?? '';
-    request.fields['price'] = price.toString()?? '';
-    request.fields['size'] = area.toString()?? '';
+
+    request.fields['status_id'] = statusId.toString() ?? '';
+    request.fields['property_type_id'] = propertyTypeId.toString() ?? '';
+    request.fields['governorate_id'] = governorateId.toString() ?? '';
+    request.fields['address_id'] = selectedCityId.toString() ?? '';
+    request.fields['user_id'] = user_id.toString() ?? '';
+    request.fields['price'] = price.toString() ?? '';
+    request.fields['size'] = area.toString() ?? '';
     request.fields['owner_of_the_property'] = ownershipType ?? '';
     request.fields['Furnished'] = furnishing ?? '';
     request.fields['direction'] = orientation ?? '';
@@ -270,11 +254,12 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     request.fields['numberOfRoom'] = numberOfRooms.toString() ?? '';
     request.fields['floor'] = floors.toString();
     request.fields['description'] = description ?? '';
-    request.fields['features'] = selectedSpecialFeatures?? '';
+    request.fields['features'] = selectedSpecialFeatures ?? '';
 
     // إضافة الصور للطلب
     for (int i = 0; i < images.length; i++) {
-      var image = await http.MultipartFile.fromPath('url_image${i + 1}', images[i].path);
+      var image = await http.MultipartFile.fromPath(
+          'url_image${i + 1}', images[i].path);
       request.files.add(image);
     }
 
@@ -287,12 +272,13 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       );
       print('Data sent successfully!');
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
-      });    }
-    else {
+        Navigator.of(context)
+            .push(MyAnimation.createRoute(AppRoutes.homeScreen));
+      });
+    } else {
       print(await response.stream.bytesToString());
       print('*********************');
-    mySnackBar(
+      mySnackBar(
         color: Colors.red,
         context: context,
         title: 'فشل إرسال البيانات الرجاء ادخال البيانات بشكلها الصحيح',
@@ -312,9 +298,11 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Constants.mainColor2,
-        title: Text('Property Form'),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Constants.mainColor2,
+        title: const Text('Property Form'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -327,7 +315,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 children: [
                   Expanded(
                     child: CheckboxListTile(
-                      title: Text('شراء'),
+                      title: const Text('شراء'),
                       value: isForSale,
                       onChanged: (value) {
                         setState(() {
@@ -338,7 +326,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   ),
                   Expanded(
                     child: CheckboxListTile(
-                      title: Text('اجار'),
+                      title: const Text('اجار'),
                       value: !isForSale,
                       onChanged: (value) {
                         setState(() {
@@ -353,42 +341,42 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'نوع العقار',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.red,
                       width: 2,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.redAccent,
                       width: 2,
                     ),
@@ -396,13 +384,14 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   filled: true,
                   fillColor: Colors.white,
                 ),
-                value: selectedPropertyType.isEmpty ? null : selectedPropertyType,
+                value:
+                    selectedPropertyType.isEmpty ? null : selectedPropertyType,
                 items: propertyTypes.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
                     child: Text(
                       type,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   );
                 }).toList(),
@@ -418,57 +407,59 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   return null;
                 },
                 dropdownColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
-                  color:  Constants.mainColor,
+                  color: Constants.mainColor,
                 ),
                 iconSize: 24,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // Province
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'المحافظة',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.red,
                       width: 2,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.redAccent,
                       width: 2,
                     ),
@@ -482,14 +473,15 @@ SizedBox(height: 10,),
                     value: province,
                     child: Text(
                       province,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   );
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
                     selectedProvince = value!;
-                    selectedCity = ''; // لإعادة تعيين المدينة عند تغيير المحافظة
+                    selectedCity =
+                        ''; // لإعادة تعيين المدينة عند تغيير المحافظة
                     selectedCityId = -1; // إعادة تعيين id_address
                     isLoadingCities = true;
                   });
@@ -502,58 +494,60 @@ SizedBox(height: 10,),
                   return null;
                 },
                 dropdownColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
-                  color:  Constants.mainColor,
+                  color: Constants.mainColor,
                 ),
                 iconSize: 24,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
 
               // City
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'المدينة',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.red,
                       width: 2,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.redAccent,
                       width: 2,
                     ),
@@ -567,7 +561,7 @@ SizedBox(height: 10,),
                     value: city['address'],
                     child: Text(
                       city['address'],
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                     onTap: () {
                       selectedCityId = city['id_address']; // تعيين id_address
@@ -586,54 +580,58 @@ SizedBox(height: 10,),
                   return null;
                 },
                 dropdownColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
                   color: Constants.mainColor,
                 ),
                 iconSize: 24,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // Price
               Container(
                 // width: 10, // تحديد عرض الحقل
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'السعر SP',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 14, // تقليل حجم نص التسمية
                       fontWeight: FontWeight.bold,
-                      color:Constants.mainColor,
+                      color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // تحسين الحشو
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 8), // تحسين الحشو
                     filled: true,
                     fillColor: Colors.white,
                   ),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true), // دعم الأرقام مع النقاط العشرية
+                  keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true), // دعم الأرقام مع النقاط العشرية
                   onChanged: (value) {
                     setState(() {
                       price = double.tryParse(value) ?? 0; // تعيين قيمة السعر
@@ -648,66 +646,70 @@ SizedBox(height: 10,),
                     }
                     return null;
                   },
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14, // تقليل حجم النص داخل الحقل
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // Area
               Container(
                 width: 150, // تحديد عرض الحقل
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'تصحيح هنا من اجل المساحة test',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 14, // تقليل حجم نص التسمية
                       fontWeight: FontWeight.bold,
-                      color:Constants.mainColor,
+                      color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.redAccent,
                         width: 2,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // تحسين الحشو
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 8), // تحسين الحشو
                     filled: true,
                     fillColor: Colors.white,
                   ),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true), // دعم الأرقام مع النقاط العشرية
+                  keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true), // دعم الأرقام مع النقاط العشرية
                   onChanged: (value) {
                     setState(() {
-                      area = double.tryParse(value) ?? 0; 
+                      area = double.tryParse(value) ?? 0;
                     });
                   },
                   validator: (value) {
@@ -719,54 +721,55 @@ SizedBox(height: 10,),
                     }
                     return null;
                   },
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14, // تقليل حجم النص داخل الحقل
                   ),
                 ),
-              )
-,
-              SizedBox(height: 10,),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
 
               // Ownership Type
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'نوع الملكية',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.red,
                       width: 2,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.redAccent,
                       width: 2,
                     ),
@@ -780,7 +783,7 @@ SizedBox(height: 10,),
                     value: type,
                     child: Text(
                       type,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   );
                 }).toList(),
@@ -796,59 +799,61 @@ SizedBox(height: 10,),
                   return null;
                 },
                 dropdownColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
-                  color:  Constants.mainColor,
+                  color: Constants.mainColor,
                 ),
                 iconSize: 24,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
 
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
 
               // Furnishing
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'التأثيث',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.red,
                       width: 2,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.redAccent,
                       width: 2,
                     ),
@@ -862,7 +867,7 @@ SizedBox(height: 10,),
                     value: type,
                     child: Text(
                       type,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   );
                 }).toList(),
@@ -878,17 +883,19 @@ SizedBox(height: 10,),
                   return null;
                 },
                 dropdownColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
-                  color:  Constants.mainColor,
+                  color: Constants.mainColor,
                 ),
                 iconSize: 24,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
 
 // Orientation
               if (selectedPropertyType != "فيلا" &&
@@ -898,42 +905,42 @@ SizedBox(height: 10,),
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
                     labelText: 'الاتجاه',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.redAccent,
                         width: 2,
                       ),
@@ -947,7 +954,7 @@ SizedBox(height: 10,),
                       value: type,
                       child: Text(
                         type,
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     );
                   }).toList(),
@@ -963,57 +970,59 @@ SizedBox(height: 10,),
                     return null;
                   },
                   dropdownColor: Colors.white,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   iconSize: 24,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                   ),
                 ),
-SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // Condition
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: 'الحالة',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color:  Constants.mainColor,
+                    borderSide: const BorderSide(
+                      color: Constants.mainColor,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.red,
                       width: 2,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.redAccent,
                       width: 2,
                     ),
@@ -1027,7 +1036,7 @@ SizedBox(height: 10,),
                     value: type,
                     child: Text(
                       type,
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   );
                 }).toList(),
@@ -1043,58 +1052,60 @@ SizedBox(height: 10,),
                   return null;
                 },
                 dropdownColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_drop_down,
-                  color:  Constants.mainColor,
+                  color: Constants.mainColor,
                 ),
                 iconSize: 24,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
               ),
-SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // Rental Duration
               if (!isForSale)
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
                     labelText: 'مدة الايجار',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color:  Constants.mainColor,
+                      color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.redAccent,
                         width: 2,
                       ),
@@ -1108,7 +1119,7 @@ SizedBox(height: 10,),
                       value: type,
                       child: Text(
                         type,
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     );
                   }).toList(),
@@ -1124,73 +1135,77 @@ SizedBox(height: 10,),
                     return null;
                   },
                   dropdownColor: Colors.white,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Constants.mainColor,
                   ),
                   iconSize: 24,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                   ),
                 ),
 
               // Number of Rooms
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
 
               Container(
                 // width: 150, // تحديد عرض الحقل
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'عدد الغرف',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 14, // تقليل حجم نص التسمية
                       fontWeight: FontWeight.bold,
                       color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.redAccent,
                         width: 2,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // تحسين الحشو
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 8), // تحسين الحشو
                     filled: true,
                     fillColor: Colors.white,
                   ),
                   keyboardType: TextInputType.number, // دعم الأرقام فقط
                   onChanged: (value) {
                     setState(() {
-                      numberOfRooms = int.tryParse(value) ?? 0; // تعيين قيمة عدد الغرف
+                      numberOfRooms =
+                          int.tryParse(value) ?? 0; // تعيين قيمة عدد الغرف
                     });
                   },
                   validator: (value) {
@@ -1202,54 +1217,60 @@ SizedBox(height: 10,),
                     }
                     return null;
                   },
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14, // تقليل حجم النص داخل الحقل
                   ),
                 ),
-              )
-,
+              ),
               // Floors
 
-              if(selectedPropertyType=="شقة"||selectedPropertyType=="مكتب")
+              if (selectedPropertyType == "شقة" ||
+                  selectedPropertyType == "مكتب")
+                const SizedBox(
+                  height: 10,
+                ),
+              if (selectedPropertyType ==
+                      "شقة" || //test here  and remove*******************
+                  selectedPropertyType == "مكتب")
                 DropdownButtonFormField<int>(
                   decoration: InputDecoration(
                     labelText: 'رقم الطابق',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.redAccent,
                         width: 2,
                       ),
@@ -1263,7 +1284,7 @@ SizedBox(height: 10,),
                       value: type,
                       child: Text(
                         type.toString(),
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     );
                   }).toList(),
@@ -1279,58 +1300,61 @@ SizedBox(height: 10,),
                     return null;
                   },
                   dropdownColor: Colors.white,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
-                    color:  Constants.mainColor,
+                    color: Constants.mainColor,
                   ),
                   iconSize: 24,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                   ),
                 ),
 
-              SizedBox(height: 10,),
-              if(selectedPropertyType!="شقة"&&selectedPropertyType!="مكتب")
+              const SizedBox(
+                height: 10,
+              ),
+              if (selectedPropertyType != "شقة" &&
+                  selectedPropertyType != "مكتب")
                 DropdownButtonFormField<int>(
                   decoration: InputDecoration(
                     labelText: 'عدد الطوابق',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color:  Constants.mainColor,
+                      color: Constants.mainColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color:  Constants.mainColor,
+                      borderSide: const BorderSide(
+                        color: Constants.mainColor,
                         width: 2,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.red,
                         width: 2,
                       ),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.redAccent,
                         width: 2,
                       ),
@@ -1344,7 +1368,7 @@ SizedBox(height: 10,),
                       value: type,
                       child: Text(
                         type.toString(),
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     );
                   }).toList(),
@@ -1360,12 +1384,12 @@ SizedBox(height: 10,),
                     return null;
                   },
                   dropdownColor: Colors.white,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_drop_down,
                     color: Constants.mainColor,
                   ),
                   iconSize: 24,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                   ),
@@ -1392,7 +1416,7 @@ SizedBox(height: 10,),
               // Description
               TextFormField(
                 controller: descriptionController,
-                decoration: InputDecoration(labelText: 'الوصف'),
+                decoration: const InputDecoration(labelText: 'الوصف'),
                 maxLines: 5,
                 onChanged: (value) {
                   setState(() {
@@ -1406,12 +1430,14 @@ SizedBox(height: 10,),
                   return null;
                 },
               ),
-              SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               // Special Features
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'ميزات خاصة',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -1429,71 +1455,73 @@ SizedBox(height: 10,),
                 ],
               ),
               // Submit Button
-              SizedBox(height: 20),
-
+              const SizedBox(height: 20),
 
               ElevatedButton(
-                  onPressed: pickImage,
-                  child: Text('اختر الصور'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.mainColor2,
-                  ),),
-              // عرض الصور المختارة
-    if (images != null && images!.isNotEmpty)
-      GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 4.0,
-          mainAxisSpacing: 4.0,
-        ),
-        itemCount: images.length + 1,
-        itemBuilder: (context, index) {
-          if (index == images.length) {
-            return GestureDetector(
-              onTap: pickImage,
-              child: Container(
-                color: Colors.grey[300],
-                child: Icon(
-                  Icons.add,
-                  size: 50,
+                onPressed: pickImage,
+                child: const Text('اختر الصور'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Constants.mainColor2,
                 ),
               ),
-            );
-          } else {
-            return Stack(
-              children: [
-                Image.file(
-                  File(images[index].path),
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      setState(() {
-                        images.removeAt(index);
-                      });
-                    },
+              // عرض الصور المختارة
+              if (images != null && images!.isNotEmpty)
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 4.0,
+                    mainAxisSpacing: 4.0,
                   ),
+                  itemCount: images.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == images.length) {
+                      return GestureDetector(
+                        onTap: pickImage,
+                        child: Container(
+                          color: Colors.grey[300],
+                          child: const Icon(
+                            Icons.add,
+                            size: 50,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Stack(
+                        children: [
+                          Image.file(
+                            File(images[index].path),
+                            fit: BoxFit.cover,
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                setState(() {
+                                  images.removeAt(index);
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 ),
-              ],
-            );
-          }
-        },
-      ),
-              SizedBox(height: 20),
-              ElevatedButton(  style: ElevatedButton.styleFrom(
-              backgroundColor: Constants.mainColor2,),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Constants.mainColor2,
+                ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     sendPropertyData();
                   }
                 },
-                child: Text('إرسال'),
+                child: const Text('إرسال'),
               ),
             ],
           ),

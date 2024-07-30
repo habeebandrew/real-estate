@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pro_2/Presentation/SignUp%20Screen/verify_email.dart';
 import 'package:pro_2/Util/app_bloc_observer.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -82,13 +82,15 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-        initialRoute: //NamedRoutes.adPropertyScreen,
-            widget.token != null
-                ? NamedRoutes.splashscreen
-                : widget.onBoardShowen == true
-                    ? NamedRoutes.logInScreen
-                    : NamedRoutes.onBoardingScreen,
-        routes: AppRoutes.routes,
+        home: EmailVerificationScreen(),
+        // initialRoute:
+        // //NamedRoutes.adPropertyScreen,
+        //     widget.token != null
+        //         ? NamedRoutes.splashscreen
+        //         : widget.onBoardShowen == true
+        //             ? NamedRoutes.logInScreen
+        //             : NamedRoutes.onBoardingScreen,
+        // routes: AppRoutes.routes,
         builder: (context, child) {
           return LanguageChangeProvider(
             changeLanguage: _changeLanguage,
@@ -99,6 +101,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
 class LanguageChangeProvider extends InheritedWidget {
   final Function(Locale) changeLanguage;
   const LanguageChangeProvider({
@@ -108,6 +111,7 @@ class LanguageChangeProvider extends InheritedWidget {
   static LanguageChangeProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<LanguageChangeProvider>();
   }
+
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
 }

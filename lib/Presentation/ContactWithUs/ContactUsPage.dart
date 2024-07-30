@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class ContactUsPage extends StatefulWidget {
   @override
@@ -16,7 +14,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('تواصل معنا'),
+        title: const Text('تواصل معنا'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,29 +22,31 @@ class _ContactUsPageState extends State<ContactUsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'تواصل معنا عبر البريد الإلكتروني و الموبايل',
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      icon: Icon(Icons.email),
-                      label: Text('البريد الإلكتروني'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                      icon: const Icon(Icons.email),
+                      label: const Text('البريد الإلكتروني'),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange),
                       onPressed: () {
                         // Handle email button press
                       },
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: ElevatedButton.icon(
-                      icon: Icon(Icons.phone),
-                      label: Text('تواصل معنا'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                      icon: const Icon(Icons.phone),
+                      label: const Text('تواصل معنا'),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue),
                       onPressed: () {
                         // Handle phone button press
                       },
@@ -54,18 +54,18 @@ class _ContactUsPageState extends State<ContactUsPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-              Row(
+              const SizedBox(height: 16),
+              const Row(
                 children: [
                   Icon(Icons.access_time, color: Colors.teal),
                   SizedBox(width: 8),
                   Text('ساعات العمل: 08:00 - 17:00'),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedCategory,
-                items: <String>['اقتراح', 'شكوى', 'استفسار','طلب']
+                items: <String>['اقتراح', 'شكوى', 'استفسار', 'طلب']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -77,7 +77,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     _selectedCategory = newValue!;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'اختر الفئة',
                   border: OutlineInputBorder(),
                 ),
@@ -90,16 +90,16 @@ class _ContactUsPageState extends State<ContactUsPage> {
               //     border: OutlineInputBorder(),
               //   ),
               // ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
                 controller: _messageController,
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'الرسالة',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -107,16 +107,16 @@ class _ContactUsPageState extends State<ContactUsPage> {
                       onPressed: () {
                         // Handle send request button press
                       },
-                      child: Text('ارسل طلب'),
+                      child: const Text('ارسل طلب'),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () {
                         // Handle cancel button press
                       },
-                      child: Text('إلغاء'),
+                      child: const Text('إلغاء'),
                     ),
                   ),
                 ],
