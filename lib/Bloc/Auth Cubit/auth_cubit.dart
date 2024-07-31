@@ -16,7 +16,7 @@ class AuthCubit extends Cubit<AuthState>
 
   static AuthCubit get(context)=>BlocProvider.of(context);
 
-   //Log In
+  //Log In
   final TextEditingController logInEmailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
@@ -63,8 +63,8 @@ class AuthCubit extends Cubit<AuthState>
     if (logInFormKey.currentState!.validate()){
       emit(AuthLoadingState());
       await AuthService.login(
-          email: logInEmailController.text,
-          password: passwordController.text,
+        email: logInEmailController.text,
+        password: passwordController.text,
       ).then((value)async
       {
         if(value != null){
@@ -124,11 +124,11 @@ class AuthCubit extends Cubit<AuthState>
           await CacheHelper.putString(key: 'image', value: value.image);
           await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
           await CacheHelper.putInt(key: 'id', value: value.user.id);
-         try{
-           await CacheHelper.putString(key: 'number', value: value.number!);
-         }catch(e){          await CacheHelper.putString(key: 'number', value: '');
-print(e);
-         print("error in num!");}
+          try{
+            await CacheHelper.putString(key: 'number', value: value.number!);
+          }catch(e){          await CacheHelper.putString(key: 'number', value: '');
+          print(e);
+          print("error in num!");}
           // await CacheHelper.putInt(key: 'number', value: value.number!);
 
           // Delay for 2 seconds and then navigate to the next screen

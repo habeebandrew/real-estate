@@ -10,18 +10,21 @@ import 'package:pro_2/Util/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
+import 'package:pro_2/tests/360pic.dart';
 
 void main() async {
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-        channelGroupKey: 'basic_channel_group',
-        channelKey: 'basic_channel',
-        channelName: 'Basic notifications',
-        channelDescription: 'Notification channel for basic tests',
-        defaultColor: Color(0xFF9D50DD),
-        ledColor: Colors.white)
-
-  ],debug: true,
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+          channelGroupKey: 'basic_channel_group',
+          channelKey: 'basic_channel',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic tests',
+          defaultColor: Color(0xFF9D50DD),
+          ledColor: Colors.white)
+    ],
+    debug: true,
   );
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -95,16 +98,16 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-        // home:
+         home:s_3dpic(),
         // notification(),
         // EmailVerificationScreen(),
-        initialRoute:
-        // NamedRoutes.adPropertyScreen,
-            widget.token != null
-                ? NamedRoutes.splashscreen
-                : widget.onBoardShowen == true
-                    ? NamedRoutes.logInScreen
-                    : NamedRoutes.onBoardingScreen,
+        // initialRoute:
+            // NamedRoutes.adPropertyScreen,
+            // widget.token != null
+            //     ? NamedRoutes.splashscreen
+            //     : widget.onBoardShowen == true
+            //         ? NamedRoutes.logInScreen
+            //         : NamedRoutes.onBoardingScreen,
         routes: AppRoutes.routes,
         builder: (context, child) {
           return LanguageChangeProvider(

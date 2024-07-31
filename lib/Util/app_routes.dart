@@ -8,11 +8,11 @@ import 'package:pro_2/Presentation/LogIn%20Screen/LogIn_screen.dart';
 import 'package:pro_2/Presentation/Main%20Screen/main_screen.dart';
 import 'package:pro_2/Presentation/My_Posts/My_Posts.dart';
 import 'package:pro_2/Presentation/Onboarding%20Screens/onboarding1.dart';
-
 import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
+import 'package:pro_2/Presentation/SignUp%20Screen/verify_email.dart';
 import '../Presentation/AccountInfoPage/AccountInfoPage.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';
@@ -25,6 +25,7 @@ class NamedRoutes
 {
   static const homeScreen='HomeScreen';
   static const onBoardingScreen='onboarding1';
+  static const passwordSetupScreen='passwordSetupScreen';
   static const signUpScreen='Signup';
   static const logInScreen='Login';
   static const splashscreen='splash_screen';
@@ -49,6 +50,7 @@ class AppRoutes
 {
   static const  homeScreen=HomeScreen();
   static const  onBoardingScreen=Onboarding();
+  static EmailVerificationScreen  emailVerificationScreen= EmailVerificationScreen();
   static const  signUpScreen= SignUp();
   static const  logInScreen=LogInScreen();
   static const  Splashscreen=splashscreen();

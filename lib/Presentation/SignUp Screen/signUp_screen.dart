@@ -115,13 +115,13 @@ class SignUp extends StatelessWidget {
                       state is AuthLoadingState
                           ? const Center(child: CircularProgressIndicator())
                           : MyButton(
-                              tittle: S.of(context).Sign_up,
-                              onPreessed: () {
-                                cubit.signUp(context);
-                              },
-                              minWidth: Dimensions.widthPercentage(context, 50),
-                              height: Dimensions.heightPercentage(context, 7),
-                            ),
+                        tittle: S.of(context).Sign_up,
+                        onPreessed: () {
+                          cubit.signUp(context);
+                        },
+                        minWidth: Dimensions.widthPercentage(context, 50),
+                        height: Dimensions.heightPercentage(context, 7),
+                      ),
                     ],
                   ),
                 ),
