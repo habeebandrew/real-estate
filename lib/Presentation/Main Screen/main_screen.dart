@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Main%20Screen/MainWidgets/main_widgets.dart';
+import 'package:pro_2/Presentation/Notification/notification_function.dart';
 import 'package:pro_2/generated/l10n.dart';
-
+import 'package:awesome_notifications/awesome_notifications.dart';
 import '../../Util/cache_helper.dart';
 
 class MainScreen extends StatefulWidget {
@@ -18,6 +19,19 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+
+      // طلب الإذن للإشعارات إذا لم يكن ممنوحاً
+      AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+        if (!isAllowed) {
+          AwesomeNotifications().requestPermissionToSendNotifications();
+        }
+      });
+    // جدولة الإشعارات
+    scheduleDailyNotification();
+
+      // جدولة الإشعارات
+      // showNotification();
+
     _loadIp();
   }
 

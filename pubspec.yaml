@@ -53,6 +53,8 @@ dependencies:
   intl: null
   image_picker: ^1.1.2
   pin_code_fields:
+  awesome_notifications: ^0.8.2 
+  #//لازم نكفي فيو اذا بدنا يا كمان لios
   #share_plus: ^9.0.0
 flutter_native_splash:
   color: "#FFFFFF"
@@ -92,6 +94,7 @@ flutter:
     - assets/images/authentication/
     - assets/images/General/
     - assets/images/Home/
+    - assets/notification/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

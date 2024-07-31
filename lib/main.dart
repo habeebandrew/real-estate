@@ -1,6 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pro_2/Presentation/Notification/notification.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/verify_email.dart';
 import 'package:pro_2/Util/app_bloc_observer.dart';
 import 'package:pro_2/Util/app_routes.dart';
@@ -10,6 +12,17 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
 
 void main() async {
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelGroupKey: 'basic_channel_group',
+        channelKey: 'basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: Color(0xFF9D50DD),
+        ledColor: Colors.white)
+
+  ],debug: true,
+  );
   WidgetsFlutterBinding.ensureInitialized();
 
   await CacheHelper.init();
@@ -82,15 +95,17 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-        home: EmailVerificationScreen(),
-        // initialRoute:
-        // //NamedRoutes.adPropertyScreen,
-        //     widget.token != null
-        //         ? NamedRoutes.splashscreen
-        //         : widget.onBoardShowen == true
-        //             ? NamedRoutes.logInScreen
-        //             : NamedRoutes.onBoardingScreen,
-        // routes: AppRoutes.routes,
+        // home:
+        // notification(),
+        // EmailVerificationScreen(),
+        initialRoute:
+        // NamedRoutes.adPropertyScreen,
+            widget.token != null
+                ? NamedRoutes.splashscreen
+                : widget.onBoardShowen == true
+                    ? NamedRoutes.logInScreen
+                    : NamedRoutes.onBoardingScreen,
+        routes: AppRoutes.routes,
         builder: (context, child) {
           return LanguageChangeProvider(
             changeLanguage: _changeLanguage,

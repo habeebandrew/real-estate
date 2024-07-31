@@ -9,6 +9,9 @@ class ApiAndEndpoints {
 
   static Future<String> api = getApi();
 //*HABEEB:   192.168.1.106
+  static const verify='verifyEmail';
+  static const checkCode='checkCode';
+
   static const signUp = 'register';
 
   static const logIn = 'signIn';
