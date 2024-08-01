@@ -25,29 +25,29 @@ import 'package:flutter/services.dart' show rootBundle;
 //   }
 // }
 
-// Future<void> showNotification() async {
-//   // تحقق من وجود إشعارات مجدولة مسبقًا
-//   List<NotificationModel> scheduledNotifications = await AwesomeNotifications().listScheduledNotifications();
-//
-//   // تحقق مما إذا كان هناك إشعار مجدول بالفعل
-//   bool isNotificationScheduled = scheduledNotifications.isNotEmpty;
-//
-//   if (!isNotificationScheduled) {
-//     AwesomeNotifications().createNotification(
-//       content: NotificationContent(
-//         id: 10  , // استخدام معرّف فريد للإشعار
-//         channelKey: 'basic_channel',
-//         title: 'Notification',
-//         body: 'This is a test notification sent every minute',
-//       ),
-//       schedule: NotificationInterval(
-//         interval: 60, // كل 60 ثانية
-//         timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
-//         repeats: true,
-//       ),
-//     );
-//   }
-// }
+Future<void> showNotification() async {
+  // تحقق من وجود إشعارات مجدولة مسبقًا
+  List<NotificationModel> scheduledNotifications = await AwesomeNotifications().listScheduledNotifications();
+
+  // تحقق مما إذا كان هناك إشعار مجدول بالفعل
+  bool isNotificationScheduled = scheduledNotifications.isNotEmpty;
+
+  if (!isNotificationScheduled) {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10  , // استخدام معرّف فريد للإشعار
+        channelKey: 'basic_channel',
+        title: 'Notification',
+        body: 'This is a test notification sent every minute',
+      ),
+      schedule: NotificationInterval(
+        interval: 60, // كل 60 ثانية
+        timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+        repeats: true,
+      ),
+    );
+  }
+}
 
 Future<List<Map<String, dynamic>>> loadMessages() async {
   final jsonString = await rootBundle.loadString('assets/notification/daily_messages.json');

@@ -10,29 +10,29 @@ class notification extends StatefulWidget {
 }
 
 class _notificationState extends State<notification> {
-  // void initState() {
-  //   
-  // AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
-  //   if(!isAllowed){AwesomeNotifications().requestPermissionToSendNotifications()}
-  //
-  // });
-  //
-  // super.initState();
-  // }
-@override
-void initState() {
-  super.initState();
+  void initState() {
+    super.initState();
 
-  // طلب الإذن للإشعارات إذا لم يكن ممنوحاً
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    if (!isAllowed) {
-      AwesomeNotifications().requestPermissionToSendNotifications();
-    }
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
+    if(!isAllowed){AwesomeNotifications().requestPermissionToSendNotifications()}
+
   });
 
-  // جدولة الإشعارات
-  // showNotification();
-}
+  }
+// @override
+// void initState() {
+//   super.initState();
+//
+//   // طلب الإذن للإشعارات إذا لم يكن ممنوحاً
+//   AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+//     if (!isAllowed) {
+//       AwesomeNotifications().requestPermissionToSendNotifications();
+//     }
+//   });
+//
+//   // جدولة الإشعارات
+//   // showNotification();
+// }
 
 @override
 Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ Widget build(BuildContext context) {
     body: Center(
       child: TextButton(
         onPressed: () {
+          showNotification();
           // يمكن إضافة وظائف أخرى هنا إذا لزم الأمر
         },
         child: Text('Send'),

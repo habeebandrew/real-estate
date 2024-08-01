@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Presentation/Notification/notification.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/verify_email.dart';
+import 'package:pro_2/Presentation/map/map.dart';
 import 'package:pro_2/Util/app_bloc_observer.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
@@ -98,7 +99,7 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-         home:s_3dpic(),
+         home:map(),
         // notification(),
         // EmailVerificationScreen(),
         // initialRoute:

@@ -20,12 +20,16 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
 
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
+      if(!isAllowed){AwesomeNotifications().requestPermissionToSendNotifications()}
+
+    });
       // طلب الإذن للإشعارات إذا لم يكن ممنوحاً
-      AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-        if (!isAllowed) {
-          AwesomeNotifications().requestPermissionToSendNotifications();
-        }
-      });
+      // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      //   if (!isAllowed) {
+      //     AwesomeNotifications().requestPermissionToSendNotifications();
+      //   }
+      // });
     // جدولة الإشعارات
     scheduleDailyNotification();
 
