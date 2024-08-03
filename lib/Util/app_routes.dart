@@ -12,7 +12,7 @@ import 'package:pro_2/Presentation/Posts%20Screen/posts_screen.dart';
 import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
-import 'package:pro_2/Presentation/SignUp%20Screen/verify_email.dart';
+import 'package:pro_2/Presentation/SignUp%20Screen/email_verification_screen.dart';
 import '../Presentation/AccountInfoPage/AccountInfoPage.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';

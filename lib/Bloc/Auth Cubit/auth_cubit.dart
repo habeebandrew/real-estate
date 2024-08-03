@@ -106,43 +106,41 @@ class AuthCubit extends Cubit<AuthState>
     if (formKey.currentState!.validate()) {
       emit(AuthLoadingState());
 
-      await AuthService.signUp(
-        user_name: user_nameController.text,
-        email: emailController.text,
-        password: signUPasswordController.text,
-        passwordConfirm: confirmPasswordController.text,
-      ).then((value)async
-      {
-        if (value != null) {
+      try {
+        // استخدم await للتأكد من انتظار استجابة الـ API
+        final responseMessage = await AuthService.signUp(
+          user_name: user_nameController.text,
+          email: emailController.text,
+          password: signUPasswordController.text,
+          passwordConfirm: confirmPasswordController.text,
+        );
+        await CacheHelper.putString(value:user_nameController.text,key: 'user_name_verify');
+print(user_nameController.text);
+        if (responseMessage != null && responseMessage.contains("The code is sent, review your email ...")) {
           emit(AuthLoadedState());
           mySnackBar(
             context: context,
-            title: 'Registration successful',
+            title: responseMessage, // عرض الرسالة الواردة من الاستجابة
           );
-          await CacheHelper.putString(key: 'name', value: value.user.username);
-          await CacheHelper.putString(key: 'token', value: value.accessToken);
-          await CacheHelper.putString(key: 'image', value: value.image);
-          await CacheHelper.putInt(key: 'role_id', value: value.user.roleId);
-          await CacheHelper.putInt(key: 'id', value: value.user.id);
-          try{
-            await CacheHelper.putString(key: 'number', value: value.number!);
-          }catch(e){          await CacheHelper.putString(key: 'number', value: '');
-          print(e);
-          print("error in num!");}
-          // await CacheHelper.putInt(key: 'number', value: value.number!);
 
-          // Delay for 2 seconds and then navigate to the next screen
+          // تأخير لمدة 2 ثانية ثم الانتقال إلى الشاشة التالية
           Future.delayed(const Duration(seconds: 2), () {
-            Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
+            Navigator.of(context).push(
+              MyAnimation.createRoute(AppRoutes.emailVerificationScreen),
+            );
           });
-          resetFormFields();
 
+          resetFormFields();
         } else {
-          resetFormFields();
-          emit(AuthErrorState(message: 'Failed to register. Please try again later.'));
-        }
-      });
 
+          emit(AuthErrorState(message: 'Failed to register. Please try again later.'));
+          resetFormFields();
+        }
+
+      } catch (e) {
+        emit(AuthErrorState(message: 'An unexpected error occurred. Please try again later.'));
+        resetFormFields();
+      }
     }
   }
 

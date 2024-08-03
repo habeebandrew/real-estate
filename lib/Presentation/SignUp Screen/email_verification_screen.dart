@@ -1,8 +1,15 @@
+//refactor with cubit*****
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:pro_2/Util/app_routes.dart';
+import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:pro_2/Util/network_helper.dart';
+import 'dart:convert';
+
+import '../../Util/api_endpoints.dart';
 import '../../Util/global Widgets/animation.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
@@ -51,14 +58,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               backgroundColor: Colors.transparent,
               enableActiveFill: true,
               onCompleted: (value) {
-                _verifyCode(value);
+                // _verifyCode(value);
+                sendCode(_codeController);
               },
               onChanged: (value) {},
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                _verifyCode(_codeController.text);
+                sendCode(_codeController);
+               // _verifyCode(_codeController.text);
               },
               child: const Text('Verify'),
               style: ElevatedButton.styleFrom(
@@ -87,6 +96,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 const Text('Already a member?'),
                 TextButton(
                   onPressed: () {
+                    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
                     // تسجيل الدخول بدلاً من ذلك
                     print('Sign in instead');
                   },
@@ -103,6 +113,80 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
+  Future<void> sendCode(TextEditingController codeController) async {
+    // URL الخاص بالـ API الذي ستقوم بإرسال الطلب إليه
+
+    // الحصول على القيمة المحتملة من التخزين المؤقت
+    String? user_name_verify = await CacheHelper.getString(key: 'user_name_verify');
+
+    // التحقق مما إذا كانت القيمة غير موجودة وتعيين قيمة افتراضية إذا لزم الأمر
+    if (user_name_verify == null) {
+      print('Error: user_name_verify is null');
+      return;
+    }
+    // محاولة تحويل النص إلى عدد صحيح
+    int? codeAsInt;
+    try {
+      codeAsInt = int.parse(codeController.text);
+    } catch (e) {
+      print('Error: The code is not a valid integer');
+      return;
+    }print(codeAsInt);
+    print("user_name_verify"+user_name_verify);
+    print("codeController"+codeController.text);
+
+    try {
+      // إرسال طلب POST إلى الـ API
+      final response = await NetworkHelper.post(
+        ApiAndEndpoints.verify,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: {
+          'user_name': "$user_name_verify",
+          'code': "${codeAsInt.toString()}",
+        },
+      );
+
+      // التحقق من استجابة الـ API
+      if (response.statusCode == 200) {
+        mySnackBar(color: Colors.green,
+          context: context,
+          title: response.body,
+        );
+        print(response.body);
+        final List<dynamic> responseData = jsonDecode(response.body);
+
+        // تحقق مما إذا كانت الرسالة هي الرسالة المتوقعة
+        if (responseData.contains("user")) {//الربط مع الموديل
+         mySnackBar(color: Colors.green,
+           context: context,
+           title: 'verify successful',
+         );
+         Future.delayed(const Duration(seconds: 2), () {
+           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.homeScreen));
+         });
+
+      }
+      else if (responseData.isNotEmpty && responseData[0] == "you have to enter correct code ...") {
+         mySnackBar(color: Colors.green,
+           context: context,
+           title: responseData[0],
+         );
+          print("النجاح: تم إدخال الكود بشكل صحيح.");
+        }
+
+      else {
+          print("الرسالة الواردة: ${responseData}");
+        }
+      } else {
+        print('خطأ: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('استثناء: $e');
+    }
+  }
   void _verifyCode(String code) {
     if (code.length == 6) {
       // تنفيذ منطق التحقق هنا
