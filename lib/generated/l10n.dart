@@ -1119,6 +1119,156 @@ class S {
       args: [],
     );
   }
+
+  /// `Contact Us`
+  String get contactUsTitle {
+    return Intl.message(
+      'Contact Us',
+      name: 'contactUsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get emailButton {
+    return Intl.message(
+      'Email',
+      name: 'emailButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Us`
+  String get phoneButton {
+    return Intl.message(
+      'Contact Us',
+      name: 'phoneButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Working Hours: 08:00 - 17:00`
+  String get workingHours {
+    return Intl.message(
+      'Working Hours: 08:00 - 17:00',
+      name: 'workingHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Request`
+  String get sendRequest {
+    return Intl.message(
+      'Send Request',
+      name: 'sendRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message sent successfully`
+  String get messageSentSuccessfully {
+    return Intl.message(
+      'Message sent successfully',
+      name: 'messageSentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to send message`
+  String get messageSendingFailed {
+    return Intl.message(
+      'Failed to send message',
+      name: 'messageSendingFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inquiry sent successfully`
+  String get inquirySentSuccessfully {
+    return Intl.message(
+      'Inquiry sent successfully',
+      name: 'inquirySentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to send inquiry`
+  String get inquirySendingFailed {
+    return Intl.message(
+      'Failed to send inquiry',
+      name: 'inquirySendingFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose category`
+  String get chooseCategory {
+    return Intl.message(
+      'Choose category',
+      name: 'chooseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suggestion`
+  String get suggestion {
+    return Intl.message(
+      'Suggestion',
+      name: 'suggestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complaint`
+  String get complaint {
+    return Intl.message(
+      'Complaint',
+      name: 'complaint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request`
+  String get request {
+    return Intl.message(
+      'Request',
+      name: 'request',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inquiry`
+  String get inquiry {
+    return Intl.message(
+      'Inquiry',
+      name: 'inquiry',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

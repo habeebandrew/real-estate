@@ -21,16 +21,25 @@ class AdPropertyScreen extends StatefulWidget {
 
 class _AdPropertyScreenState extends State<AdPropertyScreen> {
   List<XFile> images = [];
+  List<XFile> images360 = [];
   Future<void> pickImage() async {
     final XFile? selectedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
       setState(() {
         images!.add(selectedImage);
       });
     }
   }
-
+  Future<void> pickImage360() async {
+    final XFile? selectedImage =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (selectedImage != null) {
+      setState(() {
+        images360!.add(selectedImage);
+      });
+    }
+  }
   bool isForSale = true;
   String selectedPropertyType = '';
   String selectedProvince = '';
@@ -73,9 +82,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'طابو إسكان',
     'فروغ'
   ];
-
   final List<String> furnishings = ['مفروش', 'غير مفروش', 'نصف مفروش'];
-
   //الاتجاهات
   final List<String> orientations = [
     'شمال',
@@ -89,7 +96,6 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'الشمال الجنوبي',
     'الغرب الشرقي'
   ];
-
   final List<String> conditions = [
     'سوبر ديلوكس',
     'كسوة جديدة',
@@ -97,7 +103,6 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'كسوة قديمة',
     'على العظم'
   ];
-
   final List<int> _num_of_floor = [
     1,
     2,
@@ -112,9 +117,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     11,
     12,
   ];
-
   final List<String> rentalDurations = ['يومي', 'شهري', 'سنوي'];
-
   final List<String> specialFeatures = [
     'مصعد',
     'كهرباء بطاقة شمسية',
@@ -155,7 +158,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
     final int provinceId = provinceIds[province]!;
     final response = await http.get(Uri.parse(
-        // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
+      // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
         api + ApiAndEndpoints.fetchAllAddresses + '$provinceId'), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -262,6 +265,16 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
           'url_image${i + 1}', images[i].path);
       request.files.add(image);
     }
+    int length =images.length;
+    request.fields['imageCount'] ="$length";
+
+    //360****
+    for (int i = 0; i < images360.length; i++) {
+      var image = await http.MultipartFile.fromPath(
+          'url_image360${i + 1}', images360[i].path);
+      request.files.add(image);
+    }
+    request.fields['image360Count'] ="$length";
 
     var response = await request.send();
 
@@ -385,7 +398,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   fillColor: Colors.white,
                 ),
                 value:
-                    selectedPropertyType.isEmpty ? null : selectedPropertyType,
+                selectedPropertyType.isEmpty ? null : selectedPropertyType,
                 items: propertyTypes.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
@@ -481,7 +494,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   setState(() {
                     selectedProvince = value!;
                     selectedCity =
-                        ''; // لإعادة تعيين المدينة عند تغيير المحافظة
+                    ''; // لإعادة تعيين المدينة عند تغيير المحافظة
                     selectedCityId = -1; // إعادة تعيين id_address
                     isLoadingCities = true;
                   });
@@ -1230,7 +1243,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   height: 10,
                 ),
               if (selectedPropertyType ==
-                      "شقة" || //test here  and remove*******************
+                  "شقة" || //test here  and remove*******************
                   selectedPropertyType == "مكتب")
                 DropdownButtonFormField<int>(
                   decoration: InputDecoration(
@@ -1456,7 +1469,6 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               ),
               // Submit Button
               const SizedBox(height: 20),
-
               ElevatedButton(
                 onPressed: pickImage,
                 child: const Text('اختر الصور'),
@@ -1464,6 +1476,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   backgroundColor: Constants.mainColor2,
                 ),
               ),
+              const SizedBox(height: 20),
               // عرض الصور المختارة
               if (images != null && images!.isNotEmpty)
                 GridView.builder(
@@ -1492,6 +1505,61 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                         children: [
                           Image.file(
                             File(images[index].path),
+                            fit: BoxFit.cover,
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                setState(() {
+                                  images.removeAt(index);
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
+
+              ElevatedButton(
+                onPressed: pickImage360,
+                child: const Text(' 360*اختر الصور'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Constants.mainColor2,
+                ),
+              ),
+              // عرض الصور المختارة
+              if (images360 != null && images360!.isNotEmpty)
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 4.0,
+                    mainAxisSpacing: 4.0,
+                  ),
+                  itemCount: images360.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == images360.length) {
+                      return GestureDetector(
+                        onTap: pickImage,
+                        child: Container(
+                          color: Colors.grey[300],
+                          child: const Icon(
+                            Icons.add,
+                            size: 50,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Stack(
+                        children: [
+                          Image.file(
+                            File(images360[index].path),
                             fit: BoxFit.cover,
                           ),
                           Positioned(

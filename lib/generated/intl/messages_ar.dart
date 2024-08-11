@@ -138,11 +138,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "apartment": MessageLookupByLibrary.simpleMessage("شقة"),
         "building": MessageLookupByLibrary.simpleMessage("بناء"),
         "buy": MessageLookupByLibrary.simpleMessage("شراء"),
+        "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        "chooseCategory": MessageLookupByLibrary.simpleMessage("اختر الفئة"),
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
+        "complaint": MessageLookupByLibrary.simpleMessage("شكوى"),
+        "contactUsTitle": MessageLookupByLibrary.simpleMessage("تواصل معنا"),
         "email": MessageLookupByLibrary.simpleMessage("الإيميل"),
+        "emailButton":
+            MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "farm": MessageLookupByLibrary.simpleMessage("مزرعة"),
         "go_out": MessageLookupByLibrary.simpleMessage("هل تريد حقا الخروج?"),
+        "inquiry": MessageLookupByLibrary.simpleMessage("استفسار"),
+        "inquirySendingFailed":
+            MessageLookupByLibrary.simpleMessage("فشل في إرسال الاستفسار"),
+        "inquirySentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم إرسال الاستفسار بنجاح"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "messageSendingFailed":
+            MessageLookupByLibrary.simpleMessage("فشل في إرسال الرسالة"),
+        "messageSentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم إرسال الرسالة بنجاح"),
         "most_watched": MessageLookupByLibrary.simpleMessage("الأكثر مشاهدة"),
         "new_member": MessageLookupByLibrary.simpleMessage("عضو جديد؟"),
         "no": MessageLookupByLibrary.simpleMessage("لا"),
@@ -150,12 +165,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "office": MessageLookupByLibrary.simpleMessage("مكتب"),
         "ok": MessageLookupByLibrary.simpleMessage("تطبيق"),
         "on_the_beach": MessageLookupByLibrary.simpleMessage("شاليه"),
+        "phoneButton": MessageLookupByLibrary.simpleMessage("تواصل معنا"),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "property_in": MessageLookupByLibrary.simpleMessage(" الممتلكات في"),
         "rental": MessageLookupByLibrary.simpleMessage("إيجار"),
         "report": MessageLookupByLibrary.simpleMessage("إبلاغ"),
+        "request": MessageLookupByLibrary.simpleMessage("طلب"),
+        "sendRequest": MessageLookupByLibrary.simpleMessage("ارسل طلب"),
+        "suggestion": MessageLookupByLibrary.simpleMessage("اقتراح"),
         "villa": MessageLookupByLibrary.simpleMessage("فيلا"),
+        "workingHours":
+            MessageLookupByLibrary.simpleMessage("ساعات العمل: 08:00 - 17:00"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم")
       };
 }

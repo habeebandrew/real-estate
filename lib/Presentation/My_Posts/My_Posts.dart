@@ -63,28 +63,28 @@ class _My_PostsState extends State<My_Posts> {
         ),
         body: _isLoading
             ? const Center(
-                child: CircularProgressIndicator(),
-              )
+          child: CircularProgressIndicator(),
+        )
             : posts.isEmpty
-                ? Center(
-                    child: Text(S.of(context).There_are_no_posts,
-                        style: const TextStyle(fontSize: 18)))
-                : ListView.builder(
-                    itemCount: posts.length,
-                    itemBuilder: (context, index) {
-                      var post = posts[index];
-                      return PostCard_MYPOSTS(
-                        description: post.description,
-                        phone: post.mobilenumber,
-                        selectedArea: post.region,
-                        status: post.state,
-                        selectedGovernorate: post.governorate,
-                        budget: post.budget,
-                        postDate: post.createdAt,
-                        userName: post.userId,
-                        userProfileImageUrl: post.profileImage,
-                        postId: post.id,
-                      );
-                    }));
+            ? Center(
+            child: Text(S.of(context).There_are_no_posts,
+                style: const TextStyle(fontSize: 18)))
+            : ListView.builder(
+            itemCount: posts.length,
+            itemBuilder: (context, index) {
+              var post = posts[index];
+              return PostCard_MYPOSTS(
+                description: post.description,
+                phone: post.mobilenumber,
+                selectedArea: post.region,
+                status: post.state,
+                selectedGovernorate: post.governorate,
+                budget: post.budget,
+                postDate: post.createdAt,
+                userName: post.userId,
+                userProfileImageUrl: post.profileImage,
+                postId: post.id,
+              );
+            }));
   }
 }

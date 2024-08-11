@@ -144,12 +144,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "apartment": MessageLookupByLibrary.simpleMessage("apartment"),
         "building": MessageLookupByLibrary.simpleMessage("building"),
         "buy": MessageLookupByLibrary.simpleMessage("buy"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "chooseCategory":
+            MessageLookupByLibrary.simpleMessage("Choose category"),
         "close": MessageLookupByLibrary.simpleMessage("close"),
+        "complaint": MessageLookupByLibrary.simpleMessage("Complaint"),
+        "contactUsTitle": MessageLookupByLibrary.simpleMessage("Contact Us"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
+        "emailButton": MessageLookupByLibrary.simpleMessage("Email"),
         "farm": MessageLookupByLibrary.simpleMessage("farm"),
         "go_out": MessageLookupByLibrary.simpleMessage(
             "Do you really want to go out?"),
+        "inquiry": MessageLookupByLibrary.simpleMessage("Inquiry"),
+        "inquirySendingFailed":
+            MessageLookupByLibrary.simpleMessage("Failed to send inquiry"),
+        "inquirySentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Inquiry sent successfully"),
         "language": MessageLookupByLibrary.simpleMessage("language"),
+        "messageSendingFailed":
+            MessageLookupByLibrary.simpleMessage("Failed to send message"),
+        "messageSentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Message sent successfully"),
         "most_watched": MessageLookupByLibrary.simpleMessage("most watched"),
         "new_member": MessageLookupByLibrary.simpleMessage("new member?"),
         "no": MessageLookupByLibrary.simpleMessage("no"),
@@ -157,12 +172,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "office": MessageLookupByLibrary.simpleMessage("office"),
         "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "on_the_beach": MessageLookupByLibrary.simpleMessage("on the beach"),
+        "phoneButton": MessageLookupByLibrary.simpleMessage("Contact Us"),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("privacy policy"),
         "property_in": MessageLookupByLibrary.simpleMessage(" property in"),
         "rental": MessageLookupByLibrary.simpleMessage("rental"),
         "report": MessageLookupByLibrary.simpleMessage("report"),
+        "request": MessageLookupByLibrary.simpleMessage("Request"),
+        "sendRequest": MessageLookupByLibrary.simpleMessage("Send Request"),
+        "suggestion": MessageLookupByLibrary.simpleMessage("Suggestion"),
         "villa": MessageLookupByLibrary.simpleMessage("villa"),
+        "workingHours": MessageLookupByLibrary.simpleMessage(
+            "Working Hours: 08:00 - 17:00"),
         "yes": MessageLookupByLibrary.simpleMessage("yes")
       };
 }

@@ -85,8 +85,8 @@ class DrawerScreen extends StatelessWidget {
                   : CacheHelper.getInt(key: 'role_id') == 1
                   ? build_for_user(context)
                   : (CacheHelper.getInt(key: 'role_id') == 2
-                  ? build_for_Broker(context)
-                  : const Text("Error confirming identity")),
+                  ? build_for_Broker(context):build_for_banned(context))
+                  // : const Text("Error confirming identity")),
             ],
           ),
         ),

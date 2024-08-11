@@ -1,13 +1,14 @@
 import 'package:pro_2/Util/cache_helper.dart';
 
 class ApiAndEndpoints {
-  // static const api = 'http://192.168.1.3:8000/api/';
-  static Future<String> getApi() async {
-    String? ip = await CacheHelper.getString(key: 'ip');
-    return 'http://$ip:8000/api/';
-  }
+   static const api = 'http://192.168.1.104:8000/api/';
+  // static Future<String> getApi() async {
+  //   String? ip = await CacheHelper.getString(key: 'ip');
+  //   return 'http://192.168.1.104:8000/api/';
+  // }
 
-  static Future<String> api = getApi();
+
+  // static Future<String> api = getApi();
 //*HABEEB:   192.168.1.106
   static const verify='verifyEmail';//register
   static const signUp = 'register';//verifyEmail
@@ -50,4 +51,12 @@ class ApiAndEndpoints {
   static const getBrokerInfo = 'showBrokerProfile?brokerId=';
 
   static const rate = 'evaluations';
+  static const contacts = 'contacts';
+  static const inquiries = 'inquiries';
+  static const showCountMyNotification = 'showCountMyNotification';
+
+  static const showMyNotifications = 'showMyNotifications';
+
+  static const showAllImagesProperty = 'show360ImagesProperty';
+
 }

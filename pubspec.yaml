@@ -57,7 +57,7 @@ dependencies:
   panorama_viewer: ^1.0.5
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
-  location:
+#  location:
   #//لازم نكفي فيو اذا بدنا يا كمان لios
   #share_plus: ^9.0.0
 flutter_native_splash:

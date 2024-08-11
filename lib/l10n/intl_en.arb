@@ -106,10 +106,23 @@
 "Select_picture":"Select a new profile picture",
 "Choose_Gallery":"Choose from Gallery",
 "Account_informations":"Account informations",
-"No_phone":"No phone number added"
+"No_phone":"No phone number added",
 
-
-
+  "contactUsTitle": "Contact Us",
+  "emailButton": "Email",
+  "phoneButton": "Contact Us",
+  "workingHours": "Working Hours: 08:00 - 17:00",
+  "sendRequest": "Send Request",
+  "cancel": "Cancel",
+  "messageSentSuccessfully": "Message sent successfully",
+  "messageSendingFailed": "Failed to send message",
+  "inquirySentSuccessfully": "Inquiry sent successfully",
+  "inquirySendingFailed": "Failed to send inquiry",
+  "chooseCategory": "Choose category",
+  "suggestion": "Suggestion",
+  "complaint": "Complaint",
+  "request": "Request",
+  "inquiry": "Inquiry"
 
 
 

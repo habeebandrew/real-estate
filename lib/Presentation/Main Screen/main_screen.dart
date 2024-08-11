@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
       //   }
       // });
     // جدولة الإشعارات
-    scheduleDailyNotification();
+    // scheduleDailyNotification();
 
       // جدولة الإشعارات
       // showNotification();
@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _loadIp() async {
-    String? ip = await CacheHelper.getString(key: 'ip');
+    String? ip = CacheHelper.getString(key: 'ip');
     setState(() {
       _ip = ip;
       _ipController.text = ip ?? '';
@@ -70,7 +70,8 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             TextButton(
-              onPressed: _updateIp,
+              onPressed: (){_updateIp();print(_ipController);},
+
               child: Text('Update IP'),
             ),
             SearchBar(), //باخدها نفسها من مهدي بواجهة العقارات

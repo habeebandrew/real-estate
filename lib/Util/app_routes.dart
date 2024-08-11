@@ -19,6 +19,7 @@ import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
 import '../Presentation/SplashScreen/splash_screen.dart';
 import '../Presentation/Subscription/Subscription.dart';
+import '../tests/360pic.dart';
 
 
 class NamedRoutes
@@ -42,6 +43,7 @@ class NamedRoutes
   static const My_Posts='My_Posts';
   static const accountInfoPage ='AccountInfoPage';
   static const propertyDetails ='propertyDetails';
+  static const pic360='360pic';
 
 
 }
@@ -68,6 +70,7 @@ class AppRoutes
   static My_Posts My_posts=My_Posts();
   static AccountInfoPage accountInfoPage =AccountInfoPage();
   static PropertyDetailsScreen propertyDetails =PropertyDetailsScreen(propertyId: 0,favourite: false,);
+  static s_3dpic  pic360=s_3dpic(propertyId: null!,);
 
 
 
@@ -92,6 +95,7 @@ class AppRoutes
     NamedRoutes.My_Posts:(context)=>AppRoutes.My_posts,
     NamedRoutes.accountInfoPage :(context)=>AppRoutes.accountInfoPage ,
     NamedRoutes.propertyDetails :(context)=>AppRoutes.propertyDetails ,
+    NamedRoutes.pic360 :(context)=>AppRoutes.pic360 ,
 
   };
 }

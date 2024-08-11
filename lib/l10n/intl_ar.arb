@@ -105,9 +105,23 @@
 "Select_picture":"حدد صورة ملف شخصي جديدة",
 "Choose_Gallery":"اختر من المعرض",
 "Account_informations":"معلومات الحساب",
-"No_phone":"لم تتم إضافة رقم الهاتف"
+"No_phone":"لم تتم إضافة رقم الهاتف",
 
-
+    "contactUsTitle": "تواصل معنا",
+    "emailButton": "البريد الإلكتروني",
+    "phoneButton": "تواصل معنا",
+    "workingHours": "ساعات العمل: 08:00 - 17:00",
+    "sendRequest": "ارسل طلب",
+    "cancel": "إلغاء",
+    "messageSentSuccessfully": "تم إرسال الرسالة بنجاح",
+    "messageSendingFailed": "فشل في إرسال الرسالة",
+    "inquirySentSuccessfully": "تم إرسال الاستفسار بنجاح",
+    "inquirySendingFailed": "فشل في إرسال الاستفسار",
+    "chooseCategory": "اختر الفئة",
+    "suggestion": "اقتراح",
+    "complaint": "شكوى",
+    "request": "طلب",
+    "inquiry": "استفسار"
 
 
 

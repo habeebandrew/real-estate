@@ -125,6 +125,7 @@ class PropertyCubit extends Cubit<PropertyState> {
     }
   }
 
+
   void addMyFavourite(BuildContext context,int id)async{
      await PropertyService.addFavourite(id).then((value){
       if(value == 'تمت إضافة العقار إلى المفضلة بنجاح'){

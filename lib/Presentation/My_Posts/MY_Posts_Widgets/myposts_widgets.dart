@@ -27,16 +27,16 @@ class PostCard_MYPOSTS extends StatefulWidget {
 
   const PostCard_MYPOSTS(
       {super.key,
-      required this.budget,
-      required this.description,
-      this.status,
-      required this.phone,
-      required this.selectedGovernorate,
-      required this.selectedArea,
-      required this.userName,
-      this.userProfileImageUrl,
-      this.postDate,
-      required this.postId});
+        required this.budget,
+        required this.description,
+        this.status,
+        required this.phone,
+        required this.selectedGovernorate,
+        required this.selectedArea,
+        required this.userName,
+        this.userProfileImageUrl,
+        this.postDate,
+        required this.postId});
 
   String formatBudget(int budget) {
     if (budget >= 1000000000) {
@@ -147,7 +147,7 @@ class PostCard extends State<PostCard_MYPOSTS> {
                   children: [
                     CircleAvatar(
                       backgroundImage:
-                          NetworkImage(widget.userProfileImageUrl!),
+                      NetworkImage(widget.userProfileImageUrl!),
                       radius: 20.0,
                     ),
                     SizedBox(width: 10.0),
@@ -227,7 +227,7 @@ class PostCard extends State<PostCard_MYPOSTS> {
                               color: Colors.red, fontWeight: FontWeight.bold),
                         ),
                         content:
-                            Text(S.of(context).Please_loginandsignup_broker),
+                        Text(S.of(context).Please_loginandsignup_broker),
                         actions: <Widget>[
                           TextButton(
                             child: Text(
@@ -325,7 +325,7 @@ class PostCard extends State<PostCard_MYPOSTS> {
                               color: Colors.red, fontWeight: FontWeight.bold),
                         ),
                         content:
-                            Text(S.of(context).Please_loginandsignup_broker),
+                        Text(S.of(context).Please_loginandsignup_broker),
                         actions: <Widget>[
                           TextButton(
                             child: Text(
@@ -414,7 +414,7 @@ class PostCard extends State<PostCard_MYPOSTS> {
                       children: [
                         CircleAvatar(
                           backgroundImage:
-                              NetworkImage(comments[index].userProfileImageUrl),
+                          NetworkImage(comments[index].userProfileImageUrl),
                           radius: 20.0,
                         ),
                         SizedBox(width: 10.0),

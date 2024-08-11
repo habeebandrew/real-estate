@@ -74,16 +74,16 @@ Widget build_for_guest(BuildContext context) {
             label: S.of(context).Help_Center,
             icon: Icons.help_outline,
             onPress: () {}),
-        SizedBox(
-          height: 5,
-        ),
-        myDrawerButton(
-            label: S.of(context).Connect_us,
-            icon: Icons.phone,
-            onPress: () {
-              Navigator.of(context)
-                  .push(MyAnimation.createRoute(AppRoutes.contactwithus));
-            }),
+        // SizedBox(
+        //   height: 5,
+        // ),
+        // myDrawerButton(
+        //     label: S.of(context).Connect_us,
+        //     icon: Icons.phone,
+        //     onPress: () {
+        //       Navigator.of(context)
+        //           .push(MyAnimation.createRoute(AppRoutes.contactwithus));
+        //     }),
         SizedBox(
           height: 5,
         ),
@@ -107,6 +107,39 @@ Widget build_for_guest(BuildContext context) {
   );
 }
 
+//هون حسب مين مسجل دحول بيطلعو الخيارات
+Widget build_for_banned(BuildContext context) {
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+    Text("you are Banned"),
+        myDrawerButton(
+            label: S.of(context).Help_Center,
+            icon: Icons.help_outline,
+            onPress: () {}),
+
+        SizedBox(
+          height: 5,
+        ),
+        myDrawerButton(
+            label: S.of(context).privacy_policy,
+            icon: Icons.person,
+            onPress: () {}),
+        SizedBox(
+          height: 5,
+        ),
+        myDrawerButton(
+          label: S.of(context).Log_In,
+          icon: Icons.login,
+          onPress: () {
+            Navigator.of(context)
+                .push(MyAnimation.createRoute(AppRoutes.logInScreen));
+          },
+        ),
+      ],
+    ),
+  );
+}
 Widget build_for_user(BuildContext context) {
   return SingleChildScrollView(
     child: Column(

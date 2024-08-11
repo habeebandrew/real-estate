@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,31 +7,82 @@ import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
 import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Presentation/Home%20Screen/Home%20Widgets/home_widgets.dart';
+import 'package:pro_2/Presentation/Notification/api_service.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:flutter/services.dart';
-
+import '../../Util/api_endpoints.dart';
 import '../../Util/cache_helper.dart';
 import '../../Util/dimensions.dart';
 import '../../Util/global Widgets/animation.dart';
+import '../../Util/network_helper.dart';
 import '../../generated/l10n.dart';
+import '../Notification/notification_function.dart';
+import 'package:http/http.dart' as http;
+Future<dynamic> fetchUnreadCount() async {fetchNotifications();
+  if (CacheHelper.getInt(key: 'role_id') == 1 ||
+      CacheHelper.getInt(key: 'role_id') == 2|| CacheHelper.getInt(key: 'role_id') == 3) {
+  String token = (await CacheHelper.getString(key: 'token'))!;
+  final response = await NetworkHelper.get(
+    ApiAndEndpoints.showCountMyNotification,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+  );
 
-class HomeScreen extends StatelessWidget {
+  if (response.statusCode == 200) {
+    final jsonResponse = json.decode(response.body);
+    print(jsonResponse);
+    return jsonResponse ?? 0;
+  } else {
+    throw Exception('Failed to load unread count');
+  }
+}
+}
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int unreadCount = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUnreadCount();
+    _timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchUnreadCount());
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  Future<void> _fetchUnreadCount() async {
+    try {
+      final count = await fetchUnreadCount();
+      setState(() {
+        unreadCount = count;
+      });
+    } catch (e) {
+      print('Error fetching unread count: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AuthCubit(),
-        ),
-        BlocProvider(
-          create: (context) => PropertyCubit(),
-        ),
-        BlocProvider(
-          create: (context) => PostsCubit(),
-        ),
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => PropertyCubit()),
+        BlocProvider(create: (context) => PostsCubit()),
       ],
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {},
@@ -55,7 +108,6 @@ class HomeScreen extends StatelessWidget {
                         child: Text(S.of(context).yes),
                         onPressed: () {
                           SystemNavigator.pop();
-
                           Navigator.of(context).pop(true);
                         },
                       ),
@@ -66,20 +118,17 @@ class HomeScreen extends StatelessWidget {
               child: CustomScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 slivers: <Widget>[
-                  //silver منشان لما اعمل scroll down تضل ابيض ما تغمق
                   SliverAppBar(
-                    automaticallyImplyLeading: false, // لإزالة زر الرجوع
+                    automaticallyImplyLeading: false,
                     backgroundColor: Colors.white,
-                    pinned: true, // يعني أنه يبقى مثبتًا في الأعلى
+                    pinned: true,
                     title: Row(
                       children: [
                         Image.asset(
                           "assets/images/General/App_Icon1.png",
                           height: Dimensions.heightPercentage(context, 6.5),
                         ),
-                        const SizedBox(
-                          width: 1,
-                        ),
+                        const SizedBox(width: 1),
                         RichText(
                           text: TextSpan(
                             children: [
@@ -117,11 +166,36 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        IconButton(
-                          icon: Icon(Icons.notifications_none_rounded),
-                          onPressed: () {
-                            // Handle the notification icon tap
-                          },
+                        Stack(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.notifications_none_rounded),
+                              onPressed: () {
+                                showNotificationSheet(context);
+                              },
+                            ),
+                             if (unreadCount !=0)
+                              Positioned(
+                                right: 0,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  constraints: BoxConstraints(minWidth: 10, minHeight: 10),
+                                  child: Center(
+                                    child: Text(
+                                      unreadCount.toString(),
+                                      style: TextStyle(
+                                        color: Colors.white,fontSize: 8,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ],
                     ),
@@ -138,201 +212,10 @@ class HomeScreen extends StatelessWidget {
                 size: 40.0.sp,
               ),
               onPressed: () {
-                int? role_id = CacheHelper.getInt(key: 'role_id');
-                if (role_id == null) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        title: Text(
-                          S.of(context).alert,
-                          style: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold),
-                        ),
-                        content: Text(S.of(context).Please_log_in),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              S.of(context).Log_In,
-                              style: TextStyle(
-                                  color: Constants.mainColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).push(
-                                  MyAnimation.createRoute(
-                                      AppRoutes.logInScreen));
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-                if (role_id == 1) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        title: Text(
-                          S.of(context).Add,
-                          style: TextStyle(
-                              color: Constants.mainColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        content: SingleChildScrollView(
-                          child: Column(
-                            // mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        title: Text(
-                                          S.of(context).alert,
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        content: Text(
-                                            S.of(context).Please_subscription),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: Text(
-                                              S.of(context).Subscription,
-                                              style: TextStyle(
-                                                  color: Constants.mainColor,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              Navigator.of(context).push(
-                                                  MyAnimation.createRoute(
-                                                      AppRoutes.subscription));
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.));
-                                },
-                                child: ListTile(
-                                  leading: Icon(Icons.info,
-                                      color: Constants.mainColor),
-                                  title: Text(S.of(context).Add_real),
-                                ),
-                              ),
-                              Divider(),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                      MyAnimation.createRoute(
-                                          AppRoutes.addPost));
-                                },
-                                child: ListTile(
-                                  leading: Icon(Icons.info,
-                                      color: Constants.mainColor),
-                                  title: Text(S.of(context).Add_post),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              S.of(context).close,
-                              style: TextStyle(color: Constants.mainColor),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-                if (role_id == 2) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        title: Text(
-                          S.of(context).Add,
-                          style: TextStyle(
-                              color: Constants.mainColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        content: SingleChildScrollView(
-                          child: Column(
-                            // mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                      MyAnimation.createRoute(
-                                          AppRoutes.adPropertyScreen));
-                                },
-                                child: ListTile(
-                                  leading: Icon(Icons.info,
-                                      color: Constants.mainColor),
-                                  title: Text(S.of(context).Add_real),
-                                ),
-                              ),
-                              Divider(),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                      MyAnimation.createRoute(
-                                          AppRoutes.addPost));
-                                },
-                                child: ListTile(
-                                  leading: Icon(Icons.info,
-                                      color: Constants.mainColor),
-                                  title: Text(S.of(context).Add_post),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              S.of(context).close,
-                              style: TextStyle(color: Constants.mainColor),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-                // Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+                _handleFloatingActionButton(context);
               },
             ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               currentIndex: cubit.currentIndex,
@@ -343,28 +226,177 @@ class HomeScreen extends StatelessWidget {
                 cubit.bottomNavChange(value, context);
               },
               items: [
-                myBottomNavBarItem(
-                  icon: Icons.announcement,
-                  label: S.of(context).Posts,
-                ),
-                myBottomNavBarItem(
-                  icon: Icons.favorite,
-                  label: S.of(context).Favourite,
-                ),
+                myBottomNavBarItem(icon: Icons.announcement, label: S.of(context).Posts),
+                myBottomNavBarItem(icon: Icons.favorite, label: S.of(context).Favourite),
                 myBottomNavBarItem(icon: Icons.add, label: S.of(context).Add),
-                myBottomNavBarItem(
-                  icon: Icons.holiday_village,
-                  label: S.of(context).Properties,
-                ),
-                myBottomNavBarItem(
-                  icon: Icons.home,
-                  label: S.of(context).Home,
-                ),
+                myBottomNavBarItem(icon: Icons.holiday_village, label: S.of(context).Properties),
+                myBottomNavBarItem(icon: Icons.home, label: S.of(context).Home),
               ],
             ),
           );
         },
       ),
     );
+  }
+
+  void _handleFloatingActionButton(BuildContext context) {
+    int? role_id = CacheHelper.getInt(key: 'role_id');
+    if (role_id == null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              S.of(context).alert,
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+            content: Text(S.of(context).Please_log_in),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  S.of(context).Log_In,
+                  style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (role_id == 1) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              S.of(context).Add,
+              style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            title: Text(
+                              S.of(context).alert,
+                              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                            ),
+                            content: Text(S.of(context).Please_subscription),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  S.of(context).Subscription,
+                                  style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Constants.mainColor),
+                      title: Text(S.of(context).Add_real),
+                    ),
+                  ),
+                  Divider(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Constants.mainColor),
+                      title: Text(S.of(context).Add_post),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  S.of(context).close,
+                  style: TextStyle(color: Constants.mainColor),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (role_id == 2) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              S.of(context).Add,
+              style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.adPropertyScreen));
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Constants.mainColor),
+                      title: Text(S.of(context).Add_real),
+                    ),
+                  ),
+                  Divider(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Constants.mainColor),
+                      title: Text(S.of(context).Add_post),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  S.of(context).close,
+                  style: TextStyle(color: Constants.mainColor),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

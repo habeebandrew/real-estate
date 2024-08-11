@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pro_2/Presentation/Auctions/AuctionListScreen.dart';
 import 'package:pro_2/Presentation/Notification/notification.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/email_verification_screen.dart';
 import 'package:pro_2/Presentation/map/map.dart';
@@ -99,12 +100,11 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-         home:AppRoutes.homeScreen,/// 192.168.1.104
+         home:AuctionListScreen(auctionItems: [],),
         // map(),
         // notification(),
         // EmailVerificationScreen(),
         // initialRoute:
-            // NamedRoutes.adPropertyScreen,
             // widget.token != null
             //     ? NamedRoutes.splashscreen
             //     : widget.onBoardShowen == true

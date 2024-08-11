@@ -9,6 +9,10 @@ import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../Util/app_routes.dart';
+import '../../Util/global Widgets/animation.dart';
+import '../../tests/360pic.dart';
+
 // ignore: must_be_immutable
 class PropertyDetailsScreen extends StatefulWidget {
 
@@ -24,13 +28,14 @@ class PropertyDetailsScreen extends StatefulWidget {
   @override
   State<PropertyDetailsScreen> createState() => _PropertyDetailsScreenState();
 }
-
 class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
   int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    // int x=PropertyCubit()..getPropertyDetails(widget.propertyId);
+
+  return BlocProvider(
       create: (context) =>
           PropertyCubit()..getPropertyDetails(widget.propertyId),
       child: BlocConsumer<PropertyCubit, PropertyState>(
@@ -176,7 +181,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '${state.propertyDetailsModel.property.propertyType} : ${state.propertyDetailsModel.property.size} m²',
+                                      '${state.propertyDetailsModel.property.propertyType} : ${state.propertyDetailsModel.property.size.toString()} m²',
                                       style: TextStyle(
                                           fontSize: 24.sp,
                                           fontWeight: FontWeight.bold),
@@ -226,11 +231,36 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                       Icon(
                                         Icons.arrow_forward_ios,
                                         size: 16.sp,
-                                      )
+                                      ),
+
                                     ],
                                   ),
                                 ),
+
+
                               ),
+                             Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: TextButton(onPressed: (){Navigator.of(context).push(
+                                 MaterialPageRoute(
+                                   builder: (context) => s_3dpic(propertyId: widget.propertyId),
+                                 ),
+                               );
+                                 },
+                               child: Row(
+                                 children: [
+                                   Text("show 360 picture", style: TextStyle(
+                                       fontSize: 15.sp,
+                                    ),),
+                                   SizedBox(width: 5,),
+                                   Icon(
+                                     Icons.image,
+                                     size: 20.sp,color: Constants.mainColor,
+                                   ),
+                                 ],
+
+                               ),),
+                             ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 5.0),
@@ -714,7 +744,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                 ? InkWell(
                     onTap: () async {
                       final url =
-                          'tel:${state.propertyDetailsModel.property.phone_number}';
+                          'tel:${state.propertyDetailsModel.property.phone_number.toString()}';
                       debugPrint('phone:$url');
                       if (await canLaunchUrl(Uri.parse(url))) {
                         await launchUrl(Uri.parse(url));
