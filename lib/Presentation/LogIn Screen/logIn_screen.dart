@@ -136,7 +136,7 @@ class LogInScreen extends StatelessWidget {
                                         ),
                                   TextButton(
                                       onPressed: () {
-                                        //Not now
+                                        Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.forgotPasswordScreen));
                                       },
                                       child: Text(
                                         S.of(context).Forget_password,

@@ -19,6 +19,9 @@ import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
 import '../Presentation/SplashScreen/splash_screen.dart';
 import '../Presentation/Subscription/Subscription.dart';
+import '../Presentation/forget_pass/forget_verify.dart';
+import '../Presentation/forget_pass/forgot_password_screen.dart';
+import '../Presentation/forget_pass/update_password_screen.dart';
 import '../tests/360pic.dart';
 
 
@@ -45,11 +48,17 @@ class NamedRoutes
   static const propertyDetails ='propertyDetails';
   static const pic360='360pic';
 
+  static const forgotPasswordScreen='ForgotPasswordScreen';
+  static const forget_verify='forget_verify';
+  static const UpdatePasswordScreen='update_password_screen';
+
 
 }
 
 class AppRoutes
 {
+  static UpdatePasswordScreen  updatePasswordScreen=UpdatePasswordScreen();
+
   static const  homeScreen=HomeScreen();
   static const  onBoardingScreen=Onboarding();
   static EmailVerificationScreen  emailVerificationScreen= EmailVerificationScreen();
@@ -72,12 +81,18 @@ class AppRoutes
   static PropertyDetailsScreen propertyDetails =PropertyDetailsScreen(propertyId: 0,favourite: false,);
   static s_3dpic  pic360=s_3dpic(propertyId: null!,);
 
+  static ForgotPasswordScreen  forgotPasswordScreen=ForgotPasswordScreen();
 
+  static Forget_verify  forget_verify=Forget_verify();
 
 
 
   static Map <String,Widget Function(BuildContext context)>routes=
   {
+    NamedRoutes.UpdatePasswordScreen:(context)=>AppRoutes.updatePasswordScreen,
+
+    NamedRoutes.forget_verify:(context)=>AppRoutes.forget_verify,
+
     NamedRoutes.homeScreen:(context)=>AppRoutes.homeScreen,
     NamedRoutes.onBoardingScreen:(context)=>AppRoutes.onBoardingScreen,
     NamedRoutes.signUpScreen:(context)=>AppRoutes.signUpScreen,
@@ -96,6 +111,7 @@ class AppRoutes
     NamedRoutes.accountInfoPage :(context)=>AppRoutes.accountInfoPage ,
     NamedRoutes.propertyDetails :(context)=>AppRoutes.propertyDetails ,
     NamedRoutes.pic360 :(context)=>AppRoutes.pic360 ,
+    NamedRoutes.forgotPasswordScreen :(context)=>AppRoutes.forgotPasswordScreen ,
 
   };
 }

@@ -12,13 +12,13 @@ import 'dart:convert';
 import '../../Util/api_endpoints.dart';
 import '../../Util/global Widgets/animation.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
+class Forget_verify extends StatefulWidget {
   @override
   _EmailVerificationScreenState createState() =>
       _EmailVerificationScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _EmailVerificationScreenState extends State<Forget_verify> {
   TextEditingController _codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             ElevatedButton(
               onPressed: () {
                 sendCode(_codeController);
-               // _verifyCode(_codeController.text);
+                // _verifyCode(_codeController.text);
               },
               child: const Text('Verify'),
               style: ElevatedButton.styleFrom(
@@ -80,16 +80,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            // TextButton(
-            //   onPressed: () {
-            //     // إعادة إرسال الرمز
-            //     print('Resend code');
-            //   },
-            //   child: const Text(
-            //     'Resend Code',
-            //     style: TextStyle(decoration: TextDecoration.underline),
-            //   ),
-            // ),
+            TextButton(
+              onPressed: () {
+                // إعادة إرسال الرمز
+                print('Resend code');
+              },
+              child: const Text(
+                'Resend Code',
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
+            ),
             Spacer(),
             Row(
               children: [
@@ -117,10 +117,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     // URL الخاص بالـ API الذي ستقوم بإرسال الطلب إليه
 
     // الحصول على القيمة المحتملة من التخزين المؤقت
-    String? user_name_verify = await CacheHelper.getString(key: 'user_name_verify');
+    String? email = await CacheHelper.getString(key: 'email_forget');
 
     // التحقق مما إذا كانت القيمة غير موجودة وتعيين قيمة افتراضية إذا لزم الأمر
-    if (user_name_verify == null) {
+    if (email == null) {
       print('Error: user_name_verify is null');
       return;
     }
@@ -132,55 +132,69 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       print('Error: The code is not a valid integer');
       return;
     }print(codeAsInt);
-    print("user_name_verify"+user_name_verify);
+    print("user_name_verify"+email);
     print("codeController"+codeController.text);
 
     try {
+      String? opt =await CacheHelper.getString(key: 'opt');
       // إرسال طلب POST إلى الـ API
       final response = await NetworkHelper.post(
-        ApiAndEndpoints.verify,
+        ApiAndEndpoints.checkCode,
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          'Authorization': 'Bearer $opt',
         },
         body: {
-          'user_name': "$user_name_verify",
+          'email': "$email",
           'code': "${codeAsInt.toString()}",
         },
       );
 
       // التحقق من استجابة الـ API
       if (response.statusCode == 200) {
-        mySnackBar(color: Colors.green,
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+        // عرض رسالة الناجحة باستخدام Snackbar
+        mySnackBar(
+          color: Colors.green,
           context: context,
           title: response.body,
         );
+
         print(response.body);
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-        // تحقق مما إذا كانت الرسالة هي الرسالة المتوقعة
-        if (responseData.containsKey("user")) {//الربط مع الموديل
-         mySnackBar(color: Colors.green,
-           context: context,
-           title: 'verify successful',
-         );
-         Future.delayed(const Duration(seconds: 2), () {
-           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-         });
+        // التحقق مما إذا كانت الرسالة هي "correct_code"
+        if (responseData['message'] == 'correct_code') {
+          mySnackBar(
+            color: Colors.green,
+            context: context,
+            title: 'Verify successful',
+          );
 
-      }
-      else if (responseData.isNotEmpty && responseData[0] == "you have to enter correct code ...") {
-         mySnackBar(color: Colors.green,
-           context: context,
-           title: responseData[0],
-         );
+          // الانتقال إلى الشاشة التالية بعد تأخير مدته ثانيتين
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.updatePasswordScreen));
+          });
+
+        }
+        // تحقق من وجود رسالة خطأ معينة في قائمة الرسائل
+        else if (responseData.containsKey('message') && responseData['message'] == 'you have to enter correct code ...') {
+          mySnackBar(
+            color: Colors.green,
+            context: context,
+            title: responseData['message'],
+          );
           print("النجاح: تم إدخال الكود بشكل صحيح.");
         }
-
-      else {
-          print("الرسالة الواردة: ${responseData}");
-        }
+          else {
+            print("الرسالة الواردة: ${responseData}");
+          }
       } else {
+        mySnackBar(color: Colors.red,
+          context: context,
+          title: response.body,
+
+        );
         print('خطأ: ${response.statusCode}');
       }
     } catch (e) {

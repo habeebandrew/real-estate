@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,9 +20,9 @@ import '../../Util/network_helper.dart';
 import '../../generated/l10n.dart';
 import '../Notification/notification_function.dart';
 import 'package:http/http.dart' as http;
-Future<dynamic> fetchUnreadCount() async {fetchNotifications();
-  if (CacheHelper.getInt(key: 'role_id') == 1 ||
-      CacheHelper.getInt(key: 'role_id') == 2|| CacheHelper.getInt(key: 'role_id') == 3) {
+Future<dynamic> fetchUnreadCount(BuildContext context) async {
+    fetchNotifications();
+
   String token = (await CacheHelper.getString(key: 'token'))!;
   final response = await NetworkHelper.get(
     ApiAndEndpoints.showCountMyNotification,
@@ -36,9 +37,9 @@ Future<dynamic> fetchUnreadCount() async {fetchNotifications();
     print(jsonResponse);
     return jsonResponse ?? 0;
   } else {
-    throw Exception('Failed to load unread count');
+    throw Exception('Failed to load u/nread count');
   }
-}
+
 }
 
 class HomeScreen extends StatefulWidget {
@@ -55,19 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchUnreadCount();
+
+      _fetchUnreadCount();
     _timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchUnreadCount());
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+
+      _timer.cancel();
     super.dispose();
   }
 
   Future<void> _fetchUnreadCount() async {
     try {
-      final count = await fetchUnreadCount();
+      final count = await fetchUnreadCount(context);
       setState(() {
         unreadCount = count;
       });
@@ -137,14 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Constants.mainColor,
-                                  fontSize: 30.h,
+                                  fontSize: 26.h,
                                 ),
                               ),
                               TextSpan(
                                 text: 'apital',
                                 style: TextStyle(
                                   color: Constants.mainColor,
-                                  fontSize: 26.h,
+                                  fontSize: 22.h,
                                 ),
                               ),
                               TextSpan(
@@ -152,14 +155,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Constants.mainColor,
-                                  fontSize: 30.h,
+                                  fontSize: 26.h,
                                 ),
                               ),
                               TextSpan(
                                 text: 'states',
                                 style: TextStyle(
                                   color: Constants.mainColor,
-                                  fontSize: 26.h,
+                                  fontSize: 22.h,
                                 ),
                               ),
                             ],
@@ -195,8 +198,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
+
                           ],
                         ),
+                        // Spacer(),
+                        //
+                        // Padding(
+                        //   padding: const EdgeInsets.all(1.0),
+                        //   child: IconButton(icon:Icon(Icons.favorite_border),iconSize: 0.1, onPressed: (){},),
+                        // )
                       ],
                     ),
                   ),

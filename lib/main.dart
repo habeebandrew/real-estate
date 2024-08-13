@@ -104,12 +104,12 @@ class _MyAppState extends State<MyApp> {
         // map(),
         // notification(),
         // EmailVerificationScreen(),
-        // initialRoute:
-            // widget.token != null
-            //     ? NamedRoutes.splashscreen
-            //     : widget.onBoardShowen == true
-            //         ? NamedRoutes.logInScreen
-            //         : NamedRoutes.onBoardingScreen,
+        initialRoute:
+            widget.token != null
+                ? NamedRoutes.splashscreen
+                : widget.onBoardShowen == true
+                    ? NamedRoutes.logInScreen
+                    : NamedRoutes.onBoardingScreen,
         routes: AppRoutes.routes,
         builder: (context, child) {
           return LanguageChangeProvider(

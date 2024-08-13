@@ -113,10 +113,11 @@ class AuthCubit extends Cubit<AuthState>
           email: emailController.text,
           password: signUPasswordController.text,
           passwordConfirm: confirmPasswordController.text,
+          context: context
         );
         await CacheHelper.putString(value:user_nameController.text,key: 'user_name_verify');
 print(user_nameController.text);
-        if (responseMessage != null && responseMessage.contains("The code is sent, review your email ...")) {
+        if (responseMessage != null && responseMessage.contains("The code is sent")) {
           emit(AuthLoadedState());
           mySnackBar(
             context: context,

@@ -185,6 +185,18 @@ Widget build_for_user(BuildContext context) {
           height: 5,
         ),
         myDrawerButton(
+          label: S.of(context).Favourite,
+          icon: Icons.favorite_border,
+          onPress: () {
+
+            Navigator.of(context)
+                .push(MyAnimation.createRoute(AppRoutes.favouriteScreen));
+          },
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        myDrawerButton(
           label: S.of(context).Invite_friends,
           icon: Icons.mail,
           onPress: () {},

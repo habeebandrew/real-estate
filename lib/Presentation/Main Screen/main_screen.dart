@@ -63,17 +63,17 @@ class _MainScreenState extends State<MainScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              controller: _ipController,
-              decoration: InputDecoration(
-                hintText: _ip ?? 'Enter IP Address',
-              ),
-            ),
-            TextButton(
-              onPressed: (){_updateIp();print(_ipController);},
-
-              child: Text('Update IP'),
-            ),
+            // TextField(
+            //   controller: _ipController,
+            //   decoration: InputDecoration(
+            //     hintText: _ip ?? 'Enter IP Address',
+            //   ),
+            // ),
+            // TextButton(
+            //   onPressed: (){_updateIp();print(_ipController);},
+            //
+            //   child: Text('Update IP'),
+            // ),
             SearchBar(), //باخدها نفسها من مهدي بواجهة العقارات
             CategorySection(),
             SizedBox(height: 20),

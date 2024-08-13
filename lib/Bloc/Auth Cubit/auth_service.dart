@@ -1,12 +1,18 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:pro_2/Data/user_model.dart';
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'package:pro_2/Util/network_helper.dart';
+
+import '../../Util/global Widgets/mySnackBar.dart';
 class AuthService {
   static Future<String?> signUp({
     required String user_name,
     required String email,
     required String password,
     required String passwordConfirm,
+    required BuildContext context,
   }) async {
     try {
       final response = await NetworkHelper.post(
@@ -25,9 +31,20 @@ class AuthService {
       );
 
       if (response.statusCode == 200) {
+        mySnackBar(
+          context: context,
+          title:response.body , // عرض الرسالة الواردة من الاستجابة
+        );
         // تأكد من أنك تتعامل مع الاستجابة بشكل صحيح هنا
         return response.body; // إرجاع نص الاستجابة
       } else {
+        final responseData = jsonDecode(response.body);
+        final message = responseData['message'];
+
+        mySnackBar(
+          context: context,
+          title:message , // عرض الرسالة الواردة من الاستجابة
+        );
         print(response.body);
         print('Failed to register. HTTP status: ${response.statusCode}');
         return null;

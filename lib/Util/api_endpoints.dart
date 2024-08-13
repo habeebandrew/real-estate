@@ -12,6 +12,8 @@ class ApiAndEndpoints {
 //*HABEEB:   192.168.1.106
   static const verify='verifyEmail';//register
   static const signUp = 'register';//verifyEmail
+  static const checkCode='checkCode';//register
+
 
   static const logIn = 'signIn';
 
@@ -56,6 +58,9 @@ class ApiAndEndpoints {
   static const showCountMyNotification = 'showCountMyNotification';
 
   static const showMyNotifications = 'showMyNotifications';
+  static const forgotPassword = 'forgotPassword';
+
+  static const updatePassword = 'updatePassword';
 
   static const showAllImagesProperty = 'show360ImagesProperty';
 
