@@ -4,8 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pro_2/Presentation/Auctions/AuctionListScreen.dart';
 import 'package:pro_2/Presentation/Notification/notification.dart';
-import 'package:pro_2/Presentation/SignUp%20Screen/email_verification_screen.dart';
-import 'package:pro_2/Presentation/map/map.dart';
+import 'package:pro_2/Presentation/Map%20Screen/map_screen.dart';
 import 'package:pro_2/Util/app_bloc_observer.dart';
 import 'package:pro_2/Util/app_routes.dart';
 import 'package:pro_2/Util/cache_helper.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
 import 'package:pro_2/tests/360pic.dart';
+
 
 void main() async {
   AwesomeNotifications().initialize(
@@ -100,16 +100,16 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-         home:AuctionListScreen(auctionItems: [],),
-        // map(),
+         home:MapScreen(),
         // notification(),
         // EmailVerificationScreen(),
-        initialRoute:
-            widget.token != null
-                ? NamedRoutes.splashscreen
-                : widget.onBoardShowen == true
-                    ? NamedRoutes.logInScreen
-                    : NamedRoutes.onBoardingScreen,
+        // initialRoute:
+            // NamedRoutes.adPropertyScreen,
+            // widget.token != null
+            //     ? NamedRoutes.splashscreen
+            //     : widget.onBoardShowen == true
+            //         ? NamedRoutes.logInScreen
+            //         : NamedRoutes.onBoardingScreen,
         routes: AppRoutes.routes,
         builder: (context, child) {
           return LanguageChangeProvider(

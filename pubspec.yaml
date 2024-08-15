@@ -55,9 +55,9 @@ dependencies:
   pin_code_fields:
   awesome_notifications: ^0.8.2
   panorama_viewer: ^1.0.5
-  flutter_map: ^7.0.2
-  latlong2: ^0.9.1
-#  location:
+  flutter_map:
+  latlong2:
+  location:
   #//لازم نكفي فيو اذا بدنا يا كمان لios
   #share_plus: ^9.0.0
 flutter_native_splash:
