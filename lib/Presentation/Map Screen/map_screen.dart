@@ -8,7 +8,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
-
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -16,14 +15,13 @@ class MapScreen extends StatefulWidget {
   _MapScreenState createState() => _MapScreenState();
 }
 
-
 class _MapScreenState extends State<MapScreen> {
   final MapController mapController = MapController();
   LocationData? currentLocation;
+  LatLng? destinationMarker; // Store the single destination marker position
   List<LatLng> routePoints = [];
-  List<Marker> markers = [];
   final String orsApiKey =
-      '5b3ce3597851110001cf6248d22cf7112df4491990bb5e646083f844'; 
+      '5b3ce3597851110001cf6248d22cf7112df4491990bb5e646083f844';
 
   @override
   void initState() {
@@ -38,15 +36,6 @@ class _MapScreenState extends State<MapScreen> {
       var userLocation = await location.getLocation();
       setState(() {
         currentLocation = userLocation;
-        markers.add(
-          Marker(
-            width: 80.0,
-            height: 80.0,
-            point: LatLng(userLocation.latitude!, userLocation.longitude!),
-            child:
-                const Icon(Icons.my_location, color: Colors.blue, size: 40.0),
-          ),
-        );
       });
     } on Exception {
       currentLocation = null;
@@ -76,14 +65,6 @@ class _MapScreenState extends State<MapScreen> {
       setState(() {
         routePoints =
             coords.map((coord) => LatLng(coord[1], coord[0])).toList();
-        markers.add(
-          Marker(
-            width: 80.0,
-            height: 80.0,
-            point: destination,
-            child: const Icon(Icons.location_on, color: Colors.red, size: 40.0),
-          ),
-        );
       });
     } else {
       // Handle errors
@@ -93,15 +74,11 @@ class _MapScreenState extends State<MapScreen> {
 
   void _addDestinationMarker(LatLng point) {
     setState(() {
-      markers.add(
-        Marker(
-          width: 80.0,
-          height: 80.0,
-          point: point,
-          child: const Icon(Icons.location_on, color: Colors.red, size: 40.0),
-        ),
-      );
+      destinationMarker = point; // Set the destination marker position
+      routePoints.clear(); // Clear previous route
     });
+
+    print('Marker added at: Latitude ${point.latitude}, Longitude ${point.longitude}');
     _getRoute(point);
   }
 
@@ -128,17 +105,36 @@ class _MapScreenState extends State<MapScreen> {
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 MarkerLayer(
-                  markers: markers,
-                ),
-                PolylineLayer(
-                  polylines: [
-                    Polyline(
-                      points: routePoints,
-                      strokeWidth: 4.0,
-                      color: Colors.blue,
+                  markers: [
+                    // Current location marker
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: LatLng(currentLocation!.latitude!,
+                          currentLocation!.longitude!),
+                      child: const Icon(Icons.my_location,
+                          color: Colors.blue, size: 40.0),
                     ),
+                    if (destinationMarker != null)
+                      Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: destinationMarker!,
+                        child: const Icon(Icons.location_on,
+                            color: Colors.red, size: 40.0),
+                      ),
                   ],
                 ),
+                if (routePoints.isNotEmpty)
+                  PolylineLayer(
+                    polylines: [
+                      Polyline(
+                        points: routePoints,
+                        strokeWidth: 4.0,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
               ],
             ),
       floatingActionButton: FloatingActionButton(
@@ -159,12 +155,6 @@ class _MapScreenState extends State<MapScreen> {
 
 
 
-
-
-
-
-
-
 // import 'dart:async';
 // import 'dart:convert';
 
@@ -175,20 +165,23 @@ class _MapScreenState extends State<MapScreen> {
 // import 'package:latlong2/latlong.dart';
 // import 'package:location/location.dart';
 
+
 // class MapScreen extends StatefulWidget {
 //   const MapScreen({super.key});
 
 //   @override
-//   State<MapScreen> createState() => _mapState();
+//   _MapScreenState createState() => _MapScreenState();
 // }
 
-// class _mapState extends State<MapScreen> {
+
+// class _MapScreenState extends State<MapScreen> {
 //   final MapController mapController = MapController();
 //   LocationData? currentLocation;
-//   List<LatLng> routePoint = [];
+//   List<LatLng> routePoints = [];
 //   List<Marker> markers = [];
-//   final String orsApikey =
-//       '5b3ce3597851110001cf6248d22cf7112df4491990bb5e646083f844';
+//   final String orsApiKey =
+//       '5b3ce3597851110001cf6248d22cf7112df4491990bb5e646083f844'; 
+
 //   @override
 //   void initState() {
 //     super.initState();
@@ -197,22 +190,25 @@ class _MapScreenState extends State<MapScreen> {
 
 //   Future<void> _getCurrentLocation() async {
 //     var location = Location();
+
 //     try {
 //       var userLocation = await location.getLocation();
 //       setState(() {
 //         currentLocation = userLocation;
 //         markers.add(
 //           Marker(
+//             width: 80.0,
+//             height: 80.0,
 //             point: LatLng(userLocation.latitude!, userLocation.longitude!),
-//             width: 80,
-//             height: 80,
-//             child: const Icon(Icons.my_location),
+//             child:
+//                 const Icon(Icons.my_location, color: Colors.blue, size: 40.0),
 //           ),
 //         );
 //       });
 //     } on Exception {
 //       currentLocation = null;
 //     }
+
 //     location.onLocationChanged.listen((LocationData newLocation) {
 //       setState(() {
 //         currentLocation = newLocation;
@@ -222,79 +218,98 @@ class _MapScreenState extends State<MapScreen> {
 
 //   Future<void> _getRoute(LatLng destination) async {
 //     if (currentLocation == null) return;
+
 //     final start =
 //         LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
-//     final response = await http.get(Uri.parse(
-//         "https://api.openrouteservice.org/v2/directions/driving-car?api_key=$orsApikey&start=${start.longitude},${start.latitude}&end=${destination.longitude},${destination.latitude}"));
+//     final response = await http.get(
+//       Uri.parse(
+//           'https://api.openrouteservice.org/v2/directions/driving-car?api_key=$orsApiKey&start=${start.longitude},${start.latitude}&end=${destination.longitude},${destination.latitude}'),
+//     );
+    
 //     if (response.statusCode == 200) {
 //       final data = json.decode(response.body);
 //       final List<dynamic> coords =
 //           data['features'][0]['geometry']['coordinates'];
 //       setState(() {
-//         routePoint = coords.map((coord) => LatLng(coord[1], coord[0])).toList();
-//         markers.add(Marker(
+//         routePoints =
+//             coords.map((coord) => LatLng(coord[1], coord[0])).toList();
+//         markers.add(
+//           Marker(
+//             width: 80.0,
+//             height: 80.0,
 //             point: destination,
-//             height: 80,
-//             width: 80,
-//             child: const Icon(Icons.location_on)));
+//             child: const Icon(Icons.location_on, color: Colors.red, size: 40.0),
+//           ),
+//         );
 //       });
 //     } else {
-//       print('failed to etch route');
+//       // Handle errors
+//       print('Failed to fetch route');
 //     }
 //   }
 
 //   void _addDestinationMarker(LatLng point) {
 //     setState(() {
-//       markers.add(Marker(
-//           point: point, height: 80, width: 80, child: const Icon(Icons.location_on)));
+//       markers.add(
+//         Marker(
+//           width: 80.0,
+//           height: 80.0,
+//           point: point,
+//           child: const Icon(Icons.location_on, color: Colors.red, size: 40.0),
+//         ),
+//       );
 //     });
+//      print('Marker added at: Latitude ${point.latitude}, Longitude ${point.longitude}');
 //     _getRoute(point);
 //   }
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//         body: currentLocation == null
-//             ? const Center(
-//                 child: CircularProgressIndicator(),
-//               )
-//             : FlutterMap(
-//                 mapController: mapController,
-//                 options: MapOptions(
-//                   initialCenter: LatLng(
-//                       currentLocation!.latitude!, currentLocation!.longitude!),
-//                   initialZoom: 15.0,
-//                   onTap: (tapPosition, point) {
-//                     _addDestinationMarker(point);
-//                   },
-//                 ),
-//                 children: [
-//                   TileLayer(
-//                     urlTemplate:
-//                         "https://{s}.title.openstreetmap.org/{z}/{x}/{y}.png",
-//                     subdomains: const ['a', 'b', 'c'],
-//                   ),
-//                   MarkerLayer(markers: markers),
-//                   PolylineLayer(
-//                     polylines: [
-//                       Polyline(
-//                           points: routePoint,
-//                           strokeWidth: 4.0,
-//                           color: Colors.blue),
-//                     ],
-//                   ),
-//                 ],
+//       appBar: AppBar(
+//         title: const Text('OpenStreetMap with Flutter'),
+//       ),
+//       body: currentLocation == null
+//           ? const Center(child: CircularProgressIndicator())
+//           : FlutterMap(
+//               mapController: mapController,
+//               options: MapOptions(
+//                 initialCenter: LatLng(
+//                     currentLocation!.latitude!, currentLocation!.longitude!),
+//                 initialZoom: 15.0,
+//                 onTap: (tapPosition, point) => _addDestinationMarker(point),
 //               ),
-//         floatingActionButton: FloatingActionButton(
-//           onPressed: () {
-//             if (currentLocation != null) {
-//               mapController.move(
-//                   LatLng(
-//                       currentLocation!.latitude!, currentLocation!.longitude!),
-//                   15.0);
-//             }
-//           },
-//           child: const Icon(Icons.my_location),
-//         ));
+//               children: [
+//                 TileLayer(
+//                   urlTemplate:
+//                       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+//                   subdomains: const ['a', 'b', 'c'],
+//                 ),
+//                 MarkerLayer(
+//                   markers: markers,
+//                 ),
+//                 PolylineLayer(
+//                   polylines: [
+//                     Polyline(
+//                       points: routePoints,
+//                       strokeWidth: 4.0,
+//                       color: Colors.blue,
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           if (currentLocation != null) {
+//             mapController.move(
+//               LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+//               15.0,
+//             );
+//           }
+//         },
+//         child: const Icon(Icons.my_location),
+//       ),
+//     );
 //   }
 // }
