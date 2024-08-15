@@ -137,16 +137,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 slivers: <Widget>[
                   SliverAppBar(
+                    
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.white,
                     pinned: true,
+                    leadingWidth: 0.0,
+                    titleSpacing: 0.0,
+                    centerTitle: true,
                     title: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      
                       children: [
                         Image.asset(
                           "assets/images/General/App_Icon1.png",
                           height: Dimensions.heightPercentage(context, 6.5),
                         ),
-                        const SizedBox(width: 1),
+                      
                         RichText(
                           text: TextSpan(
                             children: [
@@ -183,11 +189,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        
+                        IconButton(
+                         onPressed: (){
+                            Navigator.push(context, MyAnimation.createRoute(AppRoutes.favouriteScreen));
+                         },
+                         icon: const Icon(
+                          Icons.favorite_border,
+                         ),
+                        ),
+                        
+                      
                         Stack(
                           children: [
                             IconButton(
-                              icon: Icon(Icons.notifications_none_rounded),
+                              icon: const Icon(Icons.notifications_none_rounded),
                               onPressed: () {
                                 showNotificationSheet(context);
                               },
@@ -224,6 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         // )
                       ],
                     ),
+                    
                   ),
                   SliverFillRemaining(
                     child: cubit.screens[cubit.currentIndex],
@@ -252,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               items: [
                 myBottomNavBarItem(icon: Icons.announcement, label: S.of(context).Posts),
-                myBottomNavBarItem(icon: Icons.favorite, label: S.of(context).Favourite),
+                myBottomNavBarItem(icon: Icons.price_change, label: 'Auctions'),
                 myBottomNavBarItem(icon: Icons.add, label: S.of(context).Add),
                 myBottomNavBarItem(icon: Icons.holiday_village, label: S.of(context).Properties),
                 myBottomNavBarItem(icon: Icons.home, label: S.of(context).Home),

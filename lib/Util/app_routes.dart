@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Ad%20Propert%20Screen/ad_property_screen.dart';
+import 'package:pro_2/Presentation/Auctions/AuctionListScreen.dart';
 import 'package:pro_2/Presentation/Drawer%20Screen/drawer_screen.dart';
 import 'package:pro_2/Presentation/Favourite%20Screen/favourite_screen.dart';
 import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
@@ -84,6 +85,9 @@ class AppRoutes
   static ForgotPasswordScreen  forgotPasswordScreen=ForgotPasswordScreen();
 
   static Forget_verify  forget_verify=Forget_verify();
+  
+  static AuctionListScreen auctions= AuctionListScreen(auctionItems: []);
+
 
 
 
