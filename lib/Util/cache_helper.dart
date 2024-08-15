@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper
@@ -60,14 +62,29 @@ class CacheHelper
   }) {
     return sharedPreferences!.getInt(key);
   }
+  static Future<bool?> putdouble({
+    required String key,
+    required double value,
+  }) async {
+    return await sharedPreferences!.setDouble(key, value);
+  }
 
+  static double? getdouble({
+    required String key,
+  }) {
+    return sharedPreferences!.getDouble(key);
+  }
   static Future<bool> deleteInt({
     required String key,
   }) {
     return sharedPreferences!.remove(key);
   }
+  static Future<bool> deleteDouble({
+    required String key,
+  }) {
+    return sharedPreferences!.remove(key);
+  }
 
- 
 
 
 }

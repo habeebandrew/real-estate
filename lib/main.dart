@@ -100,16 +100,16 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-         home:MapScreen(),
-        // notification(),
+         // home://MapScreen(),
+        // notification(), 
         // EmailVerificationScreen(),
-        // initialRoute:
+        initialRoute:
             // NamedRoutes.adPropertyScreen,
-            // widget.token != null
-            //     ? NamedRoutes.splashscreen
-            //     : widget.onBoardShowen == true
-            //         ? NamedRoutes.logInScreen
-            //         : NamedRoutes.onBoardingScreen,
+            widget.token != null
+                ? NamedRoutes.splashscreen
+                : widget.onBoardShowen == true
+                    ? NamedRoutes.logInScreen
+                    : NamedRoutes.onBoardingScreen,
         routes: AppRoutes.routes,
         builder: (context, child) {
           return LanguageChangeProvider(
