@@ -13,7 +13,6 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
 import 'package:pro_2/tests/360pic.dart';
 
-
 void main() async {
   AwesomeNotifications().initialize(
     null,
@@ -23,7 +22,7 @@ void main() async {
           channelKey: 'basic_channel',
           channelName: 'Basic notifications',
           channelDescription: 'Notification channel for basic tests',
-          defaultColor: Color(0xFF9D50DD),
+          defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white)
     ],
     debug: true,
@@ -60,7 +59,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale('en'); // تعيين اللغة الافتراضية هنا
+  Locale _locale = const Locale('en'); // تعيين اللغة الافتراضية هنا
 
   void _changeLanguage(Locale locale) {
     setState(() {
@@ -75,7 +74,7 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       child: MaterialApp(
         locale: _locale,
-        localizationsDelegates: [
+        localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -100,8 +99,8 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-         // home://MapScreen(),
-        // notification(), 
+        // home://MapScreen(),
+        // notification(),
         // EmailVerificationScreen(),
         initialRoute:
             // NamedRoutes.adPropertyScreen,
