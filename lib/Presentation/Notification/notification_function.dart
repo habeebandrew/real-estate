@@ -92,7 +92,9 @@ import 'api_service.dart';
 // }
 void showNotificationSheet(BuildContext context) {
   int? role_id = CacheHelper.getInt(key: 'role_id');
-  role_id!=null?
+  String? token = CacheHelper.getString(key: 'token');
+
+  token!=null?
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -104,7 +106,7 @@ void showNotificationSheet(BuildContext context) {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No notifications available.'));
+            return Center(child: Text('No notifications available yet.'));
           }
 
           final notifications = snapshot.data!;

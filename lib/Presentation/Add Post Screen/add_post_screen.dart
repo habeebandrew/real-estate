@@ -25,10 +25,38 @@ class _AddPostState extends State<AddPostScreen> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
+
   final Map<String, List<String>> governorateToAreas = {
     'Damascus': ['Abbasid Square', 'Mezzeh', 'Maliki'],
     'Rural Damascus': ['Douma', 'Harasta', 'Saquba'],
-    // ... (remaining data unchanged)
+    'Aleppo': ['Al-Sabil Neighborhood', 'Seif al-Dawla', 'Al-Azamiya'],
+    'Rural Aleppo': ['Manbij', 'Al-Bab', 'Jarabulus'],
+    'Homs': ['Al-Waer', 'Al-Hamidiyah', 'Al-Khalidiyah'],
+    'Rural Homs': ['Talkalakh', 'Rastan', 'Talbiseh'],
+    'Latakia': ['Sheikh Daher', 'Saliba', 'South Raml'],
+    'Rural Latakia': ['Jableh', 'Qardaha', 'Haffa'],
+    'Tartous': ['Baniyas', 'Safita', 'Dreikish'],
+    'Rural Tartous': ['Sheikh Badr', 'Al-Qadmous', 'Mashta al-Helou'],
+    'Hama': [
+      'Al-Qusour Neighborhood',
+      'Al-Sharia Neighborhood',
+      'Al-Arbaeen Neighborhood'
+    ],
+    'Rural Hama': ['Salamiyah', 'Masyaf', 'Soran'],
+    'Idlib': ['Maarrat al-Numan', 'Ariha', 'Jisr al-Shughur'],
+    'Rural Idlib': ['Kafranbel', 'Khan Shaykhun', 'Saraqib'],
+    'Deir ez-Zor': ['Al-Bukamal', 'Al-Mayadin', 'Al-Hamidiyah Neighborhood'],
+    'Rural Deir ez-Zor': ['Al-Busaira', 'Hajin', 'Al-Shuhail'],
+    'Raqqa': ['Tel Abyad', 'Ain Issa', 'Tabqa'],
+    'Rural Raqqa': ['Suluk', 'Al-Karama', 'Al-Mahmoudli'],
+    'Al-Hasakah': ['Qamishli', 'Ras al-Ayn', 'Al-Shaddadi'],
+    'Rural Al-Hasakah': ['Tel Tamer', 'Maabda', 'Al-Ya rubiyah'],
+    'Daraa': ['Bosra al-Sham', 'Nawa', 'Tafas'],
+    'Rural Daraa': ['Dael', 'Inkhil', 'Jasim'],
+    'As-Suwayda': ['Shahba', 'Salkhad', 'Arman'],
+    'Rural As-Suwayda': ['Qarya', 'Ara', 'Mleh'],
+    'Quneitra': ['Khan Arnabah', 'Al-Baath', 'Liberated Quneitra'],
+    'Rural Quneitra': ['Jubata al-Khashab', 'Taranja', 'Majdal Shams']
   };
 
   final _formKey = GlobalKey<FormState>();

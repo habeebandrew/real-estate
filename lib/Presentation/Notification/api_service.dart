@@ -9,7 +9,6 @@ import '../../Util/cache_helper.dart';
 import '../../Util/network_helper.dart';
 
 Future<List<Notification>> fetchNotifications() async {
-
   String token = (await CacheHelper.getString(key: 'token'))!;
 
   final response = await NetworkHelper.get(
@@ -42,5 +41,5 @@ Future<List<Notification>> fetchNotifications() async {
     return notifications;
   } else {
     throw Exception('Failed to load notifications');
-  }
-}
+  }}
+

@@ -21,6 +21,10 @@ import '../../generated/l10n.dart';
 import '../Notification/notification_function.dart';
 import 'package:http/http.dart' as http;
 Future<dynamic> fetchUnreadCount(BuildContext context) async {
+  String? token = await CacheHelper.getString(key: 'token');
+
+  if (token == null) {
+  }else{
     fetchNotifications();
 
   String token = (await CacheHelper.getString(key: 'token'))!;
@@ -40,7 +44,7 @@ Future<dynamic> fetchUnreadCount(BuildContext context) async {
     throw Exception('Failed to load u/nread count');
   }
 
-}
+}}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -56,11 +60,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _checkNumberValue();
+    // _timer = Timer.periodic(Duration(seconds: 40), (Timer t) =>     _checkNumberValue()
+    // );
 
-      _fetchUnreadCount();
+    _fetchUnreadCount();
     _timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchUnreadCount());
   }
+//
+  Future<void> _checkNumberValue() async {
+    String? number = await CacheHelper.getString(key: 'number');
+    print(number);
 
+    if (number ==null) {
+      _showMandatoryAddNumberDialog(context);
+   }
+  }
   @override
   void dispose() {
 
@@ -409,4 +424,35 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
+}void _showMandatoryAddNumberDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // يمنع إغلاق الحوار بالضغط خارجها
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Text(
+S.of(context).alert,
+          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+        ),
+        content: Text(S.of(context).Please_number),
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+              child: Text(
+                S.of(context).Enter_new_number,
+                style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // أغلق الحوار
+                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.accountInfoPage));
+              },
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

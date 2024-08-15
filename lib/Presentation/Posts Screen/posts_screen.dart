@@ -26,7 +26,7 @@ class _PostScreenState extends State<PostsScreen> {
   void initState() {
     super.initState();
     fetchPosts();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       if (mounted) {
         setState(() {
           _isLoading = false;
