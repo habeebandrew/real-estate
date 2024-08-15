@@ -1660,7 +1660,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     ),
     ],
     );                  });}
-                  if (_formKey.currentState!.validate()) {
+                 else if (_formKey.currentState!.validate()) {
                     sendPropertyData();
                   }
                 },
