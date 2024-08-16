@@ -21,7 +21,15 @@ class PropertyCubit extends Cubit<PropertyState> {
 
   int sliding=0;
   String dropDownStatus='all';
+
   String dropDownItemCites='all Cities';
+  String dropDownItemPropertyType = 'All Property type';
+
+  TextEditingController minPrice=TextEditingController();
+  TextEditingController maxPrice=TextEditingController();
+
+  TextEditingController minSize=TextEditingController();
+  TextEditingController maxSize=TextEditingController();
   
   void toggleSelectedFilter(int value,BuildContext context){
     emit(PropertyChangeFilterState());
@@ -236,6 +244,35 @@ class PropertyCubit extends Cubit<PropertyState> {
         emit(PropertyErrorState(error: 'Failed to update rate'));
       }
     });
+  }
+  bool loading=false;
+ List<Property>properties=[];
+  Future advancedSearch(
+      {int? statusId,
+      int? propertyTypeId,
+      int? cityId,
+      int? addressId,
+      String? minPrice,
+      String? maxPrice,
+      String? minSize,
+      String? maxSize}) async {
+    loading=true;
+    var response = await PropertyService.advancedSearch(
+        cityId: cityId,
+        propertyTypeId: propertyTypeId,
+        statusId: statusId,
+        addressId: addressId,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        minSize: minSize,
+        maxSize: maxSize
+    );
+    if (response is List<Property>) {
+       loading=false;
+       properties=response;
+    } else {
+      emit(PropertyErrorState(error: response.toString()));
+    }
   }
 
 }

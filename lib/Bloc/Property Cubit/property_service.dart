@@ -294,5 +294,53 @@ class PropertyService {
       }
     
   } 
+
+  static Future<List<dynamic>> advancedSearch({
+  int? statusId,
+  int? propertyTypeId,
+  int? cityId,
+  int? addressId,
+  String? minPrice,
+  String? maxPrice,
+  String? minSize,
+  String? maxSize,
+}) async {
+  String url = '${ApiAndEndpoints.advancedSearch}';
   
+  // Building the query parameters dynamically
+  if (cityId != null) url += 'governorate_id=$cityId&';
+  if (statusId != null) url += 'status_id=$statusId&';
+  if (propertyTypeId != null) url += 'property_type_id=$propertyTypeId&';
+  if (minPrice != null) url += 'min=$minPrice&';
+  if (maxPrice != null) url += 'max=$maxPrice&';
+  if (minSize != null) url += 'minSize=$minSize&';
+  if (maxSize != null) url += 'maxSize=$maxSize&';
+  if (addressId != null) url += 'address_id=$addressId&';
+  
+  if (url.endsWith('&')) {
+      url = url.substring(0, url.length - 1);
+    }
+   
+   debugPrint('SearchUrl:  $url');
+  
+  var data = await NetworkHelper.get(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+  );
+  
+  print(data.statusCode);
+  print(data.body);
+   
+  if (data.statusCode == 200) {
+    return propertyFromJson(data.body);
+  } else {
+    return [];
+  }
 }
+
+}
+  
+
