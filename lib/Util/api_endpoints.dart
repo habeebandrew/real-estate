@@ -63,5 +63,5 @@ class ApiAndEndpoints {
   static const updatePassword = 'updatePassword';
 
   static const showAllImagesProperty = 'show360ImagesProperty';
-
+  static const advancedSearch ='advancedSearch?'; 
 }
