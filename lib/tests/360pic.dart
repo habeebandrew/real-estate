@@ -13,7 +13,6 @@ class s_3dpic extends StatefulWidget {
 
 class _s_3dpicState extends State<s_3dpic> {
   late Future<List<String?>> imagesFuture;
-  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -34,56 +33,58 @@ class _s_3dpicState extends State<s_3dpic> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('خطأ في تحميل الصور'));
+              return Center(child: Text('فشل في تحميل الصور: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('لا توجد صور 360 درجة'));
+              return Center(child: Text('لا توجد صور 360 درجة.'));
             } else {
               final images = snapshot.data!;
               final filteredImages = images.where((img) => img != null && img.isNotEmpty).toList();
-              return Stack(
-                children: [
-                  Positioned.fill(
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: filteredImages.length,
-                      itemBuilder: (context, index) {
-                        final imageUrl = filteredImages[index];
-                        return PanoramaViewer(
-                          child: Image.network(
-                            imageUrl!,
-                            fit: BoxFit.cover, // هذا يضمن أن الصورة تغطي المساحة بشكل مناسب
-                          ),
-                        );
-                      },
+
+              if (filteredImages.isEmpty) {
+                return Center(child: Text('لا توجد صور 360 درجة.'));
+              }
+
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                ),
+                itemCount: filteredImages.length,
+                itemBuilder: (context, index) {
+                  final imageUrl = filteredImages[index];
+                  return GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: PanoramaViewer(
+                              child: Image.network(
+                                imageUrl!,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null) {
+                                    return child;
+                                  } else {
+                                    return Center(child: CircularProgressIndicator());
+                                  }
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Center(child: Text('خطأ في تحميل الصورة'));
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Image.network(
+                      imageUrl!,
+                      fit: BoxFit.cover,
                     ),
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    left: 10,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () {
-                        _pageController.previousPage(
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    right: 10,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_forward, color: Colors.white),
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                  );
+                },
               );
             }
           },

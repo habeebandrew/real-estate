@@ -1,12 +1,16 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pro_2/Presentation/Ad%20Propert%20Screen/SelectLocationScreen.dart';
 import 'package:pro_2/Util/api_endpoints.dart';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:pro_2/Util/constants.dart';
-
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
 import '../../Util/app_routes.dart';
 import '../../Util/cache_helper.dart';
 import '../../Util/global Widgets/animation.dart';
@@ -20,6 +24,33 @@ class AdPropertyScreen extends StatefulWidget {
 }
 
 class _AdPropertyScreenState extends State<AdPropertyScreen> {
+  LatLng? _selectedLocation;
+
+  void _openSelectLocationScreen() async {
+    final LatLng? selectedLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SelectLocationScreen(),
+      ),
+    );
+
+    if (selectedLocation != null) {
+      setState(() {
+        _selectedLocation = selectedLocation;
+      });
+
+      // طباعة الإحداثيات في الـ debug console
+      print('Selected Location: Latitude ${selectedLocation
+          .latitude}, Longitude ${selectedLocation.longitude}');
+      await CacheHelper.putdouble(key: 'x', value: selectedLocation
+          .latitude);
+      await CacheHelper.putdouble(key: 'y', value: selectedLocation.longitude);
+
+
+    }
+  }
+
+
   List<XFile> images = [];
   List<XFile> images360 = [];
   Future<void> pickImage() async {
@@ -259,6 +290,13 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     request.fields['description'] = description ?? '';
     request.fields['features'] = selectedSpecialFeatures ?? '';
 
+    //position
+   double? x= await CacheHelper.getdouble(key: 'x');
+    double? y=   await CacheHelper.getdouble(key: 'y');
+
+    request.fields['x'] = "$x"?? '';
+    request.fields['y'] =  "$y" ?? '';
+
     // إضافة الصور للطلب
     for (int i = 0; i < images.length; i++) {
       var image = await http.MultipartFile.fromPath(
@@ -279,6 +317,9 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     var response = await request.send();
 
     if (response.statusCode == 200) {
+   await CacheHelper.deleteDouble(key: 'x');
+         await CacheHelper.deleteDouble(key: 'y');
+
       mySnackBar(
         context: context,
         title: 'تم إرسال بيانات العقار بنجاح',
@@ -289,6 +330,10 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
             .push(MyAnimation.createRoute(AppRoutes.homeScreen));
       });
     } else {
+      await CacheHelper.deleteDouble(key: 'x');
+      await CacheHelper.deleteDouble(key: 'y');
+
+      print(response.statusCode);
       print(await response.stream.bytesToString());
       print('*********************');
       mySnackBar(
@@ -311,13 +356,19 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( floatingActionButton: FloatingActionButton(
+      onPressed: _openSelectLocationScreen,
+      child: const Icon(Icons.add_location),
+    ),
+
+
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Constants.mainColor2,
         title: const Text('Property Form'),
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
@@ -326,6 +377,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
               // Property Status
               Row(
                 children: [
+
                   Expanded(
                     child: CheckboxListTile(
                       title: const Text('شراء'),
@@ -350,6 +402,13 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   ),
                 ],
               ),
+              Center(
+                  child: _selectedLocation == null
+                      ? const Text('No location selected.')
+                      : Text(
+                    'Selected Location:\nLatitude: ${_selectedLocation!.latitude}\nLongitude: ${_selectedLocation!.longitude}',
+                    textAlign: TextAlign.center,
+                  )),
               // Property Type
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
@@ -672,7 +731,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                 width: 150, // تحديد عرض الحقل
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'تصحيح هنا من اجل المساحة test',
+                    labelText: 'المساحة م2',
                     labelStyle: const TextStyle(
                       fontSize: 14, // تقليل حجم نص التسمية
                       fontWeight: FontWeight.bold,
@@ -1569,7 +1628,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () {
                                 setState(() {
-                                  images.removeAt(index);
+                                  images360.removeAt(index);
                                 });
                               },
                             ),
@@ -1585,7 +1644,23 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
                   backgroundColor: Constants.mainColor2,
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (CacheHelper.getdouble(key: 'x')==null) {
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+    return AlertDialog(
+    title: const Text('Location Confirmation'),
+    content: const Text('Please select a location on the map to proceed.'),
+    actions: [
+    TextButton(
+    onPressed: () {
+    Navigator.of(context).pop(); // إغلاق الـ Dialog
+    },
+    child: const Text('OK'),
+    ),
+    ],
+    );                  });}
+                 else if (_formKey.currentState!.validate()) {
                     sendPropertyData();
                   }
                 },

@@ -628,42 +628,34 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                 ),
                               if (state.propertyDetailsModel.features != [])
                                 Column(
-                                  children: List.generate(
-                                    (state.propertyDetailsModel.features
-                                                .length /
-                                            2)
-                                        .ceil(),
-                                    (index) {
-                                      final startIndex = index * 2;
-                                      final endIndex = (startIndex + 2 <=
-                                              state.propertyDetailsModel
-                                                  .features.length)
-                                          ? startIndex + 2
-                                          : state.propertyDetailsModel.features
-                                              .length;
-                                      final pair = state
-                                          .propertyDetailsModel.features
-                                          .sublist(startIndex, endIndex);
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20.0),
-                                        child: Row(
-                                          mainAxisAlignment: state
-                                                      .propertyDetailsModel
-                                                      .features
-                                                      .length ==
-                                                  1
-                                              ? MainAxisAlignment.end
-                                              : MainAxisAlignment.spaceAround,
-                                          children: pair
-                                              .map((featureItem) =>
-                                                  Text(featureItem.feature))
-                                              .toList(),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                                      child: Wrap(
+                                        spacing: 10.0, // Space between items horizontally
+                                        runSpacing: 10.0, // Space between items vertically
+                                        children: List.generate(
+                                          state.propertyDetailsModel.features.length,
+                                              (index) {
+                                            final featureItem = state.propertyDetailsModel.features[index];
+                                            return Chip(
+                                              label: Text(
+                                                featureItem.feature,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              backgroundColor: Constants.mainColor,
+                                            );
+                                          },
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+,
                               const Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text(

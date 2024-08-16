@@ -13,7 +13,6 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
 import 'package:pro_2/tests/360pic.dart';
 
-
 void main() async {
   AwesomeNotifications().initialize(
     null,
@@ -75,7 +74,7 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       child: MaterialApp(
         locale: _locale,
-        localizationsDelegates: const[
+        localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -100,8 +99,11 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-        
+        // home://MapScreen(),
+        // notification(),
+        // EmailVerificationScreen(),
         initialRoute:
+            // NamedRoutes.adPropertyScreen,
             widget.token != null
                 ? NamedRoutes.splashscreen
                 : widget.onBoardShowen == true
