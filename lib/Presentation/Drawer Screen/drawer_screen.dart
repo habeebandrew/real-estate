@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Drawer%20Screen/Drawer%20Widgets/drawer_widgets.dart';
+import 'package:pro_2/Util/api_endpoints.dart';
 import 'package:pro_2/Util/dimensions.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:pro_2/Util/network_helper.dart';
 
 
 class DrawerScreen extends StatelessWidget {
@@ -14,10 +17,14 @@ class DrawerScreen extends StatelessWidget {
   Future<String?> fetchImage() async {
     String? token = CacheHelper.getString(key: 'token');
 
+    final response = await NetworkHelper.get(
+      ApiAndEndpoints.showMyImage,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
-    final response = await http.get(Uri.parse('http://192.168.1.106:8000/api/showMyImage'),
-    headers: { 'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       print(response.body);
