@@ -247,34 +247,32 @@ class PropertyCubit extends Cubit<PropertyState> {
   }
   bool loading=false;
  List<Property>properties=[];
-  Future advancedSearch(
-      {int? statusId,
-      int? propertyTypeId,
-      int? cityId,
-      int? addressId,
-      String? minPrice,
-      String? maxPrice,
-      String? minSize,
-      String? maxSize}) async {
-    loading=true;
+  Future<void> advancedSearch({
+    int? statusId,
+    int? propertyTypeId,
+    int? cityId,
+    int? addressId,
+    String? minPrice,
+    String? maxPrice,
+    String? minSize,
+    String? maxSize,
+  }) async {
+    emit(PropertyLoadingState());  // إظهار حالة التحميل عند بدء البحث
     var response = await PropertyService.advancedSearch(
-        cityId: cityId,
-        propertyTypeId: propertyTypeId,
-        statusId: statusId,
-        addressId: addressId,
-        minPrice: minPrice,
-        maxPrice: maxPrice,
-        minSize: minSize,
-        maxSize: maxSize
+      cityId: cityId,
+      propertyTypeId: propertyTypeId,
+      statusId: statusId,
+      addressId: addressId,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      minSize: minSize,
+      maxSize: maxSize,
     );
+
     if (response is List<Property>) {
-       loading=false;
-       properties=response;
+      emit(PropertyLoadedState(propertyModel: response)); // إظهار حالة التحميل عند نجاح البحث
     } else {
-      emit(PropertyErrorState(error: response.toString()));
+      emit(PropertyErrorState(error: response.toString())); // إظهار حالة الخطأ عند حدوث مشكلة
     }
   }
-
 }
-
-

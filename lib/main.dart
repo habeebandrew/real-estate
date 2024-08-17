@@ -2,7 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pro_2/Presentation/Auctions/AuctionListScreen.dart';
+import 'package:pro_2/Presentation/Auctions/Add_Auction_screen.dart';
 import 'package:pro_2/Presentation/Notification/notification.dart';
 import 'package:pro_2/Presentation/Map%20Screen/map_screen.dart';
 import 'package:pro_2/Util/app_bloc_observer.dart';

@@ -4,7 +4,7 @@ import 'package:pro_2/Bloc/Auth%20Cubit/auth_service.dart';
 import 'package:pro_2/Bloc/Posts%20Cubit/posts_cubit.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_service.dart';
-import 'package:pro_2/Presentation/Auctions/AuctionListScreen.dart';
+import 'package:pro_2/Presentation/Auctions/Add_Auction_screen.dart';
 import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/global%20Widgets/mySnackBar.dart';
 import '../../Util/app_routes.dart';
@@ -31,7 +31,7 @@ class AuthCubit extends Cubit<AuthState>
   int currentIndex = 4;
   List<Widget> screens = [
     AppRoutes.postsScreen,
-    AppRoutes.auctions,
+    AppRoutes.auction_screen,
     AppRoutes.adPropertyScreen,
     AppRoutes.propertiesScreen,
     AppRoutes.mainScreen,

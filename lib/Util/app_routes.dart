@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Ad%20Propert%20Screen/ad_property_screen.dart';
 import 'package:pro_2/Presentation/Advanced%20Search%20Screen/advanced_search_screen.dart';
-import 'package:pro_2/Presentation/Auctions/AuctionListScreen.dart';
+import 'package:pro_2/Presentation/Auctions/Add_Auction_screen.dart';
+import 'package:pro_2/Presentation/Auctions/auction_detail_screen.dart';
 import 'package:pro_2/Presentation/Drawer%20Screen/drawer_screen.dart';
 import 'package:pro_2/Presentation/Favourite%20Screen/favourite_screen.dart';
 import 'package:pro_2/Presentation/Home%20Screen/home_screen.dart';
@@ -16,6 +17,7 @@ import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/email_verification_screen.dart';
 import '../Presentation/AccountInfoPage/AccountInfoPage.dart';
+import '../Presentation/Auctions/auction_list_screen.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
@@ -53,15 +55,22 @@ class NamedRoutes
   static const forgotPasswordScreen='ForgotPasswordScreen';
   static const forget_verify='forget_verify';
   static const UpdatePasswordScreen='update_password_screen';
+  static const auction_screen='auction_list_screen';
+  static const addauctions='Add_Auction_screens';
 
+
+  static const auctionDetailScreen='auction_detail_screen';
 
 }
 
 class AppRoutes
 {
   static UpdatePasswordScreen  updatePasswordScreen=UpdatePasswordScreen();
+  static AuctionDetailScreen  auctionDetailScreen=AuctionDetailScreen(auctionId: 0,);
 
   static const  homeScreen=HomeScreen();
+  static AuctionListScreen  auction_screen=AuctionListScreen();
+
   static const  onBoardingScreen=Onboarding();
   static EmailVerificationScreen  emailVerificationScreen= EmailVerificationScreen();
   static const  signUpScreen= SignUp();
@@ -87,7 +96,7 @@ class AppRoutes
 
   static Forget_verify  forget_verify=Forget_verify();
   
-  static AuctionListScreen auctions= AuctionListScreen(auctionItems: []);
+  static AddAuctions addauctions= AddAuctions();
 
   static const AdvancedSearch = AdvancedSearchScreen();
 
@@ -97,6 +106,7 @@ class AppRoutes
   static Map <String,Widget Function(BuildContext context)>routes=
   {
     NamedRoutes.UpdatePasswordScreen:(context)=>AppRoutes.updatePasswordScreen,
+    NamedRoutes.auctionDetailScreen:(context)=>AppRoutes.auctionDetailScreen,
 
     NamedRoutes.forget_verify:(context)=>AppRoutes.forget_verify,
 
@@ -119,6 +129,10 @@ class AppRoutes
     NamedRoutes.propertyDetails :(context)=>AppRoutes.propertyDetails ,
     NamedRoutes.pic360 :(context)=>AppRoutes.pic360 ,
     NamedRoutes.forgotPasswordScreen :(context)=>AppRoutes.forgotPasswordScreen ,
+    NamedRoutes.addauctions :(context)=>AppRoutes.addauctions ,
+    NamedRoutes.auction_screen :(context)=>AppRoutes.auction_screen ,
+
+
 
   };
 }

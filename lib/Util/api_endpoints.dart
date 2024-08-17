@@ -8,7 +8,15 @@ class ApiAndEndpoints {
   // }
   // static Future<String> api = getApi();
 //*HABEEB:   192.168.1.106
+
   static const verify='verifyEmail';//register
+  static const showAuctions='showAuctions';
+  static const auctionid='auction/';
+  static const auctionParticipants='auctionParticipants/';
+
+  static const addParticipate='addParticipate';
+
+
   static const signUp = 'register';//verifyEmail
   static const checkCode='checkCode';//register
   static const logIn = 'signIn';
@@ -52,5 +60,7 @@ class ApiAndEndpoints {
   static const updatePassword = 'updatePassword';
 
   static const showAllImagesProperty = 'show360ImagesProperty';
+
+  static const advancedSearch='advancedSearch';
 
 }

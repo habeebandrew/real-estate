@@ -178,35 +178,35 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
   List<Map<String, dynamic>> cities = [];
   bool isLoadingCities = false;
 
-  Future<void> fetchCities(String province) async {
-    final Map<String, int> provinceIds = {
-      'Damascus': 1,
-      'Rif Damascus': 2,
-      'Homs': 3
-    };
-    String token = (await CacheHelper.getString(key: 'token'))!;
-    String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
+    Future<void> fetchCities(String province) async {
+      final Map<String, int> provinceIds = {
+        'Damascus': 1,
+        'Rif Damascus': 2,
+        'Homs': 3
+      };
+      String token = (await CacheHelper.getString(key: 'token'))!;
+      String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
 
-    final int provinceId = provinceIds[province]!;
-    final response = await http.get(Uri.parse(
-      // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
-        api + ApiAndEndpoints.fetchAllAddresses + '$provinceId'), headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-
-    if (response.statusCode == 200) {
-      final List data = json.decode(response.body);
-      setState(() {
-        cities = data.map((city) {
-          return {'id_address': city['id_address'], 'address': city['address']};
-        }).toList();
-        isLoadingCities = false;
+      final int provinceId = provinceIds[province]!;
+      final response = await http.get(Uri.parse(
+        // 'http://192.168.1.106:8000/api/fetchAllAddresses?governorate_id=$provinceId'
+          api + ApiAndEndpoints.fetchAllAddresses + '$provinceId'), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       });
-    } else {
-      throw Exception('Failed to load cities');
+
+      if (response.statusCode == 200) {
+        final List data = json.decode(response.body);
+        setState(() {
+          cities = data.map((city) {
+            return {'id_address': city['id_address'], 'address': city['address']};
+          }).toList();
+          isLoadingCities = false;
+        });
+      } else {
+        throw Exception('Failed to load cities');
+      }
     }
-  }
 
   Future<void> sendPropertyData() async {
     String token = (await CacheHelper.getString(key: 'token'))!;
