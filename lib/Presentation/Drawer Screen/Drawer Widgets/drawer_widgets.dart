@@ -10,6 +10,7 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
 import 'package:pro_2/generated/l10n.dart';
 import 'package:pro_2/main.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../Util/cache_helper.dart';
 import '../../AccountInfoPage/AccountInfoPage.dart';
@@ -199,7 +200,11 @@ Widget build_for_user(BuildContext context) {
         myDrawerButton(
           label: S.of(context).Invite_friends,
           icon: Icons.mail,
-          onPress: () {},
+          onPress: () {
+
+            _shareInvite(context);
+
+          },
         ),
         SizedBox(
           height: 5,
@@ -286,7 +291,10 @@ Widget build_for_Broker(BuildContext context) {
       myDrawerButton(
         label: S.of(context).Invite_friends,
         icon: Icons.mail,
-        onPress: () {},
+        onPress: () {
+          _shareInvite(context);
+
+        },
       ),
       SizedBox(
         height: 5,
@@ -443,11 +451,11 @@ void _showLanguageDialog(BuildContext context) {
   );
 }
 
-// void _shareInvite(BuildContext context) {
-//   final String text = "هل سمعت عن كابيتال ستيت؟ إنه تطبيق رائع لتسويق بيع وشراء واستئجار العقارات وللتحميل .....";
-//
-//   Share.share(
-//     text,
-//     subject: 'Invite to App',
-//   );
-// }
+void _shareInvite(BuildContext context) {
+  final String text = "هل سمعت عن كابيتال ستيت؟ إنه تطبيق رائع لتسويق بيع وشراء واستئجار العقارات وللتحميل .....";
+
+  Share.share(
+    text,
+    subject: 'Invite to App',
+  );
+}

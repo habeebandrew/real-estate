@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pro_2/Presentation/Auctions/api_service_auction.dart';
+import 'package:pro_2/Util/constants.dart';
 
 class AuctionDetailScreen extends StatefulWidget {
   final int auctionId;
@@ -20,7 +21,8 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
   void initState() {
     super.initState();
     _auctionDetailsFuture = _apiService.fetchAuctionDetails(widget.auctionId);
-    _auctionParticipantsFuture = _apiService.fetchAuctionParticipants(widget.auctionId);
+    _auctionParticipantsFuture =
+        _apiService.fetchAuctionParticipants(widget.auctionId);
   }
 
   void _showAddOfferDialog(Map<String, dynamic> auctionDetails) {
@@ -31,13 +33,17 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('تقديم عرض جديد'),
+          title: Text(
+            'تقديم عرض جديد',
+            style: TextStyle(color: Colors.black),
+          ),
           content: TextField(
             controller: _priceController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: 'أدخل السعر',
               hintText: 'يجب أن يكون أعلى من $minPrice \$',
+              prefixIcon: Icon(Icons.attach_money),
             ),
           ),
           actions: [
@@ -45,23 +51,25 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text('إلغاء'),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () async {
-                final double enteredPrice = double.tryParse(_priceController.text) ?? 0.0;
+                final double enteredPrice =
+                    double.tryParse(_priceController.text) ?? 0.0;
 
                 if (enteredPrice <= minPrice) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('يجب أن يكون السعر أعلى من $minPrice \$')),
+                    SnackBar(
+                        content:
+                            Text('يجب أن يكون السعر أعلى من $minPrice \$')),
                   );
                 } else {
                   try {
-                    await _apiService.addParticipate(widget.auctionId, enteredPrice, context);
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(content: Text('تم تقديم العرض بنجاح')),
-                    // );
+                    await _apiService.addParticipate(
+                        widget.auctionId, enteredPrice, context);
                     Navigator.of(context).pop();
                     setState(() {
-                      _auctionParticipantsFuture = _apiService.fetchAuctionParticipants(widget.auctionId);
+                      _auctionParticipantsFuture = _apiService
+                          .fetchAuctionParticipants(widget.auctionId);
                     });
                   } catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -103,78 +111,162 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                   children: [
                     Text(
                       auction['property_type'],
-                      style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10.0),
-                    Text(
-                      auction['address'],
-                      style: TextStyle(fontSize: 18.0, color: Colors.grey[600]),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Constants.mainColor,
+                        ),
+                        SizedBox(width: 8.0),
+                        Expanded(
+                          child: Text(
+                            auction['address'],
+                            style: TextStyle(
+                                fontSize: 18.0, color: Colors.grey[600]),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10.0),
-                    Text(
-                      auction['description'],
-                      style: TextStyle(fontSize: 16.0),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Constants.mainColor,
+                        ),
+                        SizedBox(width: 8.0),
+                        Text(
+                          auction['description'],
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10.0),
-                    Text(
-                      'المالك: ${auction['the_owner']}',
-                      style: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person,
+                          color: Constants.mainColor,
+                        ),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'المالك: ${auction['the_owner']}',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.blue[900],
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10.0),
-                    Text(
-                      'السعر الابتدائي: ${auction['first_price']} \$',
-                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        Icon(Icons.attach_money, color: Colors.redAccent),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'السعر الابتدائي: ${auction['first_price']} \$',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10.0),
-                    Text(
-                      'تاريخ البدء: ${auction['start']}',
-                      style: TextStyle(fontSize: 16.0),
+                    Row(
+                      children: [
+                        Icon(Icons.date_range, color: Constants.mainColor),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'تاريخ البدء: ${auction['start']}',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      'تاريخ النهاية: ${auction['end'] ?? 'غير محدد'}',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
+                    // SizedBox(height: 10.0),
+                    // Row(
+                    //   children: [
+                    //     Icon(Icons.date_range, color: Colors.red),
+                    //     SizedBox(width: 8.0),
+                    //     Text(
+                    //       'تاريخ النهاية: ${auction['end'] ?? 'غير محدد'}',
+                    //       style: TextStyle(fontSize: 16.0),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(height: 20.0),
                     images.isNotEmpty
                         ? CarouselSlider(
-                      options: CarouselOptions(
-                        height: 200.0,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        autoPlay: true,
-                      ),
-                      items: images.map<Widget>((image) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            image,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        );
-                      }).toList(),
-                    )
-                        : Text('لا توجد صور متاحة'),
+                            options: CarouselOptions(
+                              height: 200.0,
+                              enlargeCenterPage: true,
+                              enableInfiniteScroll: true,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              scrollDirection: Axis.horizontal,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 0.8,
+                            ),
+                            items: images.map<Widget>((image) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  image,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : Text('لا توجد صور متاحة',
+                            style: TextStyle(color: Colors.redAccent)),
                     SizedBox(height: 20.0),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       onPressed: () => _showAddOfferDialog(auction),
-                      child: Text('تقديم عرض جديد'),
+                      icon: Icon(
+                        Icons.gavel,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        'تقديم عرض جديد',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        textStyle: TextStyle(fontSize: 18.0),
+                      ),
                     ),
                     SizedBox(height: 20.0),
+                    Divider(color: Colors.grey[400]),
                     Text(
                       'المشاركون في المزاد:',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                     FutureBuilder<List<Map<String, dynamic>>>(
                       future: _auctionParticipantsFuture,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
-                          return Center(child: Text('حدث خطأ أثناء تحميل المشاركين'));
-                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return Center(child: Text('لا يوجد مشاركون في هذا المزاد'));
+                          return Center(
+                              child: Text('حدث خطأ أثناء تحميل المشاركين'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return Center(
+                              child: Text('لا يوجد مشاركون في هذا المزاد'));
                         } else {
                           return ListView.builder(
                             shrinkWrap: true,
@@ -183,13 +275,15 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                             itemBuilder: (context, index) {
                               final participant = snapshot.data![index];
                               return ListTile(
-                                leading: Icon(Icons.person),
+                                leading: Icon(Icons.person, color: Colors.blue),
                                 title: Text(participant['user_name']),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('المزايدة: ${participant['price']} \$'),
-                                    Text('التاريخ: ${participant['participated_at']}'),
+                                    Text(
+                                        'المزايدة: ${participant['price']} \$'),
+                                    Text(
+                                        'التاريخ: ${participant['participated_at']}'),
                                   ],
                                 ),
                               );

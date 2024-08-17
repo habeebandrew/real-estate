@@ -339,7 +339,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       mySnackBar(
         color: Colors.red,
         context: context,
-        title: 'فشل إرسال البيانات الرجاء ادخال البيانات بشكلها الصحيح',
+        title: 'فشل إرسال البيانات  الرجاء ادخال البيانات بشكلها الصحيح',
       );
       print('Failed to send data.');
     }

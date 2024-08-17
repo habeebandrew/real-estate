@@ -3,6 +3,8 @@ import 'package:pro_2/Presentation/Auctions/api_service_auction.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:pro_2/Util/constants.dart';
+
 class AddAuctions extends StatefulWidget {
   @override
   State<AddAuctions> createState() => _AddAuctionsState();
@@ -52,8 +54,12 @@ class _AddAuctionsState extends State<AddAuctions> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
     return Scaffold(
-      appBar: AppBar(title: Text('إضافة مزاد جديد')),
+      appBar: AppBar(
+        title: Text('إضافة مزاد جديد'),
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -62,7 +68,16 @@ class _AddAuctionsState extends State<AddAuctions> {
             child: Column(
               children: [
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'نوع العقار'),
+                  decoration: InputDecoration(
+                    labelText: 'نوع العقار',
+                    prefixIcon: Icon(
+                      Icons.home,
+                      color: Constants.mainColor,
+                    ), // أيقونة إضافية هنا
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                   items: propertyTypes.map((String type) {
                     return DropdownMenuItem<String>(
                       value: type,
@@ -75,10 +90,20 @@ class _AddAuctionsState extends State<AddAuctions> {
                     });
                   },
                   validator: (value) =>
-                  value == null ? 'يرجى اختيار نوع العقار' : null,
+                      value == null ? 'يرجى اختيار نوع العقار' : null,
                 ),
+                SizedBox(height: 15),
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'العنوان'),
+                  decoration: InputDecoration(
+                    labelText: 'العنوان',
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Constants.mainColor,
+                    ), // أيقونة إضافية هنا
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                   items: provinces.map((String province) {
                     return DropdownMenuItem<String>(
                       value: province,
@@ -91,10 +116,20 @@ class _AddAuctionsState extends State<AddAuctions> {
                     });
                   },
                   validator: (value) =>
-                  value == null ? 'يرجى اختيار العنوان' : null,
+                      value == null ? 'يرجى اختيار العنوان' : null,
                 ),
+                SizedBox(height: 15),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'الوصف'),
+                  decoration: InputDecoration(
+                    labelText: 'الوصف',
+                    prefixIcon: Icon(
+                      Icons.description,
+                      color: Constants.mainColor,
+                    ), // أيقونة إضافية هنا
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                   maxLines: 3,
                   onChanged: (value) {
                     setState(() {
@@ -102,30 +137,60 @@ class _AddAuctionsState extends State<AddAuctions> {
                     });
                   },
                   validator: (value) =>
-                  value!.isEmpty ? 'يرجى إدخال الوصف' : null,
+                      value!.isEmpty ? 'يرجى إدخال الوصف' : null,
                 ),
+                SizedBox(height: 15),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'الميزات'),
+                  decoration: InputDecoration(
+                    labelText: 'الميزات',
+                    prefixIcon: Icon(
+                      Icons.star,
+                      color: Constants.mainColor,
+                    ), // أيقونة إضافية هنا
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                   onChanged: (value) {
                     setState(() {
                       features = value;
                     });
                   },
                   validator: (value) =>
-                  value!.isEmpty ? 'يرجى إدخال الميزات' : null,
+                      value!.isEmpty ? 'يرجى إدخال الميزات' : null,
                 ),
+                SizedBox(height: 15),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'اسم المالك'),
+                  decoration: InputDecoration(
+                    labelText: 'اسم المالك',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Constants.mainColor,
+                    ), // أيقونة إضافية هنا
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                   onChanged: (value) {
                     setState(() {
                       theOwner = value;
                     });
                   },
                   validator: (value) =>
-                  value!.isEmpty ? 'يرجى إدخال اسم المالك' : null,
+                      value!.isEmpty ? 'يرجى إدخال اسم المالك' : null,
                 ),
+                SizedBox(height: 15),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'سعر البداية'),
+                  decoration: InputDecoration(
+                    labelText: 'سعر البداية',
+                    prefixIcon: Icon(
+                      Icons.attach_money,
+                      color: Constants.mainColor,
+                    ), // أيقونة إضافية هنا
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     setState(() {
@@ -142,14 +207,31 @@ class _AddAuctionsState extends State<AddAuctions> {
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: _pickImage,
-                  child: Text('إضافة صورة'),
+                  icon: Icon(
+                    Icons.add_a_photo,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'إضافة صورة',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.mainColor,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 12.0,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 10),
                 _buildImagePreviewList(),
                 SizedBox(height: 20),
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       await _apiService.addAuction(
@@ -162,12 +244,26 @@ class _AddAuctionsState extends State<AddAuctions> {
                         firstPrice: firstPrice!,
                         images: images,
                       );
-                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //   content: Text('تم إضافة المزاد بنجاح!'),
-                      // ));
                     }
                   },
-                  child: Text('إضافة المزاد'),
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'إضافة المزاد',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 70.0,
+                      vertical: 25.0,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -180,20 +276,24 @@ class _AddAuctionsState extends State<AddAuctions> {
   Widget _buildImagePreviewList() {
     return GridView.builder(
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: images.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
+        crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 3,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
         return Stack(
           children: [
-            Image.file(images[index], fit: BoxFit.cover),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.file(images[index], fit: BoxFit.cover),
+            ),
             Positioned(
               right: 0,
               child: IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
+                icon: Icon(Icons.delete, color: Colors.redAccent),
                 onPressed: () => _removeImage(index),
               ),
             ),

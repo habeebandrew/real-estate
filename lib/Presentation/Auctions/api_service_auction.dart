@@ -106,7 +106,6 @@ class ApiServiceAuctions {
     }
   }
   Future<void> addParticipate(int auctionId, double price, BuildContext context) async {
-    print("1");
     final response = await http.post(
       Uri.parse(ApiAndEndpoints.api + ApiAndEndpoints.addParticipate),
       headers: {
@@ -119,7 +118,10 @@ class ApiServiceAuctions {
       }),
     );
     print("1");
-    if (response.statusCode != 200) {    print("1");
+    if (response.statusCode != 200) {
+      print(response.body);
+      print(response.statusCode);
+
       // throw Exception('Failed to submit the offer');
       mySnackBar(title: 'added Participate failed', context: context,color: Colors.red);
 
