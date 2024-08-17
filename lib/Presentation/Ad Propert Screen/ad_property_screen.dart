@@ -30,7 +30,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     final LatLng? selectedLocation = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SelectLocationScreen(),
+        builder: (context) => const LocationScreen(),
       ),
     );
 

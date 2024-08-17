@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
+import 'package:pro_2/Presentation/Ad%20Propert%20Screen/SelectLocationScreen.dart';
 import 'package:pro_2/Presentation/Broker%20Profile%20Screen/profile_screen.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/dimensions.dart';
@@ -217,7 +219,27 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    debugPrint("x:${state.propertyDetailsModel.property.x}");
+                                    debugPrint("y:${state.propertyDetailsModel.property.y}");
+
+                                       final double? x = state.propertyDetailsModel.property.x;
+                                       final double? y = state.propertyDetailsModel.property.y;
+
+                                        LatLng? initialPosition;
+                                        if (x != null && y != null) {
+                                          initialPosition = LatLng(x, y);
+                                        }
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => LocationScreen(
+                                              initialPosition: initialPosition, // Pass initial position or null
+                                            ),
+                                          ),
+                                        );
+                                  },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [

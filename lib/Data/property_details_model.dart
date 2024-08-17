@@ -84,7 +84,10 @@ class PropertyDet {
   int?numberOfRoom;
   String?description;
   int viewers;
+  double?x;
+  double?y;
   DateTime createdAt;
+
 
   PropertyDet({
     required this.userId,
@@ -106,6 +109,8 @@ class PropertyDet {
     required this.numberOfRoom,
     required this.description,
     required this.viewers,
+    required this.x,
+    required this.y,
     required this.createdAt,
   });
 
@@ -129,6 +134,8 @@ class PropertyDet {
     numberOfRoom: json["numberOfRoom"],
     description: json["description"],
     viewers: json["viewers"],
+    x:json["x"],
+    y:json["y"],
     createdAt: DateTime.parse(json["created_at"]),
   );
 
@@ -152,6 +159,8 @@ class PropertyDet {
     "numberOfRoom": numberOfRoom,
     "description": description,
     "viewers": viewers,
+    "x":x,
+    "y":y,
     "created_at": createdAt.toIso8601String(),
   };
 }

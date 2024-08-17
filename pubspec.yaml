@@ -60,7 +60,7 @@ dependencies:
   location:
   carousel_slider:
   #//لازم نكفي فيو اذا بدنا يا كمان لios
-  #share_plus: ^9.0.0
+  share_plus: ^9.0.0
 flutter_native_splash:
   color: "#FFFFFF"
   image: "assets/images/General/App_Icon.png"

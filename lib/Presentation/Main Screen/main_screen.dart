@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
+import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Presentation/Main%20Screen/MainWidgets/main_widgets.dart';
 import 'package:pro_2/Presentation/Notification/notification_function.dart';
 import 'package:pro_2/generated/l10n.dart';
@@ -6,7 +9,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import '../../Util/cache_helper.dart';
 
 class MainScreen extends StatefulWidget {
-   MainScreen({super.key});
+  MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -16,26 +19,25 @@ class _MainScreenState extends State<MainScreen> {
   TextEditingController _ipController = TextEditingController();
   String? _ip;
 
-
   @override
   void initState() {
     super.initState();
 
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
-      if(!isAllowed){AwesomeNotifications().requestPermissionToSendNotifications()}
-
-    });
-      // طلب الإذن للإشعارات إذا لم يكن ممنوحاً
-      // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      //   if (!isAllowed) {
-      //     AwesomeNotifications().requestPermissionToSendNotifications();
-      //   }
-      // });
+          if (!isAllowed)
+            {AwesomeNotifications().requestPermissionToSendNotifications()}
+        });
+    // طلب الإذن للإشعارات إذا لم يكن ممنوحاً
+    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    //   if (!isAllowed) {
+    //     AwesomeNotifications().requestPermissionToSendNotifications();
+    //   }
+    // });
     // جدولة الإشعارات
     // scheduleDailyNotification();
 
-      // جدولة الإشعارات
-      // showNotification();
+    // جدولة الإشعارات
+    // showNotification();
 
     _loadIp();
   }
@@ -57,52 +59,62 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      // Color.fromARGB(255, 255, 255, 255),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PropertyCubit(),
+        ),
+      ],
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        // Color.fromARGB(255, 255, 255, 255),
 
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // TextField(
-            //   controller: _ipController,
-            //   decoration: InputDecoration(
-            //     hintText: _ip ?? 'Enter IP Address',
-            //   ),
-            // ),
-            // TextButton(
-            //   onPressed: (){_updateIp();print(_ipController);},
-            //
-            //   child: Text('Update IP'),
-            // ),
-            SearchBar(), //باخدها نفسها من مهدي بواجهة العقارات
-            CategorySection(),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Text(
-                    S.of(context).most_watched,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // TextField(
+              //   controller: _ipController,
+              //   decoration: InputDecoration(
+              //     hintText: _ip ?? 'Enter IP Address',
+              //   ),
+              // ),
+              // TextButton(
+              //   onPressed: (){_updateIp();print(_ipController);},
+              //
+              //   child: Text('Update IP'),
+              // ),
+              SearchBar(), //باخدها نفسها من مهدي بواجهة العقارات
+              CategorySection(),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: [
+                    Text(
+                      S.of(context).most_watched,
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(Icons.visibility)
-                ],
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Icon(Icons.visibility)
+                  ],
+                ),
               ),
-            ),
-            mostviewer(),
-            SizedBox(
-              height: 50,
-            )
-            // AdBanner(),
-          ],
+              mostviewer(),
+              SizedBox(
+                height: 50,
+              )
+              // AdBanner(),
+            ],
+          ),
         ),
       ),
     );

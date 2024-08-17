@@ -1,14 +1,15 @@
 import 'package:pro_2/Util/cache_helper.dart';
 
 class ApiAndEndpoints {
-   static const api = 'http://192.168.105.6:8000/api/';
+   static const api = 'http://192.168.1.5:8000/api/';
   // static Future<String> getApi() async {
   //   String? ip = await CacheHelper.getString(key: 'ip');
   //   return 'http://192.168.1.104:8000/api/';
   // }
+
+
   // static Future<String> api = getApi();
 //*HABEEB:   192.168.1.106
-
   static const verify='verifyEmail';//register
   static const showAuctions='showAuctions';
   static const auctionid='auction/';
@@ -19,23 +20,32 @@ class ApiAndEndpoints {
 
   static const signUp = 'register';//verifyEmail
   static const checkCode='checkCode';//register
+
+
   static const logIn = 'signIn';
+
   static const logout = 'logOut';
+
   static const createpost = 'posts';
   static const getpost = 'posts';
   static const get_My_Post = 'my-posts' ;
+
   static const updateRole = 'updateRole';
   static const addComment = 'addComment';
   static const getComments = 'comments?';
   static const reports = 'reports';
+
   static const getFavourite = 'showPropertiesInList';
+
   static const addFavourite = 'favorites';
+
   //for delete addaFavourite+deleteFavourite
   static const deleteFavourite = '/delete?';
   static const editProfile = 'editProfile'; //number or pic for user?
   // static const showMyImage = 'showMyImage'; //pic for user
   static const addPropertyAd = 'addPropertyAd';
   static const fetchAllAddresses = 'fetchAllAddresses?governorate_id=';
+
   static const getProperty = 'showPropertiesInListHome?user_id=';
   static const getBrokerProperties = 'showPropertyForBroker?user_id=';
   static const getPropertyDetails = 'showAllDetailsProperty?property_id=';
@@ -61,6 +71,11 @@ class ApiAndEndpoints {
 
   static const showAllImagesProperty = 'show360ImagesProperty';
 
-  static const advancedSearch='advancedSearch';
+  static const advancedSearch ='advancedSearch?';
+
+  static const  subscribe='payment';
+
+  static const  subscribeDetails='getMySub';
+
 
 }

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
+import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/generated/l10n.dart';
 
 import '../../../Util/constants.dart';
@@ -26,18 +28,22 @@ class _CategorySectionState extends State<CategorySection> {
   late List<Category> categories;
   late PageController _pageController;
   int _currentPage = 0;
-
+  late List<Widget>getLIst;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
+    getLIst=AuthCubit.get(context).screens; 
+    
     // تهيئة قائمة الفئات بعد التحقق من أن context جاهز
     categories = [
       Category(
         name: S.of(context).on_the_beach,
         imageUrl: 'assets/images/Home/on_the_beach.jpg',
         onTap: () {
-          print('On the beach category tapped');
+          
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>getLIst[3]));
+          PropertyCubit.get(context).sliding=8;
+          PropertyCubit.get(context).filterSelection(context);
           // أضف وظيفتك هنا
         },
       ),

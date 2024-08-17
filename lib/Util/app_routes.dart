@@ -22,7 +22,7 @@ import '../Presentation/ContactWithUs/ContactUsPage.dart';
 import '../Presentation/Add Post Screen/add_post_screen.dart';
 import '../Presentation/Confirm Add Post/confirm_add_post.dart';
 import '../Presentation/SplashScreen/splash_screen.dart';
-import '../Presentation/Subscription/Subscription.dart';
+import '../Presentation/Subscription/subscription_screen.dart';
 import '../Presentation/forget_pass/forget_verify.dart';
 import '../Presentation/forget_pass/forgot_password_screen.dart';
 import '../Presentation/forget_pass/update_password_screen.dart';
@@ -86,7 +86,7 @@ class AppRoutes
    static ContactUsPage contactwithus=ContactUsPage();
   static const addPost=AddPostScreen();
   // static const confirmAddPost=ConfirmAddPost(selectedGovernorate: '', budget: null,status: ,selectedArea: ,phone: ,description: ,key: ,);
-  static Subscription subscription=Subscription();
+  static SubscriptionScreen subscription=SubscriptionScreen();
   static My_Posts My_posts=My_Posts();
   static AccountInfoPage accountInfoPage =AccountInfoPage();
   static PropertyDetailsScreen propertyDetails =PropertyDetailsScreen(propertyId: 0,favourite: false,);
