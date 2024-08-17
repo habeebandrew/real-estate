@@ -64,7 +64,9 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                       Expanded(
                         flex: 1,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MyAnimation.createRoute(AppRoutes.AdvancedSearch));
+                          },
                           child: const CircleAvatar(
                             backgroundColor: Constants.mainColor,
                             child: Icon(Icons.filter_list, color: Colors.white),
