@@ -400,21 +400,21 @@ class _AdvancedSearchScreenState extends State<AdvancedSearchScreen> {
                           
                           int? addressId = selectedAdressId==-1  ? null:selectedAdressId;
                             
-                            print('addressId   ' + addressId.toString());
+                           
 
-                        //   await cubit.advancedSearch(
-                        //     statusId: statusId,
-                        //     propertyTypeId: propertyTypeId,
-                        //     cityId: cityId,
-                        //     addressId: addressId,
-                        //     minPrice: cubit.minPrice.text.isNotEmpty?cubit.minPrice.text:null,
-                        //     maxPrice: cubit.maxPrice.text.isNotEmpty?cubit.maxPrice.text:null,
-                        //     minSize: cubit.minSize.text.isNotEmpty?cubit.minSize.text:null,
-                        //     maxSize: cubit.maxSize.text.isNotEmpty?cubit.maxSize.text:null,
-                        //   );
-                        // if(cubit.loading==false){
-                        //   Navigator.push(context, MyAnimation.createRoute(ShowSearchResultScreen(propertyList: cubit.properties)));
-                        // }
+                          await cubit.advancedSearch(
+                            statusId: statusId,
+                            propertyTypeId: propertyTypeId,
+                            cityId: cityId,
+                            addressId: addressId,
+                            minPrice: cubit.minPrice.text.isNotEmpty?cubit.minPrice.text:null,
+                            maxPrice: cubit.maxPrice.text.isNotEmpty?cubit.maxPrice.text:null,
+                            minSize: cubit.minSize.text.isNotEmpty?cubit.minSize.text:null,
+                            maxSize: cubit.maxSize.text.isNotEmpty?cubit.maxSize.text:null,
+                          );
+                        if(cubit.loading==false){
+                          Navigator.push(context, MyAnimation.createRoute(ShowSearchResultScreen(propertyList: cubit.properties)));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
