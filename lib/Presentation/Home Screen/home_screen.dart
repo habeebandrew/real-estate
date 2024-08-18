@@ -24,27 +24,32 @@ Future<dynamic> fetchUnreadCount(BuildContext context) async {
   String? token = await CacheHelper.getString(key: 'token');
 
   if (token == null) {
-  }else{
-    fetchNotifications();
-
-  String token = (await CacheHelper.getString(key: 'token'))!;
-  final response = await NetworkHelper.get(
-    ApiAndEndpoints.showCountMyNotification,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    final jsonResponse = json.decode(response.body);
-    print(jsonResponse);
-    return jsonResponse ?? 0;
+    // يمكن هنا عرض رسالة توجيه للمستخدم لتسجيل الدخول مجددًا
+    return 0;
   } else {
-    throw Exception('Failed to load u/nread count');
-  }
+    try {
+      final response = await NetworkHelper.get(
+        ApiAndEndpoints.showCountMyNotification,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
 
-}}
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        print(jsonResponse);
+        return jsonResponse ?? 0;
+      } else {
+        throw Exception('Failed to load unread count');
+      }
+    } catch (error) {
+      print('Error fetching unread count: $error');
+      // إعادة المحاولة بعد فترة قصيرة
+      await Future.delayed(Duration(seconds: 5));
+      return await fetchUnreadCount(context); // محاولة التحميل مجددًا
+    }}}
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

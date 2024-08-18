@@ -88,7 +88,7 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
     'شاليه'
   ];
 
-  final List<String> provinces = ['Damascus', 'Rif Damascus', 'Homs'];
+  final List<String> provinces = ['Damascus', 'Rif Damascus', 'Homs','Aleppo','Hame','Latakia','Tartus','Idlib','Al-Hasakeh','Deir ez-Zor','Raqqa','Darra','As-Suwayda','Quneitra'];
 
   // القيم الجديدة
   double? price;
@@ -225,6 +225,42 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       case 'Homs':
         governorateId = 3;
         break;
+
+    //,'Aleppo','Hame','Latakia','Tartus','Idlib','Al-Hasakeh','Deir ez-Zor','Raqqa','Darra','As-Suwayda','Quneitra'
+      case 'Aleppo':
+        governorateId = 4;
+        break;
+      case 'Hame':
+        governorateId = 5;
+        break;
+      case 'Latakia':
+        governorateId = 6;
+        break;
+      case 'Tartus':
+        governorateId = 7;
+        break;
+      case 'Idlib':
+        governorateId = 8;
+        break;
+      case 'Hasakeh':
+        governorateId = 9;
+        break;
+      case 'Deir ez-Zor':
+        governorateId = 10;
+        break;
+      case 'Raqqa':
+        governorateId = 11;
+        break;
+      case 'Darra':
+        governorateId = 12;
+        break;
+      case 'As-Suwayda':
+        governorateId = 13;
+        break;
+      case 'Quneitra':
+        governorateId = 14;
+        break;
+
       default:
         governorateId = 0; // قيمة افتراضية غير صحيحة
     }
