@@ -182,8 +182,18 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
       final Map<String, int> provinceIds = {
         'Damascus': 1,
         'Rif Damascus': 2,
-        'Homs': 3
-      };
+        'Homs': 3,
+        'Aleppo': 4,
+        'Hame': 5,
+        'Latakia': 6,
+        'Tartus': 7,
+        'Idlib': 8,
+        'Hasakeh': 9,
+        'Deir ez-Zor': 10,
+        'Raqqa': 11,
+        'Darra': 12,
+        'As-Suwayda': 13,
+        'Quneitra': 14,};
       String token = (await CacheHelper.getString(key: 'token'))!;
       String api = await ApiAndEndpoints.api; // انتظار قيمة الـ api هنا
 
