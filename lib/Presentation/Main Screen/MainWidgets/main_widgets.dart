@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pro_2/Bloc/Auth%20Cubit/auth_cubit.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
+import 'package:pro_2/Presentation/Main%20Screen/MainWidgets/sharingwidget.dart';
 import 'package:pro_2/generated/l10n.dart';
 
 import '../../../Util/constants.dart';
@@ -300,6 +301,8 @@ class _mostviewerState extends State<mostviewer> {
               ],
             ),
           ),
+          SizedBox(height: 20,),
+
         ],
       ),
     );

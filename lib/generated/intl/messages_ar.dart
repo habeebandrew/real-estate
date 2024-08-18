@@ -168,6 +168,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneButton": MessageLookupByLibrary.simpleMessage("تواصل معنا"),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
+        "property_Detail":
+            MessageLookupByLibrary.simpleMessage("تفاصيل العقار"),
         "property_in": MessageLookupByLibrary.simpleMessage(" الممتلكات في"),
         "rental": MessageLookupByLibrary.simpleMessage("إيجار"),
         "report": MessageLookupByLibrary.simpleMessage("إبلاغ"),

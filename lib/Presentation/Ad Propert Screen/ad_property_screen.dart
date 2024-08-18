@@ -312,7 +312,8 @@ class _AdPropertyScreenState extends State<AdPropertyScreen> {
           'url_image360${i + 1}', images360[i].path);
       request.files.add(image);
     }
-    request.fields['image360Count'] ="$length";
+    int length_360 =images360.length;
+    request.fields['image360Count'] ="$length_360";
 
     var response = await request.send();
 

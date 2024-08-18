@@ -24,7 +24,7 @@ class _s_3dpicState extends State<s_3dpic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('عرض صورة 360 درجة'),
+        title: Text('عرض صورة 360 درجة+${widget.propertyId}'),
       ),
       body: SafeArea(
         child: FutureBuilder<List<String?>>(
@@ -38,10 +38,11 @@ class _s_3dpicState extends State<s_3dpic> {
               return Center(child: Text('لا توجد صور 360 درجة.'));
             } else {
               final images = snapshot.data!;
-              final filteredImages = images.where((img) => img != null && img.isNotEmpty).toList();
+              // فلترة الصور للتأكد من عدم وجود صور فارغة أو غير صالحة
+              final filteredImages = images.where((img) => img != null && img!.isNotEmpty).toList();
 
               if (filteredImages.isEmpty) {
-                return Center(child: Text('لا توجد صور 360 درجة.'));
+                return Center(child: Text('لا توجد صور 360 درجة صالحة.'));
               }
 
               return GridView.builder(
@@ -52,7 +53,7 @@ class _s_3dpicState extends State<s_3dpic> {
                 ),
                 itemCount: filteredImages.length,
                 itemBuilder: (context, index) {
-                  final imageUrl = filteredImages[index];
+                  final imageUrl = filteredImages[index]!;
                   return GestureDetector(
                     onTap: () {
                       showDialog(
@@ -61,7 +62,7 @@ class _s_3dpicState extends State<s_3dpic> {
                           return Dialog(
                             child: PanoramaViewer(
                               child: Image.network(
-                                imageUrl!,
+                                imageUrl,
                                 fit: BoxFit.cover,
                                 loadingBuilder: (context, child, progress) {
                                   if (progress == null) {
@@ -80,8 +81,18 @@ class _s_3dpicState extends State<s_3dpic> {
                       );
                     },
                     child: Image.network(
-                      imageUrl!,
+                      imageUrl,
                       fit: BoxFit.cover,
+                      loadingBuilder: (context, child, progress) {
+                        if (progress == null) {
+                          return child;
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(child: Icon(Icons.error, color: Colors.red));
+                      },
                     ),
                   );
                 },

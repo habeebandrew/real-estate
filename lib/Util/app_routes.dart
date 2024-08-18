@@ -16,6 +16,7 @@ import 'package:pro_2/Presentation/Properties%20Screen/properties_screen.dart';
 import 'package:pro_2/Presentation/Property%20Details%20Screen/property_details_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/Signup_screen.dart';
 import 'package:pro_2/Presentation/SignUp%20Screen/email_verification_screen.dart';
+import 'package:pro_2/Presentation/sharingtime/property_sharing_screen.dart';
 import '../Presentation/AccountInfoPage/AccountInfoPage.dart';
 import '../Presentation/Auctions/auction_list_screen.dart';
 import '../Presentation/ContactWithUs/ContactUsPage.dart';
@@ -26,11 +27,16 @@ import '../Presentation/Subscription/subscription_screen.dart';
 import '../Presentation/forget_pass/forget_verify.dart';
 import '../Presentation/forget_pass/forgot_password_screen.dart';
 import '../Presentation/forget_pass/update_password_screen.dart';
+import '../Presentation/sharingtime/AddProperty_sharing_Screen.dart';
+import '../Presentation/sharingtime/property_sharing_detail_screen.dart';
 import '../tests/360pic.dart';
 
 
 class NamedRoutes
 {
+  static const property_sharing_DetailScreen='property_sharing_detail_screen';
+
+
   static const homeScreen='HomeScreen';
   static const onBoardingScreen='onboarding1';
   static const passwordSetupScreen='passwordSetupScreen';
@@ -57,7 +63,10 @@ class NamedRoutes
   static const UpdatePasswordScreen='update_password_screen';
   static const auction_screen='auction_list_screen';
   static const addauctions='Add_Auction_screens';
+  static const add_sharing_Screen='AddProperty_sharing_Screen';
 
+
+  static const showsharing='property_sharing_screen';
 
   static const auctionDetailScreen='auction_detail_screen';
 
@@ -66,6 +75,12 @@ class NamedRoutes
 class AppRoutes
 {
   static UpdatePasswordScreen  updatePasswordScreen=UpdatePasswordScreen();
+  static Property_sharing_DetailScreen  property_sharing_DetailScreen=Property_sharing_DetailScreen(propertyId: 0,);
+
+  static Add_sharing_Screen  add_sharing_Screen=Add_sharing_Screen();
+
+  static show_sharing  showsharing=show_sharing();
+
   static AuctionDetailScreen  auctionDetailScreen=AuctionDetailScreen(auctionId: 0,);
 
   static const  homeScreen=HomeScreen();
@@ -109,6 +124,8 @@ class AppRoutes
     NamedRoutes.auctionDetailScreen:(context)=>AppRoutes.auctionDetailScreen,
 
     NamedRoutes.forget_verify:(context)=>AppRoutes.forget_verify,
+    NamedRoutes.add_sharing_Screen:(context)=>AppRoutes.add_sharing_Screen,
+
 
     NamedRoutes.homeScreen:(context)=>AppRoutes.homeScreen,
     NamedRoutes.onBoardingScreen:(context)=>AppRoutes.onBoardingScreen,
@@ -131,7 +148,10 @@ class AppRoutes
     NamedRoutes.forgotPasswordScreen :(context)=>AppRoutes.forgotPasswordScreen ,
     NamedRoutes.addauctions :(context)=>AppRoutes.addauctions ,
     NamedRoutes.auction_screen :(context)=>AppRoutes.auction_screen ,
+    NamedRoutes.property_sharing_DetailScreen :(context)=>AppRoutes.property_sharing_DetailScreen ,
 
+
+    NamedRoutes.showsharing :(context)=>AppRoutes.showsharing ,
 
 
   };

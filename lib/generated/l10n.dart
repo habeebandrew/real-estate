@@ -1269,6 +1269,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Property Detail`
+  String get property_Detail {
+    return Intl.message(
+      'Property Detail',
+      name: 'property_Detail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

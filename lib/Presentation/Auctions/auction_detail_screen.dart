@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pro_2/Presentation/Auctions/api_service_auction.dart';
 import 'package:pro_2/Util/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AuctionDetailScreen extends StatefulWidget {
   final int auctionId;
@@ -60,7 +61,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                         content:
-                            Text('يجب أن يكون السعر أعلى من $minPrice \$')),
+                        Text('يجب أن يكون السعر أعلى من $minPrice \$')),
                   );
                 } else {
                   try {
@@ -84,6 +85,18 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
         );
       },
     );
+  }
+
+  Future<void> _launchPhoneDialer(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
   }
 
   @override
@@ -189,46 +202,35 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                         ),
                       ],
                     ),
-                    // SizedBox(height: 10.0),
-                    // Row(
-                    //   children: [
-                    //     Icon(Icons.date_range, color: Colors.red),
-                    //     SizedBox(width: 8.0),
-                    //     Text(
-                    //       'تاريخ النهاية: ${auction['end'] ?? 'غير محدد'}',
-                    //       style: TextStyle(fontSize: 16.0),
-                    //     ),
-                    //   ],
-                    // ),
                     SizedBox(height: 20.0),
                     images.isNotEmpty
                         ? CarouselSlider(
-                            options: CarouselOptions(
-                              height: 200.0,
-                              enlargeCenterPage: true,
-                              enableInfiniteScroll: true,
-                              autoPlay: true,
-                              autoPlayInterval: Duration(seconds: 3),
-                              autoPlayAnimationDuration:
-                                  Duration(milliseconds: 800),
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              scrollDirection: Axis.horizontal,
-                              aspectRatio: 16 / 9,
-                              viewportFraction: 0.8,
-                            ),
-                            items: images.map<Widget>((image) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  image,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                ),
-                              );
-                            }).toList(),
-                          )
+                      options: CarouselOptions(
+                        height: 200.0,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: true,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration:
+                        Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        scrollDirection: Axis.horizontal,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.8,
+                      ),
+                      items: images.map<Widget>((image) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
+                        );
+                      }).toList(),
+                    )
                         : Text('لا توجد صور متاحة',
-                            style: TextStyle(color: Colors.redAccent)),
+                        style: TextStyle(color: Colors.redAccent)),
                     SizedBox(height: 20.0),
                     ElevatedButton.icon(
                       onPressed: () => _showAddOfferDialog(auction),
@@ -248,6 +250,37 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                       ),
                     ),
                     SizedBox(height: 20.0),
+                    Divider(color: Colors.grey[400]),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.account_circle, color: Constants.mainColor),
+                          SizedBox(width: 8.0),
+                          Text(
+                            'لوسيط: ${auction['user_name']}',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            icon: Icon(Icons.phone, color: Constants.mainColor),
+                            onPressed: () {
+                              _launchPhoneDialer(auction['number']);
+                            },
+                          ),
+                          Text(
+                            auction['number'],
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Divider(color: Colors.grey[400]),
                     Text(
                       'المشاركون في المزاد:',

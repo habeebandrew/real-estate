@@ -175,6 +175,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneButton": MessageLookupByLibrary.simpleMessage("Contact Us"),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("privacy policy"),
+        "property_Detail":
+            MessageLookupByLibrary.simpleMessage("Property Detail"),
         "property_in": MessageLookupByLibrary.simpleMessage(" property in"),
         "rental": MessageLookupByLibrary.simpleMessage("rental"),
         "report": MessageLookupByLibrary.simpleMessage("report"),

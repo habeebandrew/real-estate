@@ -14,6 +14,7 @@ class ApiAndEndpoints {
   static const showAuctions='showAuctions';
   static const auctionid='auction/';
   static const auctionParticipants='auctionParticipants/';
+  static const showSharingTimePropertyInListHome='showSharingTimePropertyInListHome';
 
   static const addParticipate='addParticipate';
 
@@ -45,6 +46,9 @@ class ApiAndEndpoints {
   // static const showMyImage = 'showMyImage'; //pic for user
   static const addPropertyAd = 'addPropertyAd';
   static const fetchAllAddresses = 'fetchAllAddresses?governorate_id=';
+  static const addSharingTimeProperty = 'addSharingTimeProperty';
+
+  static const showSharingTimePropertyDetails = 'showSharingTimePropertyDetails?sharingTimeProperty_id=';
 
   static const getProperty = 'showPropertiesInListHome?user_id=';
   static const getBrokerProperties = 'showPropertyForBroker?user_id=';

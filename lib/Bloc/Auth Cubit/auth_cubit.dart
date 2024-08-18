@@ -34,6 +34,8 @@ class AuthCubit extends Cubit<AuthState>
     AppRoutes.auction_screen,
     AppRoutes.adPropertyScreen,
     AppRoutes.propertiesScreen,
+    // AppRoutes.showsharing,
+
     AppRoutes.mainScreen,
   ];
 

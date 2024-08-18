@@ -13,6 +13,8 @@ import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/generated/l10n.dart';
 import 'package:pro_2/tests/360pic.dart';
 
+import 'Presentation/sharingtime/property_sharing_screen.dart';
+
 void main() async {
   AwesomeNotifications().initialize(
     null,
@@ -99,11 +101,10 @@ class _MyAppState extends State<MyApp> {
               //نعرف الخطوط اللازمة
               ),
         ),
-        // home://MapScreen(),
+        // home://show_sharing(),//MapScreen(),
         // notification(),
         // EmailVerificationScreen(),
         initialRoute:
-            // NamedRoutes.adPropertyScreen,
             widget.token != null
                 ? NamedRoutes.splashscreen
                 : widget.onBoardShowen == true
