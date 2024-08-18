@@ -270,6 +270,17 @@ Widget build_for_Broker(BuildContext context) {
         height: 5,
       ),
       myDrawerButton(
+          label: S.of(context).Subscription,
+          icon: Icons.business,
+          onPress: () async {
+            Navigator.of(context)
+                .push(MyAnimation.createRoute(AppRoutes.subscription));
+          },
+        ),
+        SizedBox(
+          height: 5,
+        ),
+      myDrawerButton(
         label: S.of(context).My_estate,
         icon: Icons.home,
         onPress: () {},
