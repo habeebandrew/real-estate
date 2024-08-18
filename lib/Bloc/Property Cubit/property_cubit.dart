@@ -23,6 +23,7 @@ class PropertyCubit extends Cubit<PropertyState> {
   String dropDownStatus='all';
 
   String dropDownItemCites='all Cities';
+   String dropDownItemCites2='all Cities';
   String dropDownItemPropertyType = 'All Property type';
 
   TextEditingController minPrice=TextEditingController();
@@ -85,7 +86,30 @@ class PropertyCubit extends Cubit<PropertyState> {
       cityId = 2;
     } else if (dropDownItemCites == 'Homs') {
       cityId = 3;
-    } else {
+    } else if (dropDownItemCites == 'Aleppo') {
+      cityId = 4;
+    }else if (dropDownItemCites == 'Hama') {
+      cityId = 5;
+    }else if (dropDownItemCites == 'Lattakia') {
+      cityId = 6;
+    }else if (dropDownItemCites == 'Tartus') {
+      cityId = 7;
+    }else if (dropDownItemCites == 'Idlib') {
+      cityId = 8;
+    }else if (dropDownItemCites == 'Al-Hasakah') {
+      cityId = 9;
+    }else if (dropDownItemCites == 'Deir ez-Zor') {
+      cityId = 10;
+    }else if (dropDownItemCites == 'Raqqa') {
+      cityId = 11;
+    }else if (dropDownItemCites == 'Daraa') {
+      cityId = 12;
+    }else if (dropDownItemCites == 'As-Suwayda') {
+      cityId = 13;
+    }else if (dropDownItemCites == 'Quneitra') {
+      cityId = 14;
+    }
+    else {
       cityId = null;
     }
 

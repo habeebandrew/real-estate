@@ -155,12 +155,100 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                               ),
                               DropdownMenuItem(
                                   value:'Homs',
-                                  onTap: (){
+                                  onTap:(){
                                     cubit.dropDownItemCites='Homs';
                                     cubit.filterSelection(context);
-                                  },
+                                  } ,
                                   child: const Text('Homs'),
-                              )
+                              ),
+                              DropdownMenuItem(
+                                  value:'Aleppo',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Aleppo';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Aleppo'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Hama',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Hama';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Hama'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Lattakia',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Lattakia';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Latakia'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Tartus',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Tartus';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Tartus'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Idlib',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Idlib';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Idlib'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Al-Hasakah',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Al-Hasakah';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Al-Hasakah'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Deir ez-Zor',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Deir ez-Zor';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Deir ez-Zor'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Raqqa',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Raqqa';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Raqqa'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Daraa',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Daraa';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Daraa'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'As-Suwayda',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='As-Suwayda';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('As-Suwayda'),
+                              ),
+                              DropdownMenuItem(
+                                  value:'Quneitra',
+                                  onTap: (){
+                                    cubit.dropDownItemCites='Quneitra';
+                                    cubit.filterSelection(context);
+                                  },
+                                  child: const Text('Quneitra'),
+                              ),
                             ],
                         ),
                       ],
