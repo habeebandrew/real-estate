@@ -23,18 +23,19 @@ class _show_sharingState extends State<show_sharing> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(  floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Add_sharing_Screen()),
-        );
-      },
-      child: Icon(Icons.add_circle_sharp, color: Colors.white),
-      backgroundColor: Constants.mainColor,
-    ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Add_sharing_Screen()),
+          );
+        },
+        child: Icon(Icons.add_circle_sharp, color: Colors.white),
+        backgroundColor: Constants.mainColor,
+      ),
       appBar: AppBar(
-        title: Text('Real Estate Listings'),
+        title: Text('Sharing Time Estate Listings'),
       ),
       body: FutureBuilder<List<Property_sharing>>(
         future: futureProperties,
@@ -55,7 +56,8 @@ class _show_sharingState extends State<show_sharing> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Property_sharing_DetailScreen(propertyId: properties[index].id),
+                        builder: (context) => Property_sharing_DetailScreen(
+                            propertyId: properties[index].id),
                       ),
                     );
                   },
@@ -90,7 +92,9 @@ class _show_sharingState extends State<show_sharing> {
                 ),
                 SizedBox(width: 8.0),
                 Text(
-                  property.propertyType.isNotEmpty ? property.propertyType : 'Unknown Property Type',
+                  property.propertyType.isNotEmpty
+                      ? property.propertyType
+                      : 'Unknown Property Type',
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -109,7 +113,9 @@ class _show_sharingState extends State<show_sharing> {
                 SizedBox(width: 8.0),
                 Expanded(
                   child: Text(
-                    property.address.isNotEmpty ? property.address : 'Unknown Address',
+                    property.address.isNotEmpty
+                        ? property.address
+                        : 'Unknown Address',
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Theme.of(context).primaryColor,
@@ -129,7 +135,9 @@ class _show_sharingState extends State<show_sharing> {
                 SizedBox(width: 8.0),
                 Expanded(
                   child: Text(
-                    property.description.isNotEmpty ? property.description : 'No Description Available',
+                    property.description.isNotEmpty
+                        ? property.description
+                        : 'No Description Available',
                     style: TextStyle(fontSize: 16.0, color: Colors.black87),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -174,35 +182,34 @@ class _show_sharingState extends State<show_sharing> {
             SizedBox(height: 10.0),
             property.images.isNotEmpty
                 ? CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                enlargeCenterPage: true,
-                enableInfiniteScroll: true,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                scrollDirection: Axis.horizontal,
-                aspectRatio: 16 / 9,
-                viewportFraction: 0.8,
-              ),
-              items: property.images.map<Widget>((image) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                );
-              }).toList(),
-            )
+                    options: CarouselOptions(
+                      height: 200.0,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: true,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      scrollDirection: Axis.horizontal,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 0.8,
+                    ),
+                    items: property.images.map<Widget>((image) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
+                      );
+                    }).toList(),
+                  )
                 : Text('No images available',
-                style: TextStyle(color: Colors.redAccent)),
+                    style: TextStyle(color: Colors.redAccent)),
           ],
         ),
       ),
     );
   }
-
 }

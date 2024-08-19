@@ -1279,6 +1279,196 @@ class S {
       args: [],
     );
   }
+
+  /// `Auctions`
+  String get Auctions {
+    return Intl.message(
+      'Auctions',
+      name: 'Auctions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time Sharing`
+  String get Time_Sharing {
+    return Intl.message(
+      'Time Sharing',
+      name: 'Time_Sharing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enjoy the luxury and comfort of owning a timeshare in a prestigious property. Your reservation for part of the year guarantees you an unforgettable vacation every year, with flexibility in timing and location.`
+  String get Time_Sharing_details {
+    return Intl.message(
+      'Enjoy the luxury and comfort of owning a timeshare in a prestigious property. Your reservation for part of the year guarantees you an unforgettable vacation every year, with flexibility in timing and location.',
+      name: 'Time_Sharing_details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add new real estate`
+  String get addnewreal {
+    return Intl.message(
+      'add new real estate',
+      name: 'addnewreal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Auctions`
+  String get AddAuctions {
+    return Intl.message(
+      'Add Auctions',
+      name: 'AddAuctions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `property type`
+  String get property_type {
+    return Intl.message(
+      'property type',
+      name: 'property_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `location`
+  String get location {
+    return Intl.message(
+      'location',
+      name: 'location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `description`
+  String get description {
+    return Intl.message(
+      'description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Features`
+  String get Features {
+    return Intl.message(
+      'Features',
+      name: 'Features',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Owner name`
+  String get Owner_name {
+    return Intl.message(
+      'Owner name',
+      name: 'Owner_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `price`
+  String get price {
+    return Intl.message(
+      'price',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Starting price`
+  String get Starting_price {
+    return Intl.message(
+      'Starting price',
+      name: 'Starting_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start date`
+  String get Start_date {
+    return Intl.message(
+      'Start date',
+      name: 'Start_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `end date`
+  String get end_date {
+    return Intl.message(
+      'end date',
+      name: 'end_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add image`
+  String get add_pic {
+    return Intl.message(
+      'Add image',
+      name: 'add_pic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit new offer`
+  String get Submit_new_offer {
+    return Intl.message(
+      'Submit new offer',
+      name: 'Submit_new_offer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Broker`
+  String get broker {
+    return Intl.message(
+      'Broker',
+      name: 'broker',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auction participants`
+  String get Auction_participants {
+    return Intl.message(
+      'Auction participants',
+      name: 'Auction_participants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auction Details`
+  String get Auction_Details {
+    return Intl.message(
+      'Auction Details',
+      name: 'Auction_Details',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

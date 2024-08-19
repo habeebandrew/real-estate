@@ -67,12 +67,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             ElevatedButton(
               onPressed: () {
                 sendCode(_codeController);
-               // _verifyCode(_codeController.text);
+                // _verifyCode(_codeController.text);
               },
               child: const Text('Verify'),
               style: ElevatedButton.styleFrom(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 textStyle: const TextStyle(fontSize: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -96,7 +96,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 const Text('Already a member?'),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                    Navigator.of(context)
+                        .push(MyAnimation.createRoute(AppRoutes.logInScreen));
                     // تسجيل الدخول بدلاً من ذلك
                     print('Sign in instead');
                   },
@@ -117,7 +118,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     // URL الخاص بالـ API الذي ستقوم بإرسال الطلب إليه
 
     // الحصول على القيمة المحتملة من التخزين المؤقت
-    String? user_name_verify = await CacheHelper.getString(key: 'user_name_verify');
+    String? user_name_verify =
+        await CacheHelper.getString(key: 'user_name_verify');
 
     // التحقق مما إذا كانت القيمة غير موجودة وتعيين قيمة افتراضية إذا لزم الأمر
     if (user_name_verify == null) {
@@ -131,9 +133,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     } catch (e) {
       print('Error: The code is not a valid integer');
       return;
-    }print(codeAsInt);
-    print("user_name_verify"+user_name_verify);
-    print("codeController"+codeController.text);
+    }
+    print(codeAsInt);
+    print("user_name_verify" + user_name_verify);
+    print("codeController" + codeController.text);
 
     try {
       // إرسال طلب POST إلى الـ API
@@ -151,33 +154,35 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
       // التحقق من استجابة الـ API
       if (response.statusCode == 200) {
-        mySnackBar(color: Colors.green,
+        mySnackBar(
+          color: Colors.green,
           context: context,
-          title: response.body,
+          title: "verified",
         );
         print(response.body);
         final Map<String, dynamic> responseData = jsonDecode(response.body);
 
         // تحقق مما إذا كانت الرسالة هي الرسالة المتوقعة
-        if (responseData.containsKey("user")) {//الربط مع الموديل
-         mySnackBar(color: Colors.green,
-           context: context,
-           title: 'verify successful',
-         );
-         Future.delayed(const Duration(seconds: 2), () {
-           Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
-         });
-
-      }
-      else if (responseData.isNotEmpty && responseData[0] == "you have to enter correct code ...") {
-         mySnackBar(color: Colors.green,
-           context: context,
-           title: responseData[0],
-         );
+        if (responseData.containsKey("user")) {
+          //الربط مع الموديل
+          mySnackBar(
+            color: Colors.green,
+            context: context,
+            title: 'verify successful',
+          );
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.of(context)
+                .push(MyAnimation.createRoute(AppRoutes.logInScreen));
+          });
+        } else if (responseData.isNotEmpty &&
+            responseData[0] == "you have to enter correct code ...") {
+          mySnackBar(
+            color: Colors.green,
+            context: context,
+            title: responseData[0],
+          );
           print("النجاح: تم إدخال الكود بشكل صحيح.");
-        }
-
-      else {
+        } else {
           print("الرسالة الواردة: ${responseData}");
         }
       } else {
@@ -187,6 +192,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       print('استثناء: $e');
     }
   }
+
   void _verifyCode(String code) {
     if (code.length == 6) {
       // تنفيذ منطق التحقق هنا

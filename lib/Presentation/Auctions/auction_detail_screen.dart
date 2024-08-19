@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pro_2/Presentation/Auctions/api_service_auction.dart';
 import 'package:pro_2/Util/constants.dart';
+import 'package:pro_2/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuctionDetailScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'تقديم عرض جديد',
+            S.of(context).Submit_new_offer,
             style: TextStyle(color: Colors.black),
           ),
           content: TextField(
@@ -61,7 +62,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                         content:
-                        Text('يجب أن يكون السعر أعلى من $minPrice \$')),
+                            Text('يجب أن يكون السعر أعلى من $minPrice \$')),
                   );
                 } else {
                   try {
@@ -102,7 +103,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('تفاصيل المزاد')),
+      appBar: AppBar(title: Text(S.of(context).Auction_Details)),
       body: FutureBuilder<Map<String, dynamic>>(
         future: _auctionDetailsFuture,
         builder: (context, snapshot) {
@@ -168,7 +169,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                         ),
                         SizedBox(width: 8.0),
                         Text(
-                          'المالك: ${auction['the_owner']}',
+                          '${S.of(context).Owner_name}: ${auction['the_owner']}',
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.blue[900],
@@ -182,7 +183,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                         Icon(Icons.attach_money, color: Colors.redAccent),
                         SizedBox(width: 8.0),
                         Text(
-                          'السعر الابتدائي: ${auction['first_price']} \$',
+                          '${S.of(context).Starting_price}: ${auction['first_price']} \$',
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
@@ -197,7 +198,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                         Icon(Icons.date_range, color: Constants.mainColor),
                         SizedBox(width: 8.0),
                         Text(
-                          'تاريخ البدء: ${auction['start']}',
+                          '${S.of(context).Start_date}: ${auction['start']}',
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ],
@@ -205,32 +206,32 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                     SizedBox(height: 20.0),
                     images.isNotEmpty
                         ? CarouselSlider(
-                      options: CarouselOptions(
-                        height: 200.0,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: true,
-                        autoPlay: true,
-                        autoPlayInterval: Duration(seconds: 3),
-                        autoPlayAnimationDuration:
-                        Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        scrollDirection: Axis.horizontal,
-                        aspectRatio: 16 / 9,
-                        viewportFraction: 0.8,
-                      ),
-                      items: images.map<Widget>((image) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            image,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        );
-                      }).toList(),
-                    )
+                            options: CarouselOptions(
+                              height: 200.0,
+                              enlargeCenterPage: true,
+                              enableInfiniteScroll: true,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              scrollDirection: Axis.horizontal,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 0.8,
+                            ),
+                            items: images.map<Widget>((image) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  image,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                              );
+                            }).toList(),
+                          )
                         : Text('لا توجد صور متاحة',
-                        style: TextStyle(color: Colors.redAccent)),
+                            style: TextStyle(color: Colors.redAccent)),
                     SizedBox(height: 20.0),
                     ElevatedButton.icon(
                       onPressed: () => _showAddOfferDialog(auction),
@@ -239,7 +240,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                         color: Colors.white,
                       ),
                       label: Text(
-                        'تقديم عرض جديد',
+                        S.of(context).Submit_new_offer,
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -253,37 +254,43 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                     Divider(color: Colors.grey[400]),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.account_circle, color: Constants.mainColor),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'لوسيط: ${auction['user_name']}',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black87,
+                      child: SingleChildScrollView(
+                        scrollDirection:
+                            Axis.horizontal, // تمكين التمرير الأفقي
+                        child: Row(
+                          children: [
+                            Icon(Icons.account_circle,
+                                color: Constants.mainColor),
+                            SizedBox(width: 8.0),
+                            Text(
+                              '${S.of(context).broker}: ${auction['user_name']}',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.black87,
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                          IconButton(
-                            icon: Icon(Icons.phone, color: Constants.mainColor),
-                            onPressed: () {
-                              _launchPhoneDialer(auction['number']);
-                            },
-                          ),
-                          Text(
-                            auction['number'],
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black87,
+                            SizedBox(width: 16.0), // مسافة بين العناصر
+                            IconButton(
+                              icon:
+                                  Icon(Icons.phone, color: Constants.mainColor),
+                              onPressed: () {
+                                _launchPhoneDialer(auction['number']);
+                              },
                             ),
-                          ),
-                        ],
+                            Text(
+                              auction['number'],
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Divider(color: Colors.grey[400]),
                     Text(
-                      'المشاركون في المزاد:',
+                      '${S.of(context).Auction_participants}:',
                       style: TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),

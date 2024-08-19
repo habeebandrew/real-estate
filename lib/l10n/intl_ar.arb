@@ -122,7 +122,31 @@
     "complaint": "شكوى",
     "request": "طلب",
     "inquiry": "استفسار",
-    "property_Detail": "تفاصيل العقار"
+    "property_Detail": "تفاصيل العقار",
+    "Auctions": "المزادات",
+    "Time_Sharing":"الملكية المشتركة",
+    "Time_Sharing_details":"استمتع بتجربة الفخامة والراحة من خلال امتلاك حصة زمنية في عقار فاخر. حجزك لجزء من السنة يضمن لك عطلة لا تُنسى في كل عام، مع مرونة في التوقيت والموقع."
+,
+"addnewreal":"إضافة عقار جديد"
+,
+"AddAuctions":"إضافة مزاد جديد",
+"property_type":"نوع العقار",
+"location":"الموقع",
+"description":"الوصف",
+"Features":"الميزات",
+"Owner_name":"اسم المالك",
+"price":"السعر",
+"Starting_price":"سعر البداية",
+"Start_date":"تاريخ البدء",
+"end_date":"تاريخ النهاية",
+"add_pic":"إضافة صورة",
+"Submit_new_offer":"تقديم عرض جديد",
+"broker":"الوسيط العقاري",
+"Auction_participants":"المشاركون في المزاد",
+"Auction_Details":"تفاصيل المزاد"
+
+
+
 
 
 

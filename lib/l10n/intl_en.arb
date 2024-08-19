@@ -123,7 +123,47 @@
   "complaint": "Complaint",
   "request": "Request",
   "inquiry": "Inquiry",
-  "property_Detail": "Property Detail"
+  "property_Detail": "Property Detail",
+"Auctions": "Auctions",
+"Time_Sharing":"Time Sharing",
+"Time_Sharing_details":"Enjoy the luxury and comfort of owning a timeshare in a prestigious property. Your reservation for part of the year guarantees you an unforgettable vacation every year, with flexibility in timing and location."
+,
+"addnewreal":"add new real estate",
+"AddAuctions":"Add Auctions",
+"property_type":"property type",
+"location":"location",
+"description":"description",
+"Features":"Features",
+"Owner_name":"Owner name",
+"price":"price",
+"Starting_price":"Starting price",
+"Start_date":"Start date",
+"end_date":"end date",
+"add_pic":"Add image",
+"Submit_new_offer":"Submit new offer",
+"broker":"Broker",
+"Auction_participants":"Auction participants",
+"Auction_Details":"Auction Details"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

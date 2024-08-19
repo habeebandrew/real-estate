@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Account_informations":
             MessageLookupByLibrary.simpleMessage("معلومات الحساب"),
         "Add": MessageLookupByLibrary.simpleMessage("إضافة"),
+        "AddAuctions": MessageLookupByLibrary.simpleMessage("إضافة مزاد جديد"),
         "Add_comment": MessageLookupByLibrary.simpleMessage("إضافة تعليق..."),
         "Add_post": MessageLookupByLibrary.simpleMessage("إضافة منشور"),
         "Add_real": MessageLookupByLibrary.simpleMessage("إضافة إعلان عقاري"),
@@ -35,6 +36,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "All": MessageLookupByLibrary.simpleMessage("الجميع"),
         "All_Cities": MessageLookupByLibrary.simpleMessage("كل المدن"),
         "As_Suwayda": MessageLookupByLibrary.simpleMessage("السويداء"),
+        "Auction_Details":
+            MessageLookupByLibrary.simpleMessage("تفاصيل المزاد"),
+        "Auction_participants":
+            MessageLookupByLibrary.simpleMessage("المشاركون في المزاد"),
+        "Auctions": MessageLookupByLibrary.simpleMessage("المزادات"),
         "Budget": MessageLookupByLibrary.simpleMessage("ميزانية:"),
         "Choose_Gallery":
             MessageLookupByLibrary.simpleMessage("اختر من المعرض"),
@@ -56,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Enter_new_number":
             MessageLookupByLibrary.simpleMessage("إدخال رقم الهاتف الجديد"),
         "Favourite": MessageLookupByLibrary.simpleMessage("المفضلة"),
+        "Features": MessageLookupByLibrary.simpleMessage("الميزات"),
         "Forget_password":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر؟"),
         "Hama": MessageLookupByLibrary.simpleMessage("حماة"),
@@ -74,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "No_phone":
             MessageLookupByLibrary.simpleMessage("لم تتم إضافة رقم الهاتف"),
         "Oldest": MessageLookupByLibrary.simpleMessage("الأقدم"),
+        "Owner_name": MessageLookupByLibrary.simpleMessage("اسم المالك"),
         "Password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "Password_characters_long": MessageLookupByLibrary.simpleMessage(
             "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"),
@@ -125,17 +133,28 @@ class MessageLookup extends MessageLookupByLibrary {
         "Sign_up": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "Signup_user":
             MessageLookupByLibrary.simpleMessage("إنشاء حساب كمستخدم"),
+        "Start_date": MessageLookupByLibrary.simpleMessage("تاريخ البدء"),
+        "Starting_price": MessageLookupByLibrary.simpleMessage("سعر البداية"),
+        "Submit_new_offer":
+            MessageLookupByLibrary.simpleMessage("تقديم عرض جديد"),
         "Subscription": MessageLookupByLibrary.simpleMessage("الاشتراك"),
         "Tartous": MessageLookupByLibrary.simpleMessage("طرطوس"),
         "There_are_no_posts": MessageLookupByLibrary.simpleMessage(
             "لا يوجد أي مشاركات نشرت سابقا !"),
+        "Time_Sharing":
+            MessageLookupByLibrary.simpleMessage("الملكية المشتركة"),
+        "Time_Sharing_details": MessageLookupByLibrary.simpleMessage(
+            "استمتع بتجربة الفخامة والراحة من خلال امتلاك حصة زمنية في عقار فاخر. حجزك لجزء من السنة يضمن لك عطلة لا تُنسى في كل عام، مع مرونة في التوقيت والموقع."),
         "Types": MessageLookupByLibrary.simpleMessage("أنواع العقارت>"),
         "User_Name": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "User_name_characters": MessageLookupByLibrary.simpleMessage(
             "لا يمكن أن يتجاوز اسم المستخدم 55 حرفًا"),
         "Wanted_for": MessageLookupByLibrary.simpleMessage("مطلوب ل"),
+        "add_pic": MessageLookupByLibrary.simpleMessage("إضافة صورة"),
+        "addnewreal": MessageLookupByLibrary.simpleMessage("إضافة عقار جديد"),
         "alert": MessageLookupByLibrary.simpleMessage("تنبيه"),
         "apartment": MessageLookupByLibrary.simpleMessage("شقة"),
+        "broker": MessageLookupByLibrary.simpleMessage("الوسيط العقاري"),
         "building": MessageLookupByLibrary.simpleMessage("بناء"),
         "buy": MessageLookupByLibrary.simpleMessage("شراء"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
@@ -143,9 +162,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "complaint": MessageLookupByLibrary.simpleMessage("شكوى"),
         "contactUsTitle": MessageLookupByLibrary.simpleMessage("تواصل معنا"),
+        "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "email": MessageLookupByLibrary.simpleMessage("الإيميل"),
         "emailButton":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "end_date": MessageLookupByLibrary.simpleMessage("تاريخ النهاية"),
         "farm": MessageLookupByLibrary.simpleMessage("مزرعة"),
         "go_out": MessageLookupByLibrary.simpleMessage("هل تريد حقا الخروج?"),
         "inquiry": MessageLookupByLibrary.simpleMessage("استفسار"),
@@ -154,6 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "inquirySentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الاستفسار بنجاح"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "messageSendingFailed":
             MessageLookupByLibrary.simpleMessage("فشل في إرسال الرسالة"),
         "messageSentSuccessfully":
@@ -166,11 +188,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "ok": MessageLookupByLibrary.simpleMessage("تطبيق"),
         "on_the_beach": MessageLookupByLibrary.simpleMessage("شاليه"),
         "phoneButton": MessageLookupByLibrary.simpleMessage("تواصل معنا"),
+        "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "property_Detail":
             MessageLookupByLibrary.simpleMessage("تفاصيل العقار"),
         "property_in": MessageLookupByLibrary.simpleMessage(" الممتلكات في"),
+        "property_type": MessageLookupByLibrary.simpleMessage("نوع العقار"),
         "rental": MessageLookupByLibrary.simpleMessage("إيجار"),
         "report": MessageLookupByLibrary.simpleMessage("إبلاغ"),
         "request": MessageLookupByLibrary.simpleMessage("طلب"),

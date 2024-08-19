@@ -20,6 +20,7 @@ import '../../Util/network_helper.dart';
 import '../../generated/l10n.dart';
 import '../Notification/notification_function.dart';
 import 'package:http/http.dart' as http;
+
 Future<dynamic> fetchUnreadCount(BuildContext context) async {
   String? token = await CacheHelper.getString(key: 'token');
 
@@ -48,8 +49,9 @@ Future<dynamic> fetchUnreadCount(BuildContext context) async {
       // إعادة المحاولة بعد فترة قصيرة
       await Future.delayed(Duration(seconds: 5));
       return await fetchUnreadCount(context); // محاولة التحميل مجددًا
-    }}}
-
+    }
+  }
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -70,21 +72,25 @@ class _HomeScreenState extends State<HomeScreen> {
     // );
 
     _fetchUnreadCount();
-    _timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchUnreadCount());
+    _timer =
+        Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchUnreadCount());
   }
+
 //
   Future<void> _checkNumberValue() async {
     String? number = await CacheHelper.getString(key: 'number');
     print(number);
 
-    if (number ==null) {
+    if (number != null &&
+        number.isNotEmpty &&
+        RegExp(r'^\d+$').hasMatch(number)) {
+    } else
       _showMandatoryAddNumberDialog(context);
-   }
   }
+
   @override
   void dispose() {
-
-      _timer.cancel();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -142,7 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 slivers: <Widget>[
                   SliverAppBar(
-                    
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.white,
                     pinned: true,
@@ -151,13 +156,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     centerTitle: true,
                     title: Row(
                       mainAxisSize: MainAxisSize.min,
-                      
                       children: [
                         Image.asset(
                           "assets/images/General/App_Icon1.png",
                           height: Dimensions.heightPercentage(context, 6.5),
                         ),
-                      
+
                         RichText(
                           text: TextSpan(
                             children: [
@@ -194,47 +198,52 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        
+
                         IconButton(
-                         onPressed: (){
-                            Navigator.push(context, MyAnimation.createRoute(AppRoutes.favouriteScreen));
-                         },
-                         icon: const Icon(
-                          Icons.favorite_border,
-                         ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MyAnimation.createRoute(
+                                    AppRoutes.favouriteScreen));
+                          },
+                          icon: const Icon(
+                            Icons.favorite_border,
+                          ),
                         ),
-                        
-                      
+
                         Stack(
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.notifications_none_rounded),
+                              icon:
+                                  const Icon(Icons.notifications_none_rounded),
                               onPressed: () {
                                 showNotificationSheet(context);
                               },
                             ),
-                             if (unreadCount !=0)
+                            if (unreadCount != 0)
                               Positioned(
                                 right: 0,
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 4.0),
                                   decoration: BoxDecoration(
                                     color: Colors.red,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  constraints: BoxConstraints(minWidth: 10, minHeight: 10),
+                                  constraints: BoxConstraints(
+                                      minWidth: 10, minHeight: 10),
                                   child: Center(
                                     child: Text(
                                       unreadCount.toString(),
                                       style: TextStyle(
-                                        color: Colors.white,fontSize: 8,
+                                        color: Colors.white,
+                                        fontSize: 8,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-
                           ],
                         ),
                         // Spacer(),
@@ -245,7 +254,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         // )
                       ],
                     ),
-                    
                   ),
                   SliverFillRemaining(
                     child: cubit.screens[cubit.currentIndex],
@@ -262,7 +270,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _handleFloatingActionButton(context);
               },
             ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               currentIndex: cubit.currentIndex,
@@ -273,10 +282,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 cubit.bottomNavChange(value, context);
               },
               items: [
-                myBottomNavBarItem(icon: Icons.announcement, label: S.of(context).Posts),
-                myBottomNavBarItem(icon: Icons.price_change, label: 'Auctions'),
+                myBottomNavBarItem(
+                    icon: Icons.announcement, label: S.of(context).Posts),
+                myBottomNavBarItem(
+                    icon: Icons.price_change, label: S.of(context).Auctions),
                 myBottomNavBarItem(icon: Icons.add, label: S.of(context).Add),
-                myBottomNavBarItem(icon: Icons.holiday_village, label: S.of(context).Properties),
+                myBottomNavBarItem(
+                    icon: Icons.holiday_village,
+                    label: S.of(context).Properties),
                 myBottomNavBarItem(icon: Icons.home, label: S.of(context).Home),
               ],
             ),
@@ -305,11 +318,13 @@ class _HomeScreenState extends State<HomeScreen> {
               TextButton(
                 child: Text(
                   S.of(context).Log_In,
-                  style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Constants.mainColor, fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                  Navigator.of(context)
+                      .push(MyAnimation.createRoute(AppRoutes.logInScreen));
                 },
               ),
             ],
@@ -326,7 +341,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             title: Text(
               S.of(context).Add,
-              style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Constants.mainColor, fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
               child: Column(
@@ -342,18 +358,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             title: Text(
                               S.of(context).alert,
-                              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
                             ),
                             content: Text(S.of(context).Please_subscription),
                             actions: <Widget>[
                               TextButton(
                                 child: Text(
                                   S.of(context).Subscription,
-                                  style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      color: Constants.mainColor,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.subscription));
+                                  Navigator.of(context).push(
+                                      MyAnimation.createRoute(
+                                          AppRoutes.subscription));
                                 },
                               ),
                             ],
@@ -369,7 +391,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Divider(),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+                      Navigator.of(context)
+                          .push(MyAnimation.createRoute(AppRoutes.addPost));
                     },
                     child: ListTile(
                       leading: Icon(Icons.info, color: Constants.mainColor),
@@ -403,14 +426,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             title: Text(
               S.of(context).Add,
-              style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Constants.mainColor, fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.adPropertyScreen));
+                      Navigator.of(context).push(
+                          MyAnimation.createRoute(AppRoutes.adPropertyScreen));
                     },
                     child: ListTile(
                       leading: Icon(Icons.info, color: Constants.mainColor),
@@ -420,7 +445,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Divider(),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.addPost));
+                      Navigator.of(context)
+                          .push(MyAnimation.createRoute(AppRoutes.addPost));
                     },
                     child: ListTile(
                       leading: Icon(Icons.info, color: Constants.mainColor),
@@ -446,7 +472,9 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
-}void _showMandatoryAddNumberDialog(BuildContext context) {
+}
+
+void _showMandatoryAddNumberDialog(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false, // يمنع إغلاق الحوار بالضغط خارجها
@@ -456,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(15),
         ),
         title: Text(
-S.of(context).alert,
+          S.of(context).alert,
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
         ),
         content: Text(S.of(context).Please_number),
@@ -465,11 +493,13 @@ S.of(context).alert,
             child: TextButton(
               child: Text(
                 S.of(context).Enter_new_number,
-                style: TextStyle(color: Constants.mainColor, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Constants.mainColor, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop(); // أغلق الحوار
-                Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.accountInfoPage));
+                Navigator.of(context)
+                    .push(MyAnimation.createRoute(AppRoutes.accountInfoPage));
               },
             ),
           ),

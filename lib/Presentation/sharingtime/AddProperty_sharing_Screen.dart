@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pro_2/Presentation/sharingtime/apiservice_sharing.dart';
+import 'package:pro_2/generated/l10n.dart';
 
 import '../../Util/constants.dart';
 
@@ -114,8 +114,8 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
             price!,
             startDate!,
             endDate!,
-            images,context
-        );
+            images,
+            context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('تم إضافة العقار بنجاح!')),
         );
@@ -130,7 +130,7 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('إضافة عقار جديد')),
+      appBar: AppBar(title: Text(S.of(context).addnewreal)),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -141,7 +141,7 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
               children: [
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    labelText: 'نوع العقار',
+                    labelText: S.of(context).property_type,
                     prefixIcon: Icon(
                       Icons.home,
                       color: Constants.mainColor,
@@ -162,12 +162,12 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                     });
                   },
                   validator: (value) =>
-                  value == null ? 'الرجاء اختيار نوع العقار' : null,
+                      value == null ? 'الرجاء اختيار نوع العقار' : null,
                 ),
                 SizedBox(height: 15),
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    labelText: 'الموقع',
+                    labelText: S.of(context).location,
                     prefixIcon: Icon(
                       Icons.location_on,
                       color: Constants.mainColor,
@@ -188,12 +188,12 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                     });
                   },
                   validator: (value) =>
-                  value == null ? 'الرجاء اختيار الموقع' : null,
+                      value == null ? 'الرجاء اختيار الموقع' : null,
                 ),
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'وصف العقار',
+                    labelText: S.of(context).description,
                     prefixIcon: Icon(
                       Icons.description,
                       color: Constants.mainColor,
@@ -207,12 +207,12 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                     description = value!;
                   },
                   validator: (value) =>
-                  value!.isEmpty ? 'الرجاء إدخال وصف للعقار' : null,
+                      value!.isEmpty ? 'الرجاء إدخال وصف للعقار' : null,
                 ),
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'ميزات العقار',
+                    labelText: S.of(context).Features,
                     prefixIcon: Icon(
                       Icons.star,
                       color: Constants.mainColor,
@@ -225,12 +225,12 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                     features = value!;
                   },
                   validator: (value) =>
-                  value!.isEmpty ? 'الرجاء إدخال ميزات العقار' : null,
+                      value!.isEmpty ? 'الرجاء إدخال ميزات العقار' : null,
                 ),
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'المالك',
+                    labelText: S.of(context).Owner_name,
                     prefixIcon: Icon(
                       Icons.person,
                       color: Constants.mainColor,
@@ -243,12 +243,12 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                     theOwners = value!;
                   },
                   validator: (value) =>
-                  value!.isEmpty ? 'الرجاء إدخال اسم المالك' : null,
+                      value!.isEmpty ? 'الرجاء إدخال اسم المالك' : null,
                 ),
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'السعر',
+                    labelText: S.of(context).price,
                     prefixIcon: Icon(
                       Icons.attach_money,
                       color: Constants.mainColor,
@@ -278,7 +278,7 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                         onTap: () => _selectDate(context, true),
                         child: InputDecorator(
                           decoration: InputDecoration(
-                            labelText: 'تاريخ البدء',
+                            labelText: S.of(context).Start_date,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(
                               Icons.calendar_today,
@@ -300,7 +300,7 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                         onTap: () => _selectDate(context, false),
                         child: InputDecorator(
                           decoration: InputDecoration(
-                            labelText: 'تاريخ النهاية',
+                            labelText: S.of(context).end_date,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(
                               Icons.calendar_today,
@@ -326,7 +326,7 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                     color: Colors.white,
                   ),
                   label: Text(
-                    'إضافة صور',
+                    S.of(context).add_pic,
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -369,7 +369,7 @@ class _Add_sharing_ScreenState extends State<Add_sharing_Screen> {
                   child: ElevatedButton(
                     onPressed: _submitForm,
                     child: Text(
-                      'إرسال',
+                      S.of(context).sendRequest,
                       style: TextStyle(color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(

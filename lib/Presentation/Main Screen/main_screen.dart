@@ -103,11 +103,9 @@ class _MainScreenState extends State<MainScreen> {
             // SharingTimeScreen(),
             // mostviewer(),
             ActionCard(
-              title: 'الملكية المشتركة',
-              subtitle: "استمتع بتجربة الفخامة والراحة من خلال امتلاك حصة زمنية في عقار فاخر. حجزك لجزء من السنة يضمن لك عطلة لا تُنسى في كل عام، مع مرونة في التوقيت والموقع."
-                ,
-              icon: Icons.home
-            ),
+                title: S.of(context).Time_Sharing,
+                subtitle: S.of(context).Time_Sharing_details,
+                icon: Icons.home),
             SizedBox(
               height: 50,
             )

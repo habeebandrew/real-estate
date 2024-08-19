@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Account_informations":
             MessageLookupByLibrary.simpleMessage("Account informations"),
         "Add": MessageLookupByLibrary.simpleMessage("Add"),
+        "AddAuctions": MessageLookupByLibrary.simpleMessage("Add Auctions"),
         "Add_comment": MessageLookupByLibrary.simpleMessage("Add a comment..."),
         "Add_post": MessageLookupByLibrary.simpleMessage("Add a post"),
         "Add_real":
@@ -36,6 +37,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "All": MessageLookupByLibrary.simpleMessage("All"),
         "All_Cities": MessageLookupByLibrary.simpleMessage("All Cities"),
         "As_Suwayda": MessageLookupByLibrary.simpleMessage("As-Suwayda"),
+        "Auction_Details":
+            MessageLookupByLibrary.simpleMessage("Auction Details"),
+        "Auction_participants":
+            MessageLookupByLibrary.simpleMessage("Auction participants"),
+        "Auctions": MessageLookupByLibrary.simpleMessage("Auctions"),
         "Budget": MessageLookupByLibrary.simpleMessage("Budget:"),
         "Choose_Gallery":
             MessageLookupByLibrary.simpleMessage("Choose from Gallery"),
@@ -57,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Enter_new_number":
             MessageLookupByLibrary.simpleMessage("Enter the new phone number"),
         "Favourite": MessageLookupByLibrary.simpleMessage("Favourite"),
+        "Features": MessageLookupByLibrary.simpleMessage("Features"),
         "Forget_password":
             MessageLookupByLibrary.simpleMessage("Forget the password?"),
         "Hama": MessageLookupByLibrary.simpleMessage("Hama"),
@@ -76,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "No_phone":
             MessageLookupByLibrary.simpleMessage("No phone number added"),
         "Oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
+        "Owner_name": MessageLookupByLibrary.simpleMessage("Owner name"),
         "Password": MessageLookupByLibrary.simpleMessage("Password"),
         "Password_characters_long": MessageLookupByLibrary.simpleMessage(
             "Password must be at least 8 characters long"),
@@ -131,17 +139,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "Sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
         "Signup_user":
             MessageLookupByLibrary.simpleMessage("Sign up as a user"),
+        "Start_date": MessageLookupByLibrary.simpleMessage("Start date"),
+        "Starting_price":
+            MessageLookupByLibrary.simpleMessage("Starting price"),
+        "Submit_new_offer":
+            MessageLookupByLibrary.simpleMessage("Submit new offer"),
         "Subscription": MessageLookupByLibrary.simpleMessage("Subscription"),
         "Tartous": MessageLookupByLibrary.simpleMessage("Tartous"),
         "There_are_no_posts": MessageLookupByLibrary.simpleMessage(
             "There are no posts published previously !"),
+        "Time_Sharing": MessageLookupByLibrary.simpleMessage("Time Sharing"),
+        "Time_Sharing_details": MessageLookupByLibrary.simpleMessage(
+            "Enjoy the luxury and comfort of owning a timeshare in a prestigious property. Your reservation for part of the year guarantees you an unforgettable vacation every year, with flexibility in timing and location."),
         "Types": MessageLookupByLibrary.simpleMessage("Types of properties >"),
         "User_Name": MessageLookupByLibrary.simpleMessage("User Name"),
         "User_name_characters": MessageLookupByLibrary.simpleMessage(
             "User name cannot exceed 55 characters"),
         "Wanted_for": MessageLookupByLibrary.simpleMessage("Wanted for"),
+        "add_pic": MessageLookupByLibrary.simpleMessage("Add image"),
+        "addnewreal":
+            MessageLookupByLibrary.simpleMessage("add new real estate"),
         "alert": MessageLookupByLibrary.simpleMessage("alert"),
         "apartment": MessageLookupByLibrary.simpleMessage("apartment"),
+        "broker": MessageLookupByLibrary.simpleMessage("Broker"),
         "building": MessageLookupByLibrary.simpleMessage("building"),
         "buy": MessageLookupByLibrary.simpleMessage("buy"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -150,8 +170,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "close": MessageLookupByLibrary.simpleMessage("close"),
         "complaint": MessageLookupByLibrary.simpleMessage("Complaint"),
         "contactUsTitle": MessageLookupByLibrary.simpleMessage("Contact Us"),
+        "description": MessageLookupByLibrary.simpleMessage("description"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "emailButton": MessageLookupByLibrary.simpleMessage("Email"),
+        "end_date": MessageLookupByLibrary.simpleMessage("end date"),
         "farm": MessageLookupByLibrary.simpleMessage("farm"),
         "go_out": MessageLookupByLibrary.simpleMessage(
             "Do you really want to go out?"),
@@ -161,6 +183,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "inquirySentSuccessfully":
             MessageLookupByLibrary.simpleMessage("Inquiry sent successfully"),
         "language": MessageLookupByLibrary.simpleMessage("language"),
+        "location": MessageLookupByLibrary.simpleMessage("location"),
         "messageSendingFailed":
             MessageLookupByLibrary.simpleMessage("Failed to send message"),
         "messageSentSuccessfully":
@@ -173,11 +196,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "on_the_beach": MessageLookupByLibrary.simpleMessage("on the beach"),
         "phoneButton": MessageLookupByLibrary.simpleMessage("Contact Us"),
+        "price": MessageLookupByLibrary.simpleMessage("price"),
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("privacy policy"),
         "property_Detail":
             MessageLookupByLibrary.simpleMessage("Property Detail"),
         "property_in": MessageLookupByLibrary.simpleMessage(" property in"),
+        "property_type": MessageLookupByLibrary.simpleMessage("property type"),
         "rental": MessageLookupByLibrary.simpleMessage("rental"),
         "report": MessageLookupByLibrary.simpleMessage("report"),
         "request": MessageLookupByLibrary.simpleMessage("Request"),

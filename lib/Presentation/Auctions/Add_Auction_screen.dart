@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:pro_2/Util/constants.dart';
+import 'package:pro_2/generated/l10n.dart';
 
 class AddAuctions extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _AddAuctionsState extends State<AddAuctions> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('إضافة مزاد جديد'),
+        title: Text(S.of(context).AddAuctions),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -69,7 +70,7 @@ class _AddAuctionsState extends State<AddAuctions> {
               children: [
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    labelText: 'نوع العقار',
+                    labelText: S.of(context).property_type,
                     prefixIcon: Icon(
                       Icons.home,
                       color: Constants.mainColor,
@@ -95,7 +96,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                 SizedBox(height: 15),
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    labelText: 'العنوان',
+                    labelText: S.of(context).location,
                     prefixIcon: Icon(
                       Icons.location_on,
                       color: Constants.mainColor,
@@ -121,7 +122,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'الوصف',
+                    labelText: S.of(context).description,
                     prefixIcon: Icon(
                       Icons.description,
                       color: Constants.mainColor,
@@ -142,7 +143,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'الميزات',
+                    labelText: S.of(context).Features,
                     prefixIcon: Icon(
                       Icons.star,
                       color: Constants.mainColor,
@@ -162,7 +163,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'اسم المالك',
+                    labelText: S.of(context).Owner_name,
                     prefixIcon: Icon(
                       Icons.person,
                       color: Constants.mainColor,
@@ -182,7 +183,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                 SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'سعر البداية',
+                    labelText: S.of(context).Starting_price,
                     prefixIcon: Icon(
                       Icons.attach_money,
                       color: Constants.mainColor,
@@ -214,7 +215,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                     color: Colors.white,
                   ),
                   label: Text(
-                    'إضافة صورة',
+                    S.of(context).add_pic,
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -251,7 +252,7 @@ class _AddAuctionsState extends State<AddAuctions> {
                     color: Colors.white,
                   ),
                   label: Text(
-                    'إضافة المزاد',
+                    S.of(context).AddAuctions,
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(

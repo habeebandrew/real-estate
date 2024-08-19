@@ -45,42 +45,43 @@ class Property_sharing_DetailScreen extends StatelessWidget {
                 children: [
                   property.images.isNotEmpty
                       ? CarouselSlider(
-                    options: CarouselOptions(
-                      height: 300.0,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: true,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      scrollDirection: Axis.horizontal,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 0.8,
-                    ),
-                    items: property.images.map<Widget>((image) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ),
-                      );
-                    }).toList(),
-                  )
+                          options: CarouselOptions(
+                            height: 300.0,
+                            enlargeCenterPage: true,
+                            enableInfiniteScroll: true,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            scrollDirection: Axis.horizontal,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 0.8,
+                          ),
+                          items: property.images.map<Widget>((image) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                image,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
+                            );
+                          }).toList(),
+                        )
                       : Container(
-                    height: 300.0,
-                    color: Colors.grey[200],
-                    child: Center(
-                      child: Text(
-                        'لا توجد صور مضافة',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.grey[600],
+                          height: 300.0,
+                          color: Colors.grey[200],
+                          child: Center(
+                            child: Text(
+                              'لا توجد صور مضافة',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                   SizedBox(height: 10.0),
                   Row(
                     children: [
@@ -142,7 +143,7 @@ class Property_sharing_DetailScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 8.0),
                       Text(
-                        'الملاك: ${property.owners}',
+                        '${S.of(context).Owner_name}: ${property.owners}',
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.blue[900],
@@ -156,7 +157,7 @@ class Property_sharing_DetailScreen extends StatelessWidget {
                       Icon(Icons.attach_money, color: Colors.redAccent),
                       SizedBox(width: 8.0),
                       Text(
-                        'السعر: ${property.price} \$',
+                        '${S.of(context).price}: ${property.price} \$',
                         style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
@@ -171,7 +172,7 @@ class Property_sharing_DetailScreen extends StatelessWidget {
                       Icon(Icons.date_range, color: Colors.blueAccent),
                       SizedBox(width: 8.0),
                       Text(
-                        'تاريخ البدء: ${property.createdAt}',
+                        '${S.of(context).Start_date}: ${property.createdAt}',
                         style: TextStyle(fontSize: 16.0),
                       ),
                     ],
@@ -182,7 +183,7 @@ class Property_sharing_DetailScreen extends StatelessWidget {
                       Icon(Icons.date_range, color: Colors.red),
                       SizedBox(width: 8.0),
                       Text(
-                        'تاريخ النهاية: ${property.end}',
+                        '${S.of(context).end_date}: ${property.end}',
                         style: TextStyle(fontSize: 16.0),
                       ),
                     ],
@@ -196,7 +197,7 @@ class Property_sharing_DetailScreen extends StatelessWidget {
                         Icon(Icons.account_circle, color: Constants.mainColor),
                         SizedBox(width: 8.0),
                         Text(
-                          'الوسيط: ${property.user_name}',
+                          '${S.of(context).broker}: ${property.user_name}',
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.black87,

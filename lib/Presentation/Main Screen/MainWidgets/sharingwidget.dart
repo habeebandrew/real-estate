@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pro_2/Util/constants.dart';
+import 'package:pro_2/generated/l10n.dart';
 
 import '../../../Util/app_routes.dart';
 import '../../../Util/global Widgets/animation.dart';
@@ -15,7 +16,6 @@ class ActionCard extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     // required this.imageUrl,
-
   });
 
   void _onCardTapped(BuildContext context) {
@@ -33,11 +33,13 @@ class ActionCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      elevation: 8,
+      elevation: 9,
       shadowColor: Colors.black26,
       child: InkWell(
-        onTap:(){    Navigator.of(context).push(MyAnimation.createRoute(AppRoutes.showsharing));
-        },// () => _onCardTapped(context), // استدعاء الوظيفة عند الضغط
+        onTap: () {
+          Navigator.of(context)
+              .push(MyAnimation.createRoute(AppRoutes.showsharing));
+        }, // () => _onCardTapped(context), // استدعاء الوظيفة عند الضغط
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -72,12 +74,12 @@ class ActionCard extends StatelessWidget {
                         ),
                         SizedBox(height: 5.0),
                         Text(
-                          subtitle,
+                          S.of(context).Time_Sharing_details,
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.black54,
                           ),
-                          maxLines: 6,
+                          maxLines: 7,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
