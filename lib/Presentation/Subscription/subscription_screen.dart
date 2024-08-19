@@ -22,15 +22,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   void initState() {
     super.initState();
-
-    if(CacheHelper.getInt(key: 'role_id')==2) {
+    setState((){
+      if(CacheHelper.getInt(key: 'role_id')==2) {
       getMySubscibtion(context);
-    }
+      }
+    });
+    
 
   }
-
-
- 
   TextEditingController emailController = TextEditingController();
   bool isloading =false;
 
@@ -39,20 +38,29 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   void addMySubscibtion(BuildContext context,String email)async{
      isloading=true;
      await addSubscibtion(email).then((value)async{
-      if(value.message== 'you are a real estate BROKER now, use feature and contact us if something wrong happens to you.'){
+      if(value !='you do not have an account or valid card to pay.'){
         await CacheHelper.deleteInt(key: 'role_id');
         await CacheHelper.putInt(key: 'role_id',value: value.roleId);
         mySnackBar(
             context: context,
             title: 'Subscibtion Added Successfully'
         );
-        isloading=false;
+        setState(() {
+          isloading=false;
+          getMySubscibtion(context);
+        });
+       
       }else{
+        setState(() {
+          isloading=false;
+        });
+        
          mySnackBar(
             context: context,
             color: Colors.red,
-            title: 'Subscibtion Failed'
+            title: 'you do not have an account or valid card to pay.'
         );
+        
       }
     });
 
@@ -62,21 +70,26 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
      isloading=true;
      await getSubscibtion().then((value)async{
       if(value != 'Failed to load Subscribtion'){
-        isloading=false;
+        setState(() {
+          isloading=false;
         subInfo = value;
+        });
+        
       }else{
+         isloading=false;
          mySnackBar(
             context: context,
             color: Colors.red,
             title: 'get Subscibtion details Failed'
         );
+        
       }
     });
 
   }
 
  Future addSubscibtion(String email) async {
-    try {
+    
       String token = (CacheHelper.getString(key: 'token'))!;
       debugPrint(token);
       var data =
@@ -91,12 +104,12 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       if (data.statusCode == 200 || data.statusCode == 201) {
         var res = addSubscribeModelFromJson(data.body);
         return res;
-      } else {
-        return 'Failed to add Subscribtion';
+      } else if(data.statusCode==400){
+        
+        return "you do not have an account or valid card to pay.";
+        
       }
-    } catch (e) {
-      return e.toString();
-    }
+     
   }
 
   Future getSubscibtion() async {
@@ -104,7 +117,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       String token = (CacheHelper.getString(key: 'token'))!;
       debugPrint(token);
       var data =
-        await NetworkHelper.get(ApiAndEndpoints.subscribe, headers: {
+        await NetworkHelper.get(ApiAndEndpoints.subscribeDetails, headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
         },
@@ -122,7 +135,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     }
   }
 
-  
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,36 +145,42 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       ),
       body: Center(
            
-        child: Column(
-        
-          children: [
-            if(CacheHelper.getInt(key: 'role_id')==1)
-             MyFormField(
-              controller: emailController,
-              hintText: 'enter your email',
-             ),
-             if(CacheHelper.getInt(key: 'role_id')==1)
-              isloading==true?CircularProgressIndicator()
-              :MyButton(
-               tittle: 'add', 
-               onPreessed: (){
-                addMySubscibtion(context, emailController.text);
-               }, 
-               minWidth: 50.0, 
-               height: 100.0
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if(CacheHelper.getInt(key: 'role_id')==1)
+               MyFormField(
+                controller: emailController,
+                hintText: 'enter your email',
+               ),
+               if(CacheHelper.getInt(key: 'role_id')==1)
+                isloading==true?CircularProgressIndicator()
+                :MyButton(
+                 tittle: 'add', 
+                 onPreessed: (){
+                  setState((){
+                       addMySubscibtion(context, emailController.text);
+                  });
+                  
+                 }, 
+                 minWidth: 50.0, 
+                 height: 50.0
+                ),
+                
+              if(CacheHelper.getInt(key: 'role_id')==2)
+                 isloading?const CircularProgressIndicator()
+                :Column(
+                   children: [
+                     Text(subInfo.startDate),
+                     Text(subInfo.endDate),
+                     Text(subInfo.daysRemaining),
+                  ],
               ),
-      
-            if(CacheHelper.getInt(key: 'role_id')==2)
-               isloading?const CircularProgressIndicator()
-              :Column(
-                 children: [
-                   Text(subInfo.startDate),
-                   Text(subInfo.endDate),
-                   Text(subInfo.daysRemaining),
-                ],
-            ),
-            
-          ],
+              
+            ],
+          ),
         ),
         ),
       );

@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pro_2/Bloc/Property%20Cubit/property_cubit.dart';
 import 'package:pro_2/Presentation/Advanced%20Search%20Screen/show_search_result_screen.dart';
+import 'package:pro_2/Util/api_endpoints.dart';
+import 'package:pro_2/Util/cache_helper.dart';
 import 'package:pro_2/Util/constants.dart';
 import 'package:pro_2/Util/global%20Widgets/animation.dart';
+import 'package:http/http.dart' as http;
 
 class AdvancedSearchScreen extends StatefulWidget {
   const AdvancedSearchScreen({super.key});
@@ -21,6 +26,17 @@ class _AdvancedSearchScreenState extends State<AdvancedSearchScreen> {
     'Damascus': 1,
     'Rif-Damascus': 2,
     'Homs': 3,
+    'Aleppo': 4,
+    'Hama': 5,
+    'Lattakia': 6,
+    'Tartus': 7,
+    'Idlib': 8,
+    'Al-Hasakah': 9,
+    'Deir ez-Zor': 10,
+    'Raqqa': 11,
+    'Daraa': 12,
+    'As-Suwayda': 13,
+    'Quneitra': 14,
   };
 
   final Map<String, int> propertyTypeIds = {
@@ -34,6 +50,59 @@ class _AdvancedSearchScreenState extends State<AdvancedSearchScreen> {
     'building': 7,
     'chalet': 8,
   };
+
+  String? selectedCity ='';
+  String  selectedAddress='';
+  int selectedAdressId =-1;
+  List<Map<String, dynamic>> addresses = [];
+
+    
+  bool isLoadingCities = false;
+   Future<void> fetchCities(String province) async {
+      final Map<String, int> provinceIds = {
+        'Damascus': 1,
+        'Rif-Damascus': 2,
+        'Homs': 3,
+        'Aleppo': 4,
+        'Hama': 5,
+        'Lattakia': 6,
+        'Tartus': 7,
+        'Idlib': 8,
+        'Al-Hasakah': 9,
+        'Deir ez-Zor': 10,
+        'Raqqa': 11,
+        'Daraa': 12,
+        'As-Suwayda': 13,
+        'Quneitra': 14,
+      };
+     String token = (await CacheHelper.getString(key: 'token'))!;
+    String api = await ApiAndEndpoints.api;
+
+    final int provinceId = provinceIds[province]!;
+    final response = await http.get(
+      Uri.parse(api + ApiAndEndpoints.fetchAllAddresses + '$provinceId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List data = json.decode(response.body);
+      setState(() {
+        addresses = data.map((address) {
+          return {
+            'id_address': address['id_address'],
+            'address': address['address']
+          };
+        }).toList();
+        isLoadingCities = false;
+      });
+    } else {
+      throw Exception('Failed to load addresses');
+    }
+    }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +166,16 @@ class _AdvancedSearchScreenState extends State<AdvancedSearchScreen> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              cubit.dropDownItemCites=value!;
+                              
+                              cubit.dropDownItemCites2=value!;
+                              selectedAddress =
+                                  ''; // لإعادة تعيين المدينة عند تغيير المحافظة
+                              selectedAdressId = -1;
+                              isLoadingCities = true;
                             });
+                            fetchCities(value!);
                           },
-                          value:  cubit.dropDownItemCites,
+                          value: cubit.dropDownItemCites2.isEmpty ? null :cubit.dropDownItemCites2,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -115,15 +190,23 @@ class _AdvancedSearchScreenState extends State<AdvancedSearchScreen> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          items: const [
-                            DropdownMenuItem(
-                              value: 'All Address',
-                              child: Text('All Address'),
-                            ),
-                          ],
-                          onChanged: (value) {},
-                          value: 'All Address',
+                          items:  addresses.map((address) {
+                                  return DropdownMenuItem<String>(
+                                    value: address['address'],
+                                    child: Text(address['address']),
+                                    onTap: (){
+                                     selectedAdressId= address['id_address'];
+                                    },
+                                  );
+                                }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedAddress = value!;
+                            });
+                          },
+                          value: selectedAddress.isEmpty ? null : selectedAddress,
                         ),
+                      
                       ),
                     ],
                   ),
@@ -310,13 +393,15 @@ class _AdvancedSearchScreenState extends State<AdvancedSearchScreen> {
                               ? propertyTypeIds[cubit.dropDownItemPropertyType]
                               : null;
 
-                          int? cityId = cityIds[cubit.dropDownItemCites] != 0
-                              ? cityIds[cubit.dropDownItemCites]
+                          int? cityId = cityIds[cubit.dropDownItemCites2] != 0
+                              ? cityIds[cubit.dropDownItemCites2]
                               : null;
 
-                          // TODO habbeb do your magic
-                          int? addressId;
+                          
+                          int? addressId = selectedAdressId==-1  ? null:selectedAdressId;
                             
+                           
+
                           await cubit.advancedSearch(
                             statusId: statusId,
                             propertyTypeId: propertyTypeId,
