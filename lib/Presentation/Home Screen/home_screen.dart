@@ -22,6 +22,7 @@ import '../Notification/notification_function.dart';
 import 'package:http/http.dart' as http;
 
 Future<dynamic> fetchUnreadCount(BuildContext context) async {
+  // fetchNotifications();
   String? token = await CacheHelper.getString(key: 'token');
 
   if (token == null) {
@@ -38,8 +39,13 @@ Future<dynamic> fetchUnreadCount(BuildContext context) async {
       );
 
       if (response.statusCode == 200) {
+        late Timer _timer;
+
         final jsonResponse = json.decode(response.body);
         print(jsonResponse);
+        ();
+        // _timer =
+        //     Timer.periodic(Duration(seconds: 5), (Timer t) => fetchNotifications());
         return jsonResponse ?? 0;
       } else {
         throw Exception('Failed to load unread count');
@@ -70,10 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
     _checkNumberValue();
     // _timer = Timer.periodic(Duration(seconds: 40), (Timer t) =>     _checkNumberValue()
     // );
-
     _fetchUnreadCount();
     _timer =
         Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchUnreadCount());
+
+    _timer =
+        Timer.periodic(Duration(seconds: 5), (Timer t) => fetchNotifications());
+
   }
 
 //

@@ -294,6 +294,7 @@ class PropertyCubit extends Cubit<PropertyState> {
     );
 
     if (response is List<Property>) {
+      properties=response;
       emit(PropertyLoadedState(propertyModel: response)); // إظهار حالة التحميل عند نجاح البحث
     } else {
       emit(PropertyErrorState(error: response.toString())); // إظهار حالة الخطأ عند حدوث مشكلة

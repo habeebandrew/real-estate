@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pro_2/Presentation/Auctions/Add_Auction_screen.dart';
 import 'package:pro_2/Presentation/Auctions/auction_detail_screen.dart';
 import 'package:pro_2/Util/constants.dart';
+import '../../Util/app_routes.dart';
+import '../../Util/cache_helper.dart';
+import '../../Util/global Widgets/animation.dart';
+import '../../generated/l10n.dart';
 import 'api_service_auction.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -18,16 +22,170 @@ class _AuctionListScreenState extends State<AuctionListScreen> {
     super.initState();
     _auctionsFuture = _apiService.fetchAuctions();
   }
+  void _handleFloatingActionButton(BuildContext context) {
+    int? role_id = CacheHelper.getInt(key: 'role_id');
+    if (role_id == null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              S.of(context).alert,
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+            content: Text(S.of(context).Please_log_in),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  S.of(context).Log_In,
+                  style: TextStyle(
+                      color: Constants.mainColor, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .push(MyAnimation.createRoute(AppRoutes.logInScreen));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (role_id == 1) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              S.of(context).Add,
+              style: TextStyle(
+                  color: Constants.mainColor, fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            title: Text(
+                              S.of(context).alert,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            content: Text(S.of(context).Please_subscription),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  S.of(context).Subscription,
+                                  style: TextStyle(
+                                      color: Constants.mainColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).push(
+                                      MyAnimation.createRoute(
+                                          AppRoutes.subscription));
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Constants.mainColor),
+                      title: Text(S.of(context).AddAuctions),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  S.of(context).close,
+                  style: TextStyle(color: Constants.mainColor),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (role_id == 2) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(
+              S.of(context).Add,
+              style: TextStyle(
+                  color: Constants.mainColor, fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MyAnimation.createRoute(AppRoutes.addauctions));
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.info, color: Constants.mainColor),
+                      title: Text(S.of(context).AddAuctions),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  S.of(context).close,
+                  style: TextStyle(color: Constants.mainColor),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddAuctions()),
-          );
+        onPressed: () {_handleFloatingActionButton(context);
+
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => AddAuctions()),
+          // );
         },
         child: Icon(Icons.add_circle_sharp, color: Colors.white),
         backgroundColor: Constants.mainColor,

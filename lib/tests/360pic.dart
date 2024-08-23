@@ -24,7 +24,7 @@ class _s_3dpicState extends State<s_3dpic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('عرض صورة 360 درجة+${widget.propertyId}'),
+        title: Text('عرض صورة 360 درجة'),
       ),
       body: SafeArea(
         child: FutureBuilder<List<String?>>(

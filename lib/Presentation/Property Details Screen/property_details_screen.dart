@@ -270,6 +270,8 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen> {
                                );
                                  },
                                child: Row(
+
+
                                  children: [
                                    Text("show 360 picture", style: TextStyle(
                                        fontSize: 15.sp,

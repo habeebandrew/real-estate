@@ -1,7 +1,7 @@
 import 'package:pro_2/Util/cache_helper.dart';
 
 class ApiAndEndpoints {
-   static const api = 'http://192.168.1.102:8000/api/';
+   static const api = 'http://192.168.105.6:8000/api/';
   // static Future<String> getApi() async {
   //   String? ip = await CacheHelper.getString(key: 'ip');
   //   return 'http://192.168.1.104:8000/api/';
